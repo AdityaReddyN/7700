@@ -64,3 +64,32 @@ Deviations: Glimmer not tested (D-028). Speeds below the apps-closed baseline. M
 M1 done-criteria: Ollama + both models present; smoke run and recorded; G1 answered (yes) and primary set in config/models.yaml. M1 complete.
 
 Next step: await confirmation, then M2 (convert the 2019-12-09 `.csv.tar` files to Parquet and write the data report).
+
+## 2026-11-01: M2 data conversion and report
+
+Schema verification (step 1): the raw files are tar → gzip → CSV (each tar also holds OpenSky `LICENSE.txt`/`README.txt`). The 16-column header matches DATA_SPEC §3 exactly; no schema deviation. One correction logged in DATA_SPEC §2 (format is tar→gz→csv, not a plain CSV in a tar).
+
+Plan:
+1. Done: verify the hour-00 header and the nested format; confirm it matches DATA_SPEC §3.
+2. `src/data/convert.py` (Makefile `data`): per hour, untar → gunzip → pandas (typed; booleans mapped, callsign stripped, squawk string); cleaning per DATA_SPEC §4 (drop only icao24/time-null rows; keep feature-null rows); write `data/parquet/states/date=2019-12-09/hour=HH/part-0.parquet` sorted by icao24, time. Emit `results/data_report/convert_manifest.json` with SHA-256, sizes, rows before/after, null counts before/after.
+3. `src/data/report.py` (Makefile `report`): read the manifest + Parquet (DuckDB) → `results/data_report/report.md` + `summary.json` (coverage, rows before/after, null rates, aircraft/hour, median snapshots/aircraft, flag shares, OpenSky attribution + G2 note).
+4. Hermetic tests: synthetic tar→gz→csv fixture; assert parquet output, dtypes, partition path, cleaning drops only icao24/time-null rows; report assembles from a small parquet + manifest.
+5. Run convert in the background (24 files, tight RAM) then report; record actual numbers here.
+
+Memory: one hour at a time; sort within the hour. If a single hour OOMs under current low free RAM, chunk the read.
+
+Results (M2 complete, 2026-11-01):
+- Converted all 24 hours → `data/parquet/states/date=2019-12-09/hour=HH/` (1.5 GB, gitignored). ~14 s/hour; no OOM.
+- `results/data_report/report.md` + `summary.json` + `convert_manifest.json` written (committed deliverable).
+- Coverage: 2019-12-09 00:00:00 → 23:59:50 UTC (86,390 s, full day).
+- Rows: 54,142,793 before and after cleaning; **0 rejected** (icao24 and time never null).
+- Aircraft: 44,879 distinct; median 726 snapshots/aircraft.
+- Null rate after cleaning: lat/lon 11.4%, velocity/heading 13.0%, vertrate 12.8%, callsign 9.0%, baroaltitude 7.5%, geoaltitude 18.9%, squawk 9.3%, time/icao24 0%.
+- Flag share (reported, not features): onground 7.6%, alert 2.1%, spi 1.4%.
+- Note: this day is far larger and less null-heavy than the old 2017 one-hour sample (31% null lat/lon) — the figures were re-measured, not assumed.
+
+Tests/lint: `make test` 37 passed, `make lint` clean. DuckDB report over 54M rows ran in ~5 s.
+
+M2 done-criteria met: hourly files converted to Parquet; data report with rows before/after, null rates, time coverage, aircraft counts. M2 complete.
+
+Next step: await go for M3 (50 labelled scenarios, hour-based splits, leakage test).

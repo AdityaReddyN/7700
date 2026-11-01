@@ -9,12 +9,13 @@ Gate G3 is **partial**: the raw data on disk is **one day**, 2019-12-09, as 24 h
 
 | Path | Time coverage (UTC) | Format | Status |
 |---|---|---|---|
-| `data/raw/.2019-12-09/HH/states_2019-12-09-HH.csv.tar` (HH = 00…23) | 2019-12-09, 24 one-hour files | `.csv.tar` (tar archive of one CSV each) | present, not yet inspected |
+| `data/raw/.2019-12-09/HH/states_2019-12-09-HH.csv.tar` (HH = 00…23) | 2019-12-09, 24 one-hour files | tar → gzip → CSV (plus `LICENSE.txt`, `README.txt`) | header verified (2026-11-01); full convert in M2 |
 
 Notes:
 - The folder name is hidden (leading dot); the M2 converter must not skip dotfiles. Raw data stays gitignored.
-- Each file is a **tar archive**; conversion untars it before reading the CSV.
-- Schema, row counts and null rates are **measured in M2 on this data** and recorded here. Do not assume they match any earlier sample.
+- Each `.csv.tar` is a **tar** containing a gzipped CSV (`states_...csv.gz`, ~133 MB compressed) and OpenSky's `LICENSE.txt` and `README.txt`. Conversion untars, then gunzips, then reads the CSV. The bundled licence text backs the attribution note (G2).
+- **Header verified 2026-11-01:** the 16 columns match section 3 exactly. Booleans are `True`/`False`, `callsign` is space-padded, `squawk` is a zero-padded string, `time` is int seconds.
+- **Measured 2026-11-01 (M2, full day → `results/data_report/`):** 24 hours, 00:00:00–23:59:50 UTC; 54,142,793 rows, 0 rejected (icao24/time never null); 44,879 aircraft, median 726 snapshots/aircraft; null rate after cleaning lat/lon 11.4%, velocity/heading 13.0%, geoaltitude 18.9%, baroaltitude 7.5%, callsign 9.0%, squawk 9.3%; flag share onground 7.6%, alert 2.1%, spi 1.4%. These differ from the 2017 sample below, as expected.
 
 Earlier reference (a different sample, `states_2017-06-05-01.csv`: ~1.44M rows, 9,620 aircraft, ~30 s cadence; ~31% null lat/lon) is kept only as a rough expectation and is **not** assumed to hold for 2019-12-09.
 

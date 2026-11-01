@@ -1,0 +1,330 @@
+{
+  "date": "2019-12-09",
+  "n_hours": 24,
+  "files": [
+    {
+      "source": "states_2019-12-09-00.csv.tar",
+      "sha256": "38662580f27b43b00155154fb6045b5b9e4fe8511fa883e782d4f81abe77c1e3",
+      "bytes": 133888000,
+      "hour": 0
+    },
+    {
+      "source": "states_2019-12-09-01.csv.tar",
+      "sha256": "761edadfa7017f05bb241a6976f10434eb14a98ffe8cf31142be5d2790c089e1",
+      "bytes": 129105920,
+      "hour": 1
+    },
+    {
+      "source": "states_2019-12-09-02.csv.tar",
+      "sha256": "fa1a136932d28ca0e81a861f1dd48cb64605e4c1a8bf593eb756f61a6fbba0cc",
+      "bytes": 122132480,
+      "hour": 2
+    },
+    {
+      "source": "states_2019-12-09-03.csv.tar",
+      "sha256": "d3512ad4d4fb0e856ddf7481340acac08b34f2ad9429b96417b81bf5725bd1d4",
+      "bytes": 114728960,
+      "hour": 3
+    },
+    {
+      "source": "states_2019-12-09-04.csv.tar",
+      "sha256": "9e94942045058a20a6f6c2561252dc6225c994fac121f8c9c27c049a0d0a49d9",
+      "bytes": 103290880,
+      "hour": 4
+    },
+    {
+      "source": "states_2019-12-09-05.csv.tar",
+      "sha256": "442fce45bf6a6d62d3b9e04a91e3d5016647cd8af157f5b12bd3f8c5c48cbcac",
+      "bytes": 95784960,
+      "hour": 5
+    },
+    {
+      "source": "states_2019-12-09-06.csv.tar",
+      "sha256": "dc5374a25612fe321832edbd715acbeee7f242986897143113893685544cf896",
+      "bytes": 104192000,
+      "hour": 6
+    },
+    {
+      "source": "states_2019-12-09-07.csv.tar",
+      "sha256": "8d539893328219a0a72d063937b83e55cfdf7cca14a276545f0b6ef6046fb2be",
+      "bytes": 106690560,
+      "hour": 7
+    },
+    {
+      "source": "states_2019-12-09-08.csv.tar",
+      "sha256": "f1d22fbb49a39593e98fcad8a3e788518a578f9710286cf78653182a2d187c48",
+      "bytes": 107223040,
+      "hour": 8
+    },
+    {
+      "source": "states_2019-12-09-09.csv.tar",
+      "sha256": "1b2ed6178336ae81a8e5d527ac58e48130846e295e58cd76aac67ba6c0580912",
+      "bytes": 111247360,
+      "hour": 9
+    },
+    {
+      "source": "states_2019-12-09-10.csv.tar",
+      "sha256": "91ba317e3370a2ea26f5d609ad1632feae37c53936e7bd9c7993d79b8cc265e1",
+      "bytes": 115701760,
+      "hour": 10
+    },
+    {
+      "source": "states_2019-12-09-11.csv.tar",
+      "sha256": "129d7718dd999d0aa077cb18c5df58204e49916d9f6cf4c7443ece2ef5a9fbfb",
+      "bytes": 127057920,
+      "hour": 11
+    },
+    {
+      "source": "states_2019-12-09-12.csv.tar",
+      "sha256": "c872c8fdd3a8f9bd686ac314901676fd65f3ff1c09306a709675cc7dd3040c9b",
+      "bytes": 141885440,
+      "hour": 12
+    },
+    {
+      "source": "states_2019-12-09-13.csv.tar",
+      "sha256": "11ff97cae2d0ae0c7b176cbb15558cb41360d87a20d01ff929f14368e55aa871",
+      "bytes": 156712960,
+      "hour": 13
+    },
+    {
+      "source": "states_2019-12-09-14.csv.tar",
+      "sha256": "f3e85ce399cba5740f8c45f36c9ae8586887940c22ddf980a621217a1cff0c54",
+      "bytes": 170854400,
+      "hour": 14
+    },
+    {
+      "source": "states_2019-12-09-15.csv.tar",
+      "sha256": "fa6fada65f73f99d2dcab19cb8ae7ac240cbb73c748559754a36ddefb2394b3a",
+      "bytes": 178012160,
+      "hour": 15
+    },
+    {
+      "source": "states_2019-12-09-16.csv.tar",
+      "sha256": "2ae696910e208e0a68be9ca96fdb4f3eb34c5d19d9e48ed1eadfede3df46e4e6",
+      "bytes": 176568320,
+      "hour": 16
+    },
+    {
+      "source": "states_2019-12-09-17.csv.tar",
+      "sha256": "592dfc66e32a2c9e74b450d0e90343ee7309afae727e1fac1e68dee0697a78b7",
+      "bytes": 177367040,
+      "hour": 17
+    },
+    {
+      "source": "states_2019-12-09-18.csv.tar",
+      "sha256": "f37f6f242abd1ca9e39e8fc7a4619d0ab45d987877fd3630b5a76e94581d3b39",
+      "bytes": 180264960,
+      "hour": 18
+    },
+    {
+      "source": "states_2019-12-09-19.csv.tar",
+      "sha256": "d410731fe5e1e36a0bf929582d909b2f40a8825f2a3f883a60f1265f3809e711",
+      "bytes": 176680960,
+      "hour": 19
+    },
+    {
+      "source": "states_2019-12-09-20.csv.tar",
+      "sha256": "4943f557a127f4467d2e32232342cec9221952bcfde89651ee0ce2d9f4bef0bc",
+      "bytes": 176455680,
+      "hour": 20
+    },
+    {
+      "source": "states_2019-12-09-21.csv.tar",
+      "sha256": "410daeeb6a59c6dccc93b3e28ea2ea276e57cfa85938d49ae1b73b2d62db557e",
+      "bytes": 169205760,
+      "hour": 21
+    },
+    {
+      "source": "states_2019-12-09-22.csv.tar",
+      "sha256": "9f86c218dbe5977c3ce1198542cc25d877c934073c5c79365e0ee242a858a21e",
+      "bytes": 154009600,
+      "hour": 22
+    },
+    {
+      "source": "states_2019-12-09-23.csv.tar",
+      "sha256": "4179151559bebe29e4a767fcc73fa7b6d119e29f24b079ee3a9c6c31cb346b58",
+      "bytes": 145623040,
+      "hour": 23
+    }
+  ],
+  "coverage": {
+    "t_min": 1575849600,
+    "t_max": 1575935990,
+    "t_min_utc": "2019-12-09T00:00:00+00:00",
+    "t_max_utc": "2019-12-09T23:59:50+00:00",
+    "span_seconds": 86390
+  },
+  "rows": {
+    "before_cleaning": 54142793,
+    "after_cleaning": 54142793,
+    "rejected": 0,
+    "note": "cleaning drops only rows missing icao24 or time (DATA_SPEC \u00a74)"
+  },
+  "aircraft_total": 44879,
+  "median_snapshots_per_aircraft": 726.0,
+  "null_rate_before": {
+    "time": 0.0,
+    "icao24": 0.0,
+    "lat": 0.1143,
+    "lon": 0.1143,
+    "velocity": 0.1296,
+    "heading": 0.1296,
+    "vertrate": 0.1283,
+    "callsign": 0.0904,
+    "onground": 0.0,
+    "alert": 0.0,
+    "spi": 0.0,
+    "squawk": 0.0927,
+    "baroaltitude": 0.0751,
+    "geoaltitude": 0.1886,
+    "lastposupdate": 0.1143,
+    "lastcontact": 0.0
+  },
+  "null_rate_after": {
+    "time": 0.0,
+    "icao24": 0.0,
+    "lat": 0.1143,
+    "lon": 0.1143,
+    "velocity": 0.1296,
+    "heading": 0.1296,
+    "vertrate": 0.1283,
+    "callsign": 0.0904,
+    "onground": 0.0,
+    "alert": 0.0,
+    "spi": 0.0,
+    "squawk": 0.0927,
+    "baroaltitude": 0.0751,
+    "geoaltitude": 0.1886,
+    "lastposupdate": 0.1143,
+    "lastcontact": 0.0
+  },
+  "flag_share": {
+    "onground": 0.0764,
+    "alert": 0.0213,
+    "spi": 0.0144,
+    "note": "reported only; alert and spi are never used as features (DATA_SPEC \u00a73)"
+  },
+  "per_hour": [
+    {
+      "hour": 0,
+      "rows": 2119894,
+      "aircraft": 11587
+    },
+    {
+      "hour": 1,
+      "rows": 2045866,
+      "aircraft": 10989
+    },
+    {
+      "hour": 2,
+      "rows": 1931898,
+      "aircraft": 10416
+    },
+    {
+      "hour": 3,
+      "rows": 1821981,
+      "aircraft": 9751
+    },
+    {
+      "hour": 4,
+      "rows": 1656639,
+      "aircraft": 9283
+    },
+    {
+      "hour": 5,
+      "rows": 1560038,
+      "aircraft": 9208
+    },
+    {
+      "hour": 6,
+      "rows": 1701488,
+      "aircraft": 9551
+    },
+    {
+      "hour": 7,
+      "rows": 1757663,
+      "aircraft": 9884
+    },
+    {
+      "hour": 8,
+      "rows": 1769449,
+      "aircraft": 9879
+    },
+    {
+      "hour": 9,
+      "rows": 1838337,
+      "aircraft": 9822
+    },
+    {
+      "hour": 10,
+      "rows": 1901592,
+      "aircraft": 9994
+    },
+    {
+      "hour": 11,
+      "rows": 2064888,
+      "aircraft": 10980
+    },
+    {
+      "hour": 12,
+      "rows": 2292298,
+      "aircraft": 12009
+    },
+    {
+      "hour": 13,
+      "rows": 2536375,
+      "aircraft": 13777
+    },
+    {
+      "hour": 14,
+      "rows": 2756863,
+      "aircraft": 14669
+    },
+    {
+      "hour": 15,
+      "rows": 2849156,
+      "aircraft": 14965
+    },
+    {
+      "hour": 16,
+      "rows": 2819537,
+      "aircraft": 14726
+    },
+    {
+      "hour": 17,
+      "rows": 2830366,
+      "aircraft": 14759
+    },
+    {
+      "hour": 18,
+      "rows": 2865237,
+      "aircraft": 14842
+    },
+    {
+      "hour": 19,
+      "rows": 2810835,
+      "aircraft": 15042
+    },
+    {
+      "hour": 20,
+      "rows": 2792471,
+      "aircraft": 14616
+    },
+    {
+      "hour": 21,
+      "rows": 2670552,
+      "aircraft": 14029
+    },
+    {
+      "hour": 22,
+      "rows": 2443275,
+      "aircraft": 13252
+    },
+    {
+      "hour": 23,
+      "rows": 2306095,
+      "aircraft": 12477
+    }
+  ],
+  "attribution": "Data: The OpenSky Network (https://opensky-network.org). Used under the OpenSky General Terms of Use & Data License Agreement (bundled LICENSE.txt in each raw archive). Permission for this hackathon use is recorded in docs/permissions/G2-opensky.md (gate G2); follow any conditions stated there. Raw data is not redistributed in this repository."
+}

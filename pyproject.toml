@@ -53,3 +53,5 @@ select = ["E", "F", "I", "UP", "B"]
 [tool.ruff.lint.per-file-ignores]
 # Dev prompts are prose data; wrapping each sentence hurts readability.
 "src/agents/prompts/dev_prompts.py" = ["E501"]
+# Synthetic CSV rows are fixed-width data; wrapping them hurts readability.
+"tests/test_data_convert.py" = ["E501"]
