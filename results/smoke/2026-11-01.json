@@ -1,0 +1,469 @@
+{
+  "date": "2026-11-01",
+  "endpoint": "http://localhost:11434/v1",
+  "local_only": true,
+  "host": {
+    "platform": "Windows-10-10.0.26300-SP0",
+    "total_ram_gb": 16.91,
+    "free_ram_gb_at_start": 1.4
+  },
+  "n_prompts": 20,
+  "models": {
+    "llama3.1:8b": {
+      "ollama_show": "Model\n    architecture        llama          \n    parameters          8.0B           \n    context length      131072         \n    embedding length    4096           \n    quantization        Q4_K_M         \n    template source     go_template    \n\n  Capabilities\n    completion    \n    tools         \n\n  Parameters\n    stop    \"<|start_header_id|>\"    \n    stop    \"<|end_header_id|>\"      \n    stop    \"<|eot_id|>\"             \n\n  License\n    LLAMA 3.1 COMMUNITY LICENSE AGREEMENT            \n    Llama 3.1 Version Release Date: July 23, 2024    \n    ...",
+      "ollama_ps": "NAME           ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              \nllama3.1:8b    46e0c10c039e    5.6 GB    100% CPU     4096       llamacpp    4 minutes from now",
+      "plain": {
+        "latency_s": 21.95,
+        "prompt_tokens": 53,
+        "completion_tokens": 40,
+        "gen_tokens_per_s": 1.82,
+        "note": "gen_tokens_per_s = completion_tokens / wall latency (approx)"
+      },
+      "tool_calls": {
+        "n": 20,
+        "valid": 11,
+        "rate": 0.55,
+        "mode": "native_tools",
+        "details": [
+          {
+            "id": "P01",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P02",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P03",
+            "ok": false,
+            "reason": "bad arg types: ['t_start', 't_end']"
+          },
+          {
+            "id": "P04",
+            "ok": false,
+            "reason": "bad arg types: ['t_start', 't_end']"
+          },
+          {
+            "id": "P05",
+            "ok": false,
+            "reason": "bad arg types: ['t_end', 't_start']"
+          },
+          {
+            "id": "P06",
+            "ok": false,
+            "reason": "bad arg types: ['t_start', 't_end']"
+          },
+          {
+            "id": "P07",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P08",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P09",
+            "ok": false,
+            "reason": "bad arg types: ['t_start', 't_end']"
+          },
+          {
+            "id": "P10",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P11",
+            "ok": false,
+            "reason": "bad arg types: ['t_start', 't_end']"
+          },
+          {
+            "id": "P12",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P13",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P14",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P15",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P16",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P17",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P18",
+            "ok": false,
+            "reason": "bad arg types: ['t_start', 't_end']"
+          },
+          {
+            "id": "P19",
+            "ok": false,
+            "reason": "bad arg types: ['t_start', 't_end']"
+          },
+          {
+            "id": "P20",
+            "ok": false,
+            "reason": "bad arg types: ['t_start', 't_end']"
+          }
+        ]
+      },
+      "structured": {
+        "n": 20,
+        "parsed": 20,
+        "rate": 1.0,
+        "mode": "json_object + schema in prompt",
+        "details": [
+          {
+            "id": "P01",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P02",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P03",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P04",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P05",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P06",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P07",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P08",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P09",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P10",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P11",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P12",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P13",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P14",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P15",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P16",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P17",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P18",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P19",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P20",
+            "ok": true,
+            "reason": "ok"
+          }
+        ]
+      },
+      "free_ram_gb_min": 1.4
+    },
+    "llama3.2:3b": {
+      "ollama_show": "Model\n    architecture        llama          \n    parameters          3.2B           \n    context length      131072         \n    embedding length    3072           \n    quantization        Q4_K_M         \n    template source     go_template    \n\n  Capabilities\n    completion    \n    tools         \n\n  Parameters\n    stop    \"<|start_header_id|>\"    \n    stop    \"<|end_header_id|>\"      \n    stop    \"<|eot_id|>\"             \n\n  License\n    LLAMA 3.2 COMMUNITY LICENSE AGREEMENT                 \n    Llama 3.2 Version Release Date: September 25, 2024    \n    ...",
+      "ollama_ps": "NAME           ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              \nllama3.2:3b    a80c4f17acd5    2.6 GB    100% CPU     4096       llamacpp    4 minutes from now",
+      "plain": {
+        "latency_s": 8.49,
+        "prompt_tokens": 63,
+        "completion_tokens": 37,
+        "gen_tokens_per_s": 4.36,
+        "note": "gen_tokens_per_s = completion_tokens / wall latency (approx)"
+      },
+      "tool_calls": {
+        "n": 20,
+        "valid": 20,
+        "rate": 1.0,
+        "mode": "native_tools",
+        "details": [
+          {
+            "id": "P01",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P02",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P03",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P04",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P05",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P06",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P07",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P08",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P09",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P10",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P11",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P12",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P13",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P14",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P15",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P16",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P17",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P18",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P19",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P20",
+            "ok": true,
+            "reason": "ok"
+          }
+        ]
+      },
+      "structured": {
+        "n": 20,
+        "parsed": 19,
+        "rate": 0.95,
+        "mode": "json_object + schema in prompt",
+        "details": [
+          {
+            "id": "P01",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P02",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P03",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P04",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P05",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P06",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P07",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P08",
+            "ok": false,
+            "reason": "invalid: 1 validation error for HypothesisReport\nhypothesis\n  Input should be 'position_s"
+          },
+          {
+            "id": "P09",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P10",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P11",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P12",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P13",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P14",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P15",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P16",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P17",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P18",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P19",
+            "ok": true,
+            "reason": "ok"
+          },
+          {
+            "id": "P20",
+            "ok": true,
+            "reason": "ok"
+          }
+        ]
+      },
+      "free_ram_gb_min": 0.64
+    }
+  }
+}

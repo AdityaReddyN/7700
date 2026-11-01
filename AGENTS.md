@@ -24,8 +24,8 @@ These gates must be resolved before the work that depends on them. Record each a
 
 **Model gate logic (implement as configuration, not code branches):**
 - G1 is accepted, so the primary model is `llama3.1:8b` via Ollama, subject to the bake-off in M1. Use `llama3.2:3b` only as a triage model or fallback if memory is too tight.
-- **Muse Glimmer 30B** (2-bit, local) is no longer the fallback primary. It is kept only as the optional comparison run that satisfies the Meta-tooling criterion (D-025), off by default. It is slow and tight on this laptop; run it once for the comparison if time allows, not for the main pipeline.
-- Whether to run the optional Muse Glimmer comparison (D-025) is an open item in section 10.
+- **Muse Glimmer 30B** is not used: the optional comparison (D-025) is declined by D-028. Meta-tooling eligibility is met by Llama, which the organizers accepted (G1).
+- **Inference is local only (D-028):** no third-party hosted inference at all. The `hosted` block in `config/models.yaml` stays disabled; G5 (credits) no longer blocks anything.
 - The model is a config value in `config/models.yaml`. Changing it must not require code changes.
 
 ## 3. Non-negotiables
@@ -51,7 +51,7 @@ These gates must be resolved before the work that depends on them. Record each a
   - Cap subagents at 4 tool calls each.
   - Long jobs (the evaluation) run in the background with `--resume`, ideally overnight. Do not block on them.
   - Close the browser and other large apps before any benchmark run.
-- Glimmer 2-bit is tight on 16 GB and will be slow. Test it once in M1 and record the result. Use it only as the optional comparison in D-025, never for the main pipeline (G1 is accepted, so Llama is primary).
+- Glimmer is not used (D-028 declines the D-025 comparison). The pipeline uses the local Llama models only (`llama3.1:8b` primary, `llama3.2:3b` triage/fallback).
 
 ## 5. Stack (fixed)
 
@@ -61,8 +61,7 @@ These gates must be resolved before the work that depends on them. Record each a
 | Local LLM server | Ollama (OpenAI-compatible endpoint at `http://localhost:11434/v1`) |
 | Primary model | `llama3.1:8b` via Ollama (G1 accepted). Set in `config/models.yaml` |
 | Fallback model | `llama3.2:3b` via Ollama, for triage or if memory is too tight |
-| Optional comparison | Muse Glimmer 30B (2-bit, local). Off by default; run only for the D-025 Meta-tooling comparison |
-| Hosted model (optional, budget-capped) | Muse Spark Open or Muse Glimmer through a provider the human has an account with. Off by default |
+| Hosted / third-party | **Not used** — ruled out by D-028. Config blocks stay disabled |
 | LLM client | `openai` Python SDK pointed at the configured base URL |
 | Orchestration | Plain `asyncio` (no agent framework) |
 | Data | Parquet files, queried with DuckDB (read-only, fixed queries) |
@@ -124,7 +123,7 @@ Do not start a milestone until the previous one's checks pass. Log each mileston
 | # | Milestone | Done when |
 |---|---|---|
 | M0 | Setup | `make setup` and `make test` pass on the laptop. Repo initialised, public-ready, `.gitignore` covers secrets and raw data. Living docs exist |
-| M1 | Model gate | Ollama installed. `llama3.1:8b` (and `llama3.2:3b`) pulled. Smoke tests run and recorded: plain completion, tool-call validity on 20 dev prompts, structured-output parse rate on 20 prompts, tokens/s, free RAM during run. Glimmer 2-bit tested once. G1 answered and primary model set in `config/models.yaml` |
+| M1 | Model gate | Ollama installed. `llama3.1:8b` (and `llama3.2:3b`) pulled. Smoke tests run and recorded: plain completion, tool-call validity on 20 dev prompts, structured-output parse rate on 20 prompts, tokens/s, free RAM during run. (Glimmer dropped per D-028.) G1 is answered and the primary model is set in `config/models.yaml` |
 | M2 | Data | Both CSVs (if G3 resolved) converted to Parquet by hour. `data report` written: rows before and after filtering, null rates, time coverage, aircraft counts |
 | M3 | Scenarios | 50 labelled scenarios (10 per class), splits assigned, leakage test passes |
 | M4 | Detector | Rule-based flagger produces alerts for dev and test scenarios, with precision and recall on injected data and alert rate on real data. Isolation Forest added only if M4 flagger is done by day 3 |
@@ -164,8 +163,7 @@ Do not start a milestone until the previous one's checks pass. Log each mileston
 1. Problem statement: "Push the Frontier" or "Build for Your World"? (D-020.)
 2. D-008: approve Streamlit as the UI.
 3. Licence for the repo (default: MIT).
-4. Day split: confirm the day groups for the by-day scenario split (D-024), once the G3 file dates are checked in M2.
-5. Glimmer comparison: run the optional Muse Glimmer comparison (D-025) or skip it?
-6. Daily time available, so the plan can be set.
+4. Day split: with only one day of data (D-029) the by-day split (D-024) falls back to the hour-based split; confirm in M2.
+5. Daily time available, so the plan can be set.
 
-(G1, G2 and the CSV upload are resolved; see section 2 and `docs/permissions/`.) Until the above are answered, the agent proceeds with the defaults in `docs/DECISIONS.md` and marks each assumption in the README.
+(G1, G2 and the CSV upload are resolved — see section 2 and `docs/permissions/`. Inference is local only and the Glimmer comparison is declined; see D-028.) Until the above are answered, the agent proceeds with the defaults in `docs/DECISIONS.md` and marks each assumption in the README.

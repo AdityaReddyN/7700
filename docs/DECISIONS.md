@@ -118,7 +118,16 @@ Format: ID, date, status, context, decision, consequences. Never delete an entry
 - Decision: `replay_duplicate` `window_copy` offset range is now 10 minutes to 6 hours (`config/scenarios.yaml`: `window_copy_offset_min: [10, 360]`). The source window must stay within the same day group as the scenario (D-024).
 - Consequences: more realistic replay scenarios. The leakage test checks that replay source windows do not cross the split boundary.
 
-## D-027 (2026-11-01, accepted): Windows build environment for M0
+## D-028 (2026-11-01, accepted): Local inference only — no third-party hosts
+- Supersedes the hosted allowance in D-010 and declines D-025.
+- Context: the human confirmed there will be no third-party hosted inference. The primary model is the local Llama model.
+- Decision: all inference runs locally through Ollama. No hosted/third-party calls at all (Baseten, Modal, Fireworks, Together, OpenRouter, Meta Model API). The `hosted` block in `config/models.yaml` stays disabled; the optional Muse Glimmer comparison (D-025) is declined, so Glimmer is not run or tested. Meta-tooling eligibility is met by Llama, which the organizers accepted (G1). `llama3.1:8b` is primary and `llama3.2:3b` is the triage/fallback; both are local Llama models.
+- Consequences: G5 (credits) no longer blocks anything. No spend risk. The M1 Glimmer test is dropped. The README's Meta-tooling section cites Llama only. If the human later wants a Glimmer comparison, re-open D-025.
+
+## D-029 (2026-11-01, accepted): Raw data is one day of hourly tar archives
+- Context: the human added the raw OpenSky data. It is **one day**, 2019-12-09, with 24 hourly files `data/raw/.2019-12-09/HH/states_2019-12-09-HH.csv.tar` (~3.2 GB), not the four days or the 2017-06-05 date the earlier docs assumed, and the files are `.csv.tar` archives, not plain CSV. The folder name is hidden (leading dot).
+- Decision: M2 conversion untars each hourly file before reading, and re-measures the schema/null rates on this data (the 2017 figures in DATA_SPEC are from a different file and are not assumed to hold). Because only one day is available, the day-based split (D-024) falls back to the **hour-based** split (disjoint hours per split); confirm in M2. The day lists in `config/scenarios.yaml` stay null.
+- Consequences: replay offsets up to 6 h (D-026) fit within the 24-hour day. The data report (M2) states the actual date, coverage and counts. Raw data stays uncommitted (gitignored).
 - Renumbered from an earlier D-023 in this session to avoid a collision with the gates entry above (log rule: ids are unique and entries are not deleted).
 - Context: the laptop had no `make` and no `pytest`/`ruff`; the stack otherwise matched the pinned versions.
 - Decision: use a project-local `.venv` (created at the human's request); `make setup` creates/uses it. Use the pre-installed GNU Make 3.82 (`C:\MinGW\bin\mingw32-make.exe`), copied to `make.exe` on PATH so the documented `make` commands work. Dependencies pinned to the versions verified installed on the laptop.

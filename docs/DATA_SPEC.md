@@ -5,21 +5,20 @@ OpenSky Network state vectors, exported as hourly CSV files. Gate G2 (permission
 
 ## 2. Files available now
 
-Gate G3 is **partial**: four days of hourly OpenSky files are now present, but only the first has been inspected. The exact file dates and hour coverage are confirmed in M2; do not assume the other three match the first in schema or span.
+Gate G3 is **partial**: the raw data on disk is **one day**, 2019-12-09, as 24 hourly tar archives (see D-029). None has been inspected or converted yet; that happens in M2.
 
-| File | Time coverage (UTC) | Rows | Columns | Status |
-|---|---|---|---|---|
-| `states_2017-06-05-01.csv` | 2017-06-05 01:00:00 to 01:59:50 (about 60 minutes) | 1,443,596 | 16 | inspected |
-| three further hourly files (dates TBC) | to be confirmed in M2 | — | — | present, not yet inspected |
+| Path | Time coverage (UTC) | Format | Status |
+|---|---|---|---|
+| `data/raw/.2019-12-09/HH/states_2019-12-09-HH.csv.tar` (HH = 00…23) | 2019-12-09, 24 one-hour files | `.csv.tar` (tar archive of one CSV each) | present, not yet inspected |
 
-Measured on the inspected file:
-- 9,620 unique `icao24` values. Median about 122 snapshots per aircraft, roughly one every 30 seconds.
-- Null rates: `lat`, `lon`, `lastposupdate` about 31%. `velocity`, `heading` about 34%. `vertrate` about 30%. `callsign` about 40%. `geoaltitude` about 40%. `baroaltitude` about 10%. `squawk` about 16%. `time`, `icao24`, `onground`, `alert`, `spi`, `lastcontact` have no nulls.
-- `onground` True for about 9% of rows. `alert` set on about 2.1%, `spi` on about 1.4%.
+Notes:
+- The folder name is hidden (leading dot); the M2 converter must not skip dotfiles. Raw data stays gitignored.
+- Each file is a **tar archive**; conversion untars it before reading the CSV.
+- Schema, row counts and null rates are **measured in M2 on this data** and recorded here. Do not assume they match any earlier sample.
 
-**Day-based split note (D-024):** because scenarios are split by day group, the data check in M2 must record each file's date so that test-day windows can be kept out of the dev/kb day group. If only one day is usable, fall back to the hour-based split and say so.
+Earlier reference (a different sample, `states_2017-06-05-01.csv`: ~1.44M rows, 9,620 aircraft, ~30 s cadence; ~31% null lat/lon) is kept only as a rough expectation and is **not** assumed to hold for 2019-12-09.
 
-**Remaining files:** each file's schema and time span is checked on arrival in M2 and any difference is recorded here and in DECISIONS.md. Do not assume they match the first file.
+**Split note (D-024 / D-029):** with only one day available, the by-day split falls back to the **hour-based** split (disjoint hours per split). M2 confirms the usable hours and records the split.
 
 ## 3. Schema
 
@@ -72,6 +71,6 @@ This report is a deliverable. It goes in the README.
 - Benign anomalies are found in real data by rule (see SCENARIO_SPEC.md) and checked by eye.
 
 ## 8. Limits to state in the README
-- Coverage is a few hours across four days (one hour per file, dates confirmed in M2), not continuous and not representative of all traffic. Report the exact coverage used, from `results/data_report/`.
+- Coverage is one day (2019-12-09), up to 24 one-hour windows, not representative of all traffic. Report the exact coverage used, from `results/data_report/`.
 - Position data are reported by aircraft and not verified against any authority.
 - Synthetic injections are not real attacks. Results measure detection and explanation on injected faults, not on real-world attacks.

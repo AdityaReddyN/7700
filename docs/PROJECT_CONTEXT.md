@@ -61,9 +61,9 @@ The rubric weights noted earlier (Impact 30%, Tooling 25%, Demo 25%, Technical 2
 - Isolation Forest detector.
 - BM25 plus embedding retrieval (BM25 alone is acceptable).
 - Three or more paraphrased reference passages with sources.
-- Glimmer 2-bit local comparison on a few cases.
-- A hosted Muse call for a few cases, within the $1 budget.
 - Ten-case spot-check of verifier claims.
+
+(The Glimmer comparison and any hosted Muse call are out of scope per D-028: local Llama only.)
 
 **Out of scope:**
 - GRU autoencoder, FastAPI and SSE, React UI, Docker.

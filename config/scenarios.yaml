@@ -13,8 +13,9 @@ per_label:
 difficulty_mix: {easy: 0.33, medium: 0.34, hard: 0.33}
 
 # Day-based split (D-024). Scenarios are split by day group so that no test-day
-# window informs a dev/kb scenario. Day lists are null until the G3 file dates
-# are checked in M2; method falls back to by_hour if only one day is usable.
+# window informs a dev/kb scenario. Only 2019-12-09 is present (D-029), so the
+# by_hour fallback (disjoint hours per split) is expected; confirm in M2.
+# Day lists stay null until the data check in M2.
 day_split:
   method: by_day
   groups:

@@ -1,8 +1,9 @@
 # Model configuration. Change models here, never in code.
 # G1 is ACCEPTED: Llama is eligible, so the primary model is llama3.1:8b
 # (reply in docs/permissions/G1-llama.md; see DECISIONS.md D-023).
-# llama3.2:3b is the triage / fallback model. Muse Glimmer is an optional
-# comparison only (D-025), off by default.
+# llama3.2:3b is the triage / fallback model, also local Llama.
+# D-028: inference is LOCAL ONLY. No third-party hosts. The `hosted` and
+# `comparison` blocks below stay disabled; Glimmer (D-025) is declined.
 
 primary:
   backend: ollama

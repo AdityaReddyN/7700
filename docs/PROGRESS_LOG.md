@@ -38,3 +38,29 @@ Next step: await human confirmation, then M1 (Ollama smoke tests).
 - DECISIONS: added D-023 (gates, settles D-011), D-024 (day split, proposed/default), D-025 (optional Glimmer comparison, off), D-026 (replay offsets). Renumbered the earlier Windows-build entry from D-023 to **D-027** to avoid an id collision (log rule: ids unique, entries not deleted).
 - New `docs/permissions/` folder: README plus G1-llama.md and G2-opensky.md placeholders for the actual replies.
 - `make test`: 30 passed. `make lint`: clean. No code changed; M0 still green.
+
+## 2026-11-01: M1 model gate
+
+Decisions in: D-028 (local Llama only, no third-party hosts, Glimmer declined), D-029 (raw data is one day 2019-12-09, 24 hourly `.csv.tar`; day-split falls back to hour-based). Propagated to AGENTS, config, DATA_SPEC, SCENARIO/PROJECT_CONTEXT, ROADMAP, API_NOTES.
+
+Plan:
+1. Confirm environment: Ollama present; `llama3.1:8b` and `llama3.2:3b` pulled (both present, 3 days old). Glimmer not pulled (and not needed, D-028).
+2. Build `src/agents/llm.py`: a thin Ollama chat client (openai SDK → `http://localhost:11434/v1`, temperature 0, fixed seed) plus a `--smoke` CLI. Keep the full M7 wrapper for later.
+3. Write 20 neutral hand-written dev prompts (no labels/scenario ids) in `src/agents/prompts/` for the tool-call and structured-output checks; add minimal OpenAI-format specs for the five tools (ARCHITECTURE §3).
+4. Smoke checklist (API_NOTES §5): plain completion (timed, temp 0), tool-call validity ×20, `HypothesisReport` structured-output parse rate ×20, tokens/s, free RAM (psutil) + `ollama ps`, endpoint check. Write `results/smoke/<date>.json`.
+5. Run on `llama3.1:8b` and `llama3.2:3b`; long run in the background (CPU ~8 tok/s). Record results in API_NOTES with the date.
+6. Add a hermetic unit test (mocked client) so `make test` needs no Ollama; keep `make lint` clean.
+
+Built: `src/agents/tool_specs.py` (5 tool schemas), `src/agents/prompts/dev_prompts.py` (20 neutral, leakage-checked prompts), `src/agents/llm.py` (thin Ollama client + `make smoke`). Added `tests/test_smoke_harness.py` (hermetic). Pinned `psutil==6.1.1`.
+
+Tests and results: `make test` → 36 passed; `make lint` clean. Full smoke (`results/smoke/2026-11-01.json`, both models × 20 prompts) ran in the background in ~20 min:
+- Endpoint, native tool calling, and JSON structured output all work via the `openai` SDK; `ollama ps` = 100% CPU for both.
+- `llama3.1:8b` (primary): structured 20/20; tool-call 11/20 (9 fails = integer timestamps sent as strings); plain 1.82 tok/s.
+- `llama3.2:3b` (triage): tool-call 20/20; structured 19/20; plain 4.36 tok/s.
+- Speeds low due to memory pressure (0.6–1.4 GB free); re-measure with apps closed.
+
+Deviations: Glimmer not tested (D-028). Speeds below the apps-closed baseline. M5 tool registry must coerce numeric-string args (8B quirk, logged in API_NOTES §6).
+
+M1 done-criteria: Ollama + both models present; smoke run and recorded; G1 answered (yes) and primary set in config/models.yaml. M1 complete.
+
+Next step: await confirmation, then M2 (convert the 2019-12-09 `.csv.tar` files to Parquet and write the data report).

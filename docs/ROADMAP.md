@@ -6,7 +6,7 @@ Today is the start of the build. Day numbering below is relative. The hard deadl
 
 - [x] G1: organizers confirmed Llama is eligible. Reply saved in `docs/permissions/G1-llama.md`.
 - [x] G2: OpenSky permission reply received and saved in `docs/permissions/G2-opensky.md`. Follow any stated conditions.
-- [~] G3: four days of hourly OpenSky CSVs uploaded (partial). Confirm the file dates and the day groups for the split in M2.
+- [~] G3: one day (2019-12-09) of 24 hourly OpenSky files uploaded as `.csv.tar` (partial, D-029). Confirm coverage and the hour-based split in M2.
 - [ ] Choose the problem statement (Push the Frontier or Build for Your World).
 - [ ] Approve Streamlit (D-008) and the licence (default MIT).
 - [ ] Create the public GitHub repository and share the link.
@@ -22,7 +22,7 @@ Today is the start of the build. Day numbering below is relative. The hard deadl
 - M0 complete: repo, environment, Makefile, `.gitignore`, docs folder, `make test` runs.
 - M1 started: `llama3.1:8b` smoke test already has speed numbers. Add the tool-call and structured-output tests on 20 dev prompts each, once the dev prompts exist. Create dev prompts from the scenario builder once M3 is done, or use 20 hand-written neutral prompts in the meantime.
 - M2 started: convert the existing CSV to Parquet; write the data report.
-- Checkpoint: G1 answered? If no, switch primary model to Glimmer and run its 2-bit timing test.
+- Checkpoint: G1 is answered (yes); primary is local `llama3.1:8b`. No Glimmer, no hosted calls (D-028).
 
 **Day 2: scenarios and detector**
 - M3 complete: injectors for the four fault classes, benign finder, splits, leakage test. Labels: 50 scenarios.
@@ -68,7 +68,7 @@ Cut in this order, and log each cut in DECISIONS.md:
 Do not cut: the verifier, the evidence/inference split, the verified-only report, the leakage test, the data report, or the honest limitations.
 
 ## 4. Blocking items and what happens if unanswered
-- G1 unanswered by Day 2: use Muse Glimmer as primary. Test its speed on Day 1 regardless.
-- G2 unanswered by Day 5: do not publish OpenSky-derived samples. Submit with the code, the data report (statistics only), and a note that the raw data is not included. Say so in the README.
-- G3 unanswered: the replay offsets are limited to the time range available. Say so in the README.
-- Credits unconfirmed: proceed on local inference only. Do not plan the evaluation around hosted calls.
+- G1 resolved: local `llama3.1:8b` is primary (D-023). No Glimmer fallback and no hosted calls (D-028).
+- G2 resolved: permission received; follow its conditions. Raw data is still never committed; publish statistics and at most a small sample as the reply allows.
+- G3 partial (one day, D-029): replay offsets are within the 24-hour day; the split uses the hour-based fallback. Say so in the README.
+- Credits: not needed — inference is local only (D-028). No hosted spend.
