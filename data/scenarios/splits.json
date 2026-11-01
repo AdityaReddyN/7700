@@ -1,0 +1,1033 @@
+{
+  "global_seed": 20261029,
+  "method": "by_hour",
+  "hour_groups": {
+    "kb": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "dev": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "test": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  "counts": {
+    "total": 50,
+    "benign_found": 10
+  },
+  "scenarios": [
+    {
+      "scenario_id": "S0001",
+      "label": "position_spoofing",
+      "split": "kb",
+      "difficulty": "easy",
+      "icao24": "0d09e5",
+      "t_start": 1575867610,
+      "t_end": 1575868210,
+      "n_points": 61,
+      "params": {
+        "mode": "drift",
+        "difficulty": "easy",
+        "drift_rate_km_per_min": 0.47197785826287425,
+        "bearing_en": [
+          -0.977,
+          0.213
+        ]
+      },
+      "source_track_ref": "0d09e5:5:1575867610-1575868210"
+    },
+    {
+      "scenario_id": "S0002",
+      "label": "position_spoofing",
+      "split": "kb",
+      "difficulty": "medium",
+      "icao24": "39aead",
+      "t_start": 1575867610,
+      "t_end": 1575868210,
+      "n_points": 61,
+      "params": {
+        "mode": "jump",
+        "difficulty": "medium",
+        "jump_offset_km": 8.35993785451695,
+        "jump_start_index": 30,
+        "bearing_en": [
+          -0.816,
+          0.577
+        ]
+      },
+      "source_track_ref": "39aead:5:1575867610-1575868210"
+    },
+    {
+      "scenario_id": "S0003",
+      "label": "position_spoofing",
+      "split": "dev",
+      "difficulty": "hard",
+      "icao24": "020065",
+      "t_start": 1575878410,
+      "t_end": 1575879010,
+      "n_points": 61,
+      "params": {
+        "mode": "velocity_offset",
+        "difficulty": "hard",
+        "velocity_scale": 1.1279154126632955
+      },
+      "source_track_ref": "020065:8:1575878410-1575879010"
+    },
+    {
+      "scenario_id": "S0004",
+      "label": "position_spoofing",
+      "split": "dev",
+      "difficulty": "easy",
+      "icao24": "0d0760",
+      "t_start": 1575878410,
+      "t_end": 1575879010,
+      "n_points": 61,
+      "params": {
+        "mode": "drift",
+        "difficulty": "easy",
+        "drift_rate_km_per_min": 0.4018894907678766,
+        "bearing_en": [
+          -0.292,
+          0.957
+        ]
+      },
+      "source_track_ref": "0d0760:8:1575878410-1575879010"
+    },
+    {
+      "scenario_id": "S0005",
+      "label": "position_spoofing",
+      "split": "dev",
+      "difficulty": "medium",
+      "icao24": "06a0b8",
+      "t_start": 1575882010,
+      "t_end": 1575882610,
+      "n_points": 61,
+      "params": {
+        "mode": "jump",
+        "difficulty": "medium",
+        "jump_offset_km": 31.812972425845615,
+        "jump_start_index": 30,
+        "bearing_en": [
+          0.957,
+          -0.29
+        ]
+      },
+      "source_track_ref": "06a0b8:9:1575882010-1575882610"
+    },
+    {
+      "scenario_id": "S0006",
+      "label": "position_spoofing",
+      "split": "test",
+      "difficulty": "hard",
+      "icao24": "04008d",
+      "t_start": 1575907210,
+      "t_end": 1575907810,
+      "n_points": 61,
+      "params": {
+        "mode": "velocity_offset",
+        "difficulty": "hard",
+        "velocity_scale": 1.1907737250340273
+      },
+      "source_track_ref": "04008d:16:1575907210-1575907810"
+    },
+    {
+      "scenario_id": "S0007",
+      "label": "position_spoofing",
+      "split": "test",
+      "difficulty": "easy",
+      "icao24": "02001b",
+      "t_start": 1575918010,
+      "t_end": 1575918610,
+      "n_points": 61,
+      "params": {
+        "mode": "drift",
+        "difficulty": "easy",
+        "drift_rate_km_per_min": 0.4442342773150289,
+        "bearing_en": [
+          -0.118,
+          0.993
+        ]
+      },
+      "source_track_ref": "02001b:19:1575918010-1575918610"
+    },
+    {
+      "scenario_id": "S0008",
+      "label": "position_spoofing",
+      "split": "test",
+      "difficulty": "medium",
+      "icao24": "78022c",
+      "t_start": 1575918000,
+      "t_end": 1575918600,
+      "n_points": 61,
+      "params": {
+        "mode": "jump",
+        "difficulty": "medium",
+        "jump_offset_km": 29.53206774029345,
+        "jump_start_index": 30,
+        "bearing_en": [
+          0.295,
+          0.956
+        ]
+      },
+      "source_track_ref": "78022c:19:1575918000-1575918600"
+    },
+    {
+      "scenario_id": "S0009",
+      "label": "position_spoofing",
+      "split": "test",
+      "difficulty": "hard",
+      "icao24": "06a0bc",
+      "t_start": 1575910810,
+      "t_end": 1575911410,
+      "n_points": 61,
+      "params": {
+        "mode": "drift",
+        "difficulty": "hard",
+        "drift_rate_km_per_min": 0.10741145125562157,
+        "bearing_en": [
+          0.986,
+          -0.166
+        ]
+      },
+      "source_track_ref": "06a0bc:17:1575910810-1575911410"
+    },
+    {
+      "scenario_id": "S0010",
+      "label": "position_spoofing",
+      "split": "test",
+      "difficulty": "hard",
+      "icao24": "06a07e",
+      "t_start": 1575918010,
+      "t_end": 1575918610,
+      "n_points": 61,
+      "params": {
+        "mode": "velocity_offset",
+        "difficulty": "hard",
+        "velocity_scale": 0.9285786265413184
+      },
+      "source_track_ref": "06a07e:19:1575918010-1575918610"
+    },
+    {
+      "scenario_id": "S0011",
+      "label": "ghost_aircraft",
+      "split": "kb",
+      "difficulty": "easy",
+      "icao24": "dc7c84",
+      "t_start": 1575853210,
+      "t_end": 1575854160,
+      "n_points": 96,
+      "params": {
+        "cruise_kt": 400.6,
+        "duration_min": 16,
+        "position_noise_m": 24.2,
+        "heading": 83.3,
+        "difficulty": "easy",
+        "new_icao24": "dc7c84"
+      },
+      "source_track_ref": "394a00:1:1575853210-1575853330"
+    },
+    {
+      "scenario_id": "S0012",
+      "label": "ghost_aircraft",
+      "split": "kb",
+      "difficulty": "medium",
+      "icao24": "839e26",
+      "t_start": 1575867610,
+      "t_end": 1575868380,
+      "n_points": 78,
+      "params": {
+        "cruise_kt": 475.4,
+        "duration_min": 13,
+        "position_noise_m": 28.0,
+        "heading": 110.3,
+        "difficulty": "medium",
+        "new_icao24": "839e26"
+      },
+      "source_track_ref": "3c6467:5:1575867610-1575867730"
+    },
+    {
+      "scenario_id": "S0013",
+      "label": "ghost_aircraft",
+      "split": "dev",
+      "difficulty": "hard",
+      "icao24": "0a372e",
+      "t_start": 1575878410,
+      "t_end": 1575879120,
+      "n_points": 72,
+      "params": {
+        "cruise_kt": 404.8,
+        "duration_min": 12,
+        "position_noise_m": 52.6,
+        "heading": 208.8,
+        "difficulty": "hard",
+        "new_icao24": "0a372e"
+      },
+      "source_track_ref": "0200ec:8:1575878410-1575878530"
+    },
+    {
+      "scenario_id": "S0014",
+      "label": "ghost_aircraft",
+      "split": "dev",
+      "difficulty": "easy",
+      "icao24": "3af481",
+      "t_start": 1575885610,
+      "t_end": 1575886320,
+      "n_points": 72,
+      "params": {
+        "cruise_kt": 432.6,
+        "duration_min": 12,
+        "position_noise_m": 24.8,
+        "heading": 55.5,
+        "difficulty": "easy",
+        "new_icao24": "3af481"
+      },
+      "source_track_ref": "155c1a:10:1575885610-1575885730"
+    },
+    {
+      "scenario_id": "S0015",
+      "label": "ghost_aircraft",
+      "split": "dev",
+      "difficulty": "medium",
+      "icao24": "2c88ba",
+      "t_start": 1575882010,
+      "t_end": 1575882780,
+      "n_points": 78,
+      "params": {
+        "cruise_kt": 410.1,
+        "duration_min": 13,
+        "position_noise_m": 25.1,
+        "heading": 288.7,
+        "difficulty": "medium",
+        "new_icao24": "2c88ba"
+      },
+      "source_track_ref": "06a1bd:9:1575882010-1575882130"
+    },
+    {
+      "scenario_id": "S0016",
+      "label": "ghost_aircraft",
+      "split": "test",
+      "difficulty": "hard",
+      "icao24": "306c47",
+      "t_start": 1575921610,
+      "t_end": 1575921900,
+      "n_points": 30,
+      "params": {
+        "cruise_kt": 473.4,
+        "duration_min": 5,
+        "position_noise_m": 49.7,
+        "heading": 210.3,
+        "difficulty": "hard",
+        "new_icao24": "306c47"
+      },
+      "source_track_ref": "020110:20:1575921610-1575921730"
+    },
+    {
+      "scenario_id": "S0017",
+      "label": "ghost_aircraft",
+      "split": "test",
+      "difficulty": "easy",
+      "icao24": "78fde3",
+      "t_start": 1575910800,
+      "t_end": 1575911450,
+      "n_points": 66,
+      "params": {
+        "cruise_kt": 426.3,
+        "duration_min": 11,
+        "position_noise_m": 21.7,
+        "heading": 73.7,
+        "difficulty": "easy",
+        "new_icao24": "78fde3"
+      },
+      "source_track_ref": "48c238:17:1575910800-1575910920"
+    },
+    {
+      "scenario_id": "S0018",
+      "label": "ghost_aircraft",
+      "split": "test",
+      "difficulty": "medium",
+      "icao24": "a47ccb",
+      "t_start": 1575921610,
+      "t_end": 1575922560,
+      "n_points": 96,
+      "params": {
+        "cruise_kt": 477.7,
+        "duration_min": 16,
+        "position_noise_m": 29.4,
+        "heading": 63.4,
+        "difficulty": "medium",
+        "new_icao24": "a47ccb"
+      },
+      "source_track_ref": "01008f:20:1575921610-1575921730"
+    },
+    {
+      "scenario_id": "S0019",
+      "label": "ghost_aircraft",
+      "split": "test",
+      "difficulty": "hard",
+      "icao24": "257df2",
+      "t_start": 1575907210,
+      "t_end": 1575907680,
+      "n_points": 48,
+      "params": {
+        "cruise_kt": 464.3,
+        "duration_min": 8,
+        "position_noise_m": 58.9,
+        "heading": 115.9,
+        "difficulty": "hard",
+        "new_icao24": "257df2"
+      },
+      "source_track_ref": "010161:16:1575907210-1575907330"
+    },
+    {
+      "scenario_id": "S0020",
+      "label": "ghost_aircraft",
+      "split": "test",
+      "difficulty": "hard",
+      "icao24": "5451b2",
+      "t_start": 1575918010,
+      "t_end": 1575918960,
+      "n_points": 96,
+      "params": {
+        "cruise_kt": 430.8,
+        "duration_min": 16,
+        "position_noise_m": 48.4,
+        "heading": 211.8,
+        "difficulty": "hard",
+        "new_icao24": "5451b2"
+      },
+      "source_track_ref": "020045:19:1575918010-1575918130"
+    },
+    {
+      "scenario_id": "S0021",
+      "label": "replay_duplicate",
+      "split": "kb",
+      "difficulty": "easy",
+      "icao24": "06a2c6",
+      "t_start": 1575853210,
+      "t_end": 1575874163,
+      "n_points": 79,
+      "params": {
+        "mode": "window_copy",
+        "window_min": 3,
+        "window_copy_offset_min": 346.4,
+        "source_window": [
+          1575853210,
+          1575853380
+        ],
+        "difficulty": "easy"
+      },
+      "source_track_ref": "06a2c6:1:1575853210-1575853810"
+    },
+    {
+      "scenario_id": "S0022",
+      "label": "replay_duplicate",
+      "split": "kb",
+      "difficulty": "medium",
+      "icao24": "0d0bba",
+      "t_start": 1575867610,
+      "t_end": 1575868211,
+      "n_points": 122,
+      "params": {
+        "mode": "address_duplicate",
+        "address_offset_km": 254.0,
+        "difficulty": "medium"
+      },
+      "source_track_ref": "0d0bba:5:1575867610-1575868210"
+    },
+    {
+      "scenario_id": "S0023",
+      "label": "replay_duplicate",
+      "split": "dev",
+      "difficulty": "hard",
+      "icao24": "155c18",
+      "t_start": 1575885610,
+      "t_end": 1575889885,
+      "n_points": 79,
+      "params": {
+        "mode": "window_copy",
+        "window_min": 3,
+        "window_copy_offset_min": 68.4,
+        "source_window": [
+          1575885610,
+          1575885780
+        ],
+        "difficulty": "hard"
+      },
+      "source_track_ref": "155c18:10:1575885610-1575886210"
+    },
+    {
+      "scenario_id": "S0024",
+      "label": "replay_duplicate",
+      "split": "dev",
+      "difficulty": "easy",
+      "icao24": "020106",
+      "t_start": 1575889210,
+      "t_end": 1575889814,
+      "n_points": 122,
+      "params": {
+        "mode": "address_duplicate",
+        "address_offset_km": 273.0,
+        "difficulty": "easy"
+      },
+      "source_track_ref": "020106:11:1575889210-1575889810"
+    },
+    {
+      "scenario_id": "S0025",
+      "label": "replay_duplicate",
+      "split": "dev",
+      "difficulty": "medium",
+      "icao24": "06a11d",
+      "t_start": 1575882010,
+      "t_end": 1575886109,
+      "n_points": 85,
+      "params": {
+        "mode": "window_copy",
+        "window_min": 4,
+        "window_copy_offset_min": 64.5,
+        "source_window": [
+          1575882010,
+          1575882240
+        ],
+        "difficulty": "medium"
+      },
+      "source_track_ref": "06a11d:9:1575882010-1575882610"
+    },
+    {
+      "scenario_id": "S0026",
+      "label": "replay_duplicate",
+      "split": "test",
+      "difficulty": "hard",
+      "icao24": "02a186",
+      "t_start": 1575907210,
+      "t_end": 1575907813,
+      "n_points": 122,
+      "params": {
+        "mode": "address_duplicate",
+        "address_offset_km": 66.5,
+        "difficulty": "hard"
+      },
+      "source_track_ref": "02a186:16:1575907210-1575907810"
+    },
+    {
+      "scenario_id": "S0027",
+      "label": "replay_duplicate",
+      "split": "test",
+      "difficulty": "easy",
+      "icao24": "346303",
+      "t_start": 1575892800,
+      "t_end": 1575913679,
+      "n_points": 109,
+      "params": {
+        "mode": "window_copy",
+        "window_min": 8,
+        "window_copy_offset_min": 340.2,
+        "source_window": [
+          1575892800,
+          1575893270
+        ],
+        "difficulty": "easy"
+      },
+      "source_track_ref": "346303:12:1575892800-1575893400"
+    },
+    {
+      "scenario_id": "S0028",
+      "label": "replay_duplicate",
+      "split": "test",
+      "difficulty": "medium",
+      "icao24": "0a001b",
+      "t_start": 1575900010,
+      "t_end": 1575900613,
+      "n_points": 122,
+      "params": {
+        "mode": "address_duplicate",
+        "address_offset_km": 202.5,
+        "difficulty": "medium"
+      },
+      "source_track_ref": "0a001b:14:1575900010-1575900610"
+    },
+    {
+      "scenario_id": "S0029",
+      "label": "replay_duplicate",
+      "split": "test",
+      "difficulty": "hard",
+      "icao24": "4ca9c3",
+      "t_start": 1575921600,
+      "t_end": 1575929432,
+      "n_points": 115,
+      "params": {
+        "mode": "window_copy",
+        "window_min": 9,
+        "window_copy_offset_min": 121.7,
+        "source_window": [
+          1575921600,
+          1575922130
+        ],
+        "difficulty": "hard"
+      },
+      "source_track_ref": "4ca9c3:20:1575921600-1575922200"
+    },
+    {
+      "scenario_id": "S0030",
+      "label": "replay_duplicate",
+      "split": "test",
+      "difficulty": "hard",
+      "icao24": "06a01b",
+      "t_start": 1575903610,
+      "t_end": 1575904214,
+      "n_points": 122,
+      "params": {
+        "mode": "address_duplicate",
+        "address_offset_km": 108.6,
+        "difficulty": "hard"
+      },
+      "source_track_ref": "06a01b:15:1575903610-1575904210"
+    },
+    {
+      "scenario_id": "S0031",
+      "label": "sensor_fault",
+      "split": "kb",
+      "difficulty": "easy",
+      "icao24": "06a073",
+      "t_start": 1575860409,
+      "t_end": 1575861009,
+      "n_points": 58,
+      "params": {
+        "modes": [
+          "jitter",
+          "dropout"
+        ],
+        "difficulty": "easy",
+        "dropout_fraction": 0.54,
+        "dropout_duration_s": 55,
+        "timestamp_jitter_s": 3
+      },
+      "source_track_ref": "06a073:3:1575860410-1575861010"
+    },
+    {
+      "scenario_id": "S0032",
+      "label": "sensor_fault",
+      "split": "kb",
+      "difficulty": "medium",
+      "icao24": "392af1",
+      "t_start": 1575867610,
+      "t_end": 1575868210,
+      "n_points": 61,
+      "params": {
+        "modes": [
+          "stuck"
+        ],
+        "difficulty": "medium",
+        "stuck_field": "lat",
+        "stuck_duration_s": 33
+      },
+      "source_track_ref": "392af1:5:1575867610-1575868210"
+    },
+    {
+      "scenario_id": "S0033",
+      "label": "sensor_fault",
+      "split": "dev",
+      "difficulty": "hard",
+      "icao24": "06a106",
+      "t_start": 1575889210,
+      "t_end": 1575889810,
+      "n_points": 61,
+      "params": {
+        "modes": [
+          "noise"
+        ],
+        "difficulty": "hard",
+        "noise_sigma_m": 186.4
+      },
+      "source_track_ref": "06a106:11:1575889210-1575889810"
+    },
+    {
+      "scenario_id": "S0034",
+      "label": "sensor_fault",
+      "split": "dev",
+      "difficulty": "easy",
+      "icao24": "3c64fa",
+      "t_start": 1575882000,
+      "t_end": 1575882600,
+      "n_points": 58,
+      "params": {
+        "modes": [
+          "dropout",
+          "stuck"
+        ],
+        "difficulty": "easy",
+        "dropout_fraction": 0.41,
+        "dropout_duration_s": 50,
+        "stuck_field": "baroaltitude",
+        "stuck_duration_s": 42
+      },
+      "source_track_ref": "3c64fa:9:1575882000-1575882600"
+    },
+    {
+      "scenario_id": "S0035",
+      "label": "sensor_fault",
+      "split": "dev",
+      "difficulty": "medium",
+      "icao24": "06a0fc",
+      "t_start": 1575882010,
+      "t_end": 1575882610,
+      "n_points": 61,
+      "params": {
+        "modes": [
+          "stuck",
+          "noise"
+        ],
+        "difficulty": "medium",
+        "noise_sigma_m": 51.4,
+        "stuck_field": "baroaltitude",
+        "stuck_duration_s": 30
+      },
+      "source_track_ref": "06a0fc:9:1575882010-1575882610"
+    },
+    {
+      "scenario_id": "S0036",
+      "label": "sensor_fault",
+      "split": "test",
+      "difficulty": "hard",
+      "icao24": "040159",
+      "t_start": 1575896409,
+      "t_end": 1575897008,
+      "n_points": 59,
+      "params": {
+        "modes": [
+          "jitter",
+          "dropout"
+        ],
+        "difficulty": "hard",
+        "dropout_fraction": 0.12,
+        "dropout_duration_s": 112,
+        "timestamp_jitter_s": 2
+      },
+      "source_track_ref": "040159:13:1575896410-1575897010"
+    },
+    {
+      "scenario_id": "S0037",
+      "label": "sensor_fault",
+      "split": "test",
+      "difficulty": "easy",
+      "icao24": "06a0b0",
+      "t_start": 1575907212,
+      "t_end": 1575907809,
+      "n_points": 61,
+      "params": {
+        "modes": [
+          "noise",
+          "jitter"
+        ],
+        "difficulty": "easy",
+        "noise_sigma_m": 476.5,
+        "timestamp_jitter_s": 4
+      },
+      "source_track_ref": "06a0b0:16:1575907210-1575907810"
+    },
+    {
+      "scenario_id": "S0038",
+      "label": "sensor_fault",
+      "split": "test",
+      "difficulty": "medium",
+      "icao24": "06a19d",
+      "t_start": 1575910810,
+      "t_end": 1575911407,
+      "n_points": 61,
+      "params": {
+        "modes": [
+          "stuck",
+          "jitter"
+        ],
+        "difficulty": "medium",
+        "stuck_field": "velocity",
+        "stuck_duration_s": 28,
+        "timestamp_jitter_s": 3
+      },
+      "source_track_ref": "06a19d:17:1575910810-1575911410"
+    },
+    {
+      "scenario_id": "S0039",
+      "label": "sensor_fault",
+      "split": "test",
+      "difficulty": "hard",
+      "icao24": "02009f",
+      "t_start": 1575892810,
+      "t_end": 1575893410,
+      "n_points": 61,
+      "params": {
+        "modes": [
+          "noise",
+          "dropout"
+        ],
+        "difficulty": "hard",
+        "noise_sigma_m": 77.5,
+        "dropout_fraction": 0.12,
+        "dropout_duration_s": 63
+      },
+      "source_track_ref": "02009f:12:1575892810-1575893410"
+    },
+    {
+      "scenario_id": "S0040",
+      "label": "sensor_fault",
+      "split": "test",
+      "difficulty": "hard",
+      "icao24": "3c670c",
+      "t_start": 1575892800,
+      "t_end": 1575893400,
+      "n_points": 60,
+      "params": {
+        "modes": [
+          "dropout",
+          "noise"
+        ],
+        "difficulty": "hard",
+        "noise_sigma_m": 186.2,
+        "dropout_fraction": 0.14,
+        "dropout_duration_s": 63
+      },
+      "source_track_ref": "3c670c:12:1575892800-1575893400"
+    },
+    {
+      "scenario_id": "S0041",
+      "label": "benign_anomaly",
+      "split": "kb",
+      "difficulty": "medium",
+      "icao24": "123456",
+      "t_start": 1575850900,
+      "t_end": 1575851260,
+      "n_points": 37,
+      "params": {
+        "kind": "holding",
+        "provisional_eye_check": false,
+        "confounder": false,
+        "turn_deg": 389.6,
+        "radius_nm": 4.62,
+        "i": 129,
+        "j": 165,
+        "eye_checked": true,
+        "eye_check_date": "2026-11-02"
+      },
+      "source_track_ref": "123456:0:1575850900-1575851260"
+    },
+    {
+      "scenario_id": "S0042",
+      "label": "benign_anomaly",
+      "split": "kb",
+      "difficulty": "medium",
+      "icao24": "3c6446",
+      "t_start": 1575869160,
+      "t_end": 1575869240,
+      "n_points": 9,
+      "params": {
+        "kind": "holding",
+        "provisional_eye_check": false,
+        "confounder": false,
+        "turn_deg": 438.3,
+        "radius_nm": 3.44,
+        "i": 155,
+        "j": 163,
+        "eye_checked": true,
+        "eye_check_date": "2026-11-02"
+      },
+      "source_track_ref": "3c6446:5:1575869160-1575869240"
+    },
+    {
+      "scenario_id": "S0043",
+      "label": "benign_anomaly",
+      "split": "dev",
+      "difficulty": "medium",
+      "icao24": "3cd06a",
+      "t_start": 1575891180,
+      "t_end": 1575891430,
+      "n_points": 26,
+      "params": {
+        "kind": "holding",
+        "provisional_eye_check": false,
+        "confounder": false,
+        "turn_deg": 380.1,
+        "radius_nm": 4.88,
+        "i": 198,
+        "j": 223,
+        "eye_checked": true,
+        "eye_check_date": "2026-11-02"
+      },
+      "source_track_ref": "3cd06a:11:1575891180-1575891430"
+    },
+    {
+      "scenario_id": "S0044",
+      "label": "benign_anomaly",
+      "split": "dev",
+      "difficulty": "medium",
+      "icao24": "4075ff",
+      "t_start": 1575884480,
+      "t_end": 1575884840,
+      "n_points": 37,
+      "params": {
+        "kind": "holding",
+        "provisional_eye_check": false,
+        "confounder": false,
+        "turn_deg": 360.2,
+        "radius_nm": 4.53,
+        "i": 248,
+        "j": 284,
+        "eye_checked": true,
+        "eye_check_date": "2026-11-02"
+      },
+      "source_track_ref": "4075ff:9:1575884480-1575884840"
+    },
+    {
+      "scenario_id": "S0045",
+      "label": "benign_anomaly",
+      "split": "dev",
+      "difficulty": "medium",
+      "icao24": "706212",
+      "t_start": 1575892380,
+      "t_end": 1575892740,
+      "n_points": 37,
+      "params": {
+        "kind": "holding",
+        "provisional_eye_check": false,
+        "confounder": false,
+        "turn_deg": 362.7,
+        "radius_nm": 4.06,
+        "i": 318,
+        "j": 354,
+        "eye_checked": true,
+        "eye_check_date": "2026-11-02"
+      },
+      "source_track_ref": "706212:11:1575892380-1575892740"
+    },
+    {
+      "scenario_id": "S0046",
+      "label": "benign_anomaly",
+      "split": "test",
+      "difficulty": "medium",
+      "icao24": "0200ec",
+      "t_start": 1575906410,
+      "t_end": 1575906770,
+      "n_points": 37,
+      "params": {
+        "kind": "holding",
+        "provisional_eye_check": false,
+        "confounder": false,
+        "turn_deg": 360.5,
+        "radius_nm": 4.63,
+        "i": 280,
+        "j": 316,
+        "eye_checked": true,
+        "eye_check_date": "2026-11-02"
+      },
+      "source_track_ref": "0200ec:15:1575906410-1575906770"
+    },
+    {
+      "scenario_id": "S0047",
+      "label": "benign_anomaly",
+      "split": "test",
+      "difficulty": "medium",
+      "icao24": "3005e3",
+      "t_start": 1575900110,
+      "t_end": 1575900470,
+      "n_points": 37,
+      "params": {
+        "kind": "holding",
+        "provisional_eye_check": false,
+        "confounder": true,
+        "turn_deg": 452.4,
+        "radius_nm": 4.37,
+        "i": 10,
+        "j": 46,
+        "eye_checked": true,
+        "eye_check_date": "2026-11-02"
+      },
+      "source_track_ref": "3005e3:14:1575900110-1575900470"
+    },
+    {
+      "scenario_id": "S0048",
+      "label": "benign_anomaly",
+      "split": "test",
+      "difficulty": "medium",
+      "icao24": "342091",
+      "t_start": 1575906610,
+      "t_end": 1575906970,
+      "n_points": 37,
+      "params": {
+        "kind": "holding",
+        "provisional_eye_check": false,
+        "confounder": false,
+        "turn_deg": 367.2,
+        "radius_nm": 4.07,
+        "i": 300,
+        "j": 336,
+        "eye_checked": true,
+        "eye_check_date": "2026-11-02"
+      },
+      "source_track_ref": "342091:15:1575906610-1575906970"
+    },
+    {
+      "scenario_id": "S0049",
+      "label": "benign_anomaly",
+      "split": "test",
+      "difficulty": "medium",
+      "icao24": "344481",
+      "t_start": 1575898740,
+      "t_end": 1575899080,
+      "n_points": 35,
+      "params": {
+        "kind": "holding",
+        "provisional_eye_check": false,
+        "confounder": false,
+        "turn_deg": 366.3,
+        "radius_nm": 4.94,
+        "i": 233,
+        "j": 267,
+        "eye_checked": true,
+        "eye_check_date": "2026-11-02"
+      },
+      "source_track_ref": "344481:13:1575898740-1575899080"
+    },
+    {
+      "scenario_id": "S0050",
+      "label": "benign_anomaly",
+      "split": "test",
+      "difficulty": "medium",
+      "icao24": "345687",
+      "t_start": 1575902540,
+      "t_end": 1575902890,
+      "n_points": 36,
+      "params": {
+        "kind": "holding",
+        "provisional_eye_check": false,
+        "confounder": false,
+        "turn_deg": 360.5,
+        "radius_nm": 4.95,
+        "i": 253,
+        "j": 288,
+        "eye_checked": true,
+        "eye_check_date": "2026-11-02"
+      },
+      "source_track_ref": "345687:14:1575902540-1575902890"
+    }
+  ]
+}

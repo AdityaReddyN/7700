@@ -12,15 +12,15 @@ per_label:
   test: 5
 difficulty_mix: {easy: 0.33, medium: 0.34, hard: 0.33}
 
-# Day-based split (D-024). Scenarios are split by day group so that no test-day
-# window informs a dev/kb scenario. Only 2019-12-09 is present (D-029), so the
-# by_hour fallback (disjoint hours per split) is expected; confirm in M2.
-# Day lists stay null until the data check in M2.
+# Split (D-024 / D-029). Only 2019-12-09 is present, so we use the hour-based
+# fallback: disjoint hour groups per split. A scenario draws its source track(s)
+# only from its group's hours; a replay's source window stays in the same group.
 day_split:
-  method: by_day
-  groups:
-    dev_kb: null              # list of YYYY-MM-DD days; filled after the G3 data check
-    test: null                # list of YYYY-MM-DD days; filled after the G3 data check
+  method: by_hour
+  hour_groups:
+    kb:   [0, 1, 2, 3, 4, 5]
+    dev:  [6, 7, 8, 9, 10, 11]
+    test: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 
 injectors:
   position_spoofing:

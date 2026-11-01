@@ -55,3 +55,6 @@ select = ["E", "F", "I", "UP", "B"]
 "src/agents/prompts/dev_prompts.py" = ["E501"]
 # Synthetic CSV rows are fixed-width data; wrapping them hurts readability.
 "tests/test_data_convert.py" = ["E501"]
+# Numeric assertions read better unwrapped.
+"tests/test_injectors.py" = ["E501"]
+"tests/test_leakage.py" = ["E501"]

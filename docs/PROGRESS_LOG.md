@@ -93,3 +93,33 @@ Tests/lint: `make test` 37 passed, `make lint` clean. DuckDB report over 54M row
 M2 done-criteria met: hourly files converted to Parquet; data report with rows before/after, null rates, time coverage, aircraft counts. M2 complete.
 
 Next step: await go for M3 (50 labelled scenarios, hour-based splits, leakage test).
+
+## 2026-11-01: M3 scenarios, splits, leakage test
+
+Data recon (step 1): the store is on a **10 s cadence** (median dt 10 s), up to 360 points/aircraft/hour; hour 12 has ~9,800 airborne aircraft with non-null lat/lon/velocity/heading, median 178 points each. Multi-minute windows give ample points for every injector.
+
+Split (D-029 hour-based fallback), set in config/scenarios.yaml: kb = hours 00–05, dev = 06–11, test = 12–23 (disjoint). A scenario draws sources only from its group's hours; replay sources stay in-group.
+
+Plan:
+1. Done: recon cadence/density; set hour groups.
+2. `scenarios/select.py`: deterministic candidate source tracks per group (airborne, non-null fields, enough contiguous 10 s points).
+3. `scenarios/inject.py`: fresh injectors — position_spoofing (drift/jump/velocity_offset), ghost_aircraft (new icao24), replay_duplicate (window_copy/address_duplicate), sensor_fault (noise/dropout/stuck/jitter) + hard variants. Params from config; per-scenario seed.
+4. `scenarios/benign.py`: rule-found holding/go-around + Matplotlib plots, marked provisional for the human eye-check.
+5. `scenarios/split.py`: assemble 50 (10/label: 2 kb/3 dev/5 test), difficulty ~⅓ each; write data/scenarios/tracks.parquet + splits.json + scenarios catalog. alert_map.json comes in M4 (needs alerts).
+6. `tests/test_leakage.py` + injector determinism/signature unit tests.
+7. Generate, record actual counts + benign count; test + lint green.
+
+Results (M3 complete, 2026-11-02):
+- Built: `scenarios/select.py`, `inject.py`, `benign.py`, `split.py`, `leakage.py`. Makefile `scenarios` → `scenarios.split`.
+- 50 scenarios, 10 per label, splits 2 kb / 3 dev / 5 test each. `data/scenarios/tracks.parquet` (3,348 rows, **no label column**) + `splits.json` catalog. Benign plots in `data/scenarios/benign_plots/` (gitignored).
+- Difficulty: 12 easy / 22 medium / 16 hard (synthetic labels 3/3/4 each; benign uniformly "medium" — found anomalies aren't meaningfully gradeable). Position modes drift 4 / jump 3 / velocity_offset 3; replay window_copy 5 / address_duplicate 5.
+- Benign: 10 holding patterns found by rule (turn ≥360°, radius <5 nm), 1 marked confounder. **Eye-checked and confirmed by the human on 2026-11-02** (plots reviewed); `provisional_eye_check` set to false in splits.json.
+- Leakage test passes: disjoint hour groups, no cross-split aircraft/window overlap, replay source windows stay in-group, no test ids in `data/kb`, tracks/Alert carry no label.
+- Tests: `make test` 55 passed (incl. injector determinism/signatures + hermetic leakage); `make lint` clean.
+
+Notes for later:
+- **M5 `check_identity`**: `address_duplicate` uses a few-second time shift (SCENARIO_SPEC §4.3), so "duplicate position, same time" needs a small time tolerance (e.g., ≤5 s), not exact-equal timestamps.
+- `alert_map.json` (alert_id→scenario_id) is produced in M4 once alerts exist.
+- Benign difficulty left uniform; revisit if the detector needs graded benign cases.
+
+Next step: human confirms the benign holdings (eye-check); then M4 (rule-based flagger + alerts).

@@ -31,7 +31,7 @@ report:
 
 # --- M3: scenarios ---------------------------------------------------------
 scenarios:
-	$(PY) -m scenarios.inject
+	$(PY) -m scenarios.split
 
 # --- M4: detector / alerts -------------------------------------------------
 alerts:

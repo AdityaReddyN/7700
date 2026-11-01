@@ -3,6 +3,7 @@
 data/raw/
 data/parquet/
 data/scenarios/*.parquet
+data/scenarios/benign_plots/
 runs/
 models/
 __pycache__/
