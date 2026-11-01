@@ -1,0 +1,13 @@
+triage_min_prior: 0.15
+triage_min_hypotheses: 3
+triage_max_hypotheses: 5
+subagent_tool_call_limit: 4     # config D
+config_a_tool_call_limit: 8     # config A
+max_concurrency: 1              # CPU laptop; raise only if measured to help
+call_timeout_s: 300
+max_tokens:
+  triage: 300
+  subagent: 700
+  adjudicator: 900
+tool_output_max_chars: 1600
+confidence_cap_single_evidence: 0.9

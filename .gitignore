@@ -1,0 +1,14 @@
+.env
+.venv/
+data/raw/
+data/parquet/
+data/scenarios/*.parquet
+runs/
+models/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+*.gguf

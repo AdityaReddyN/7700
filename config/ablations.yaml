@@ -1,0 +1,17 @@
+# Only two configs for v1. See docs/EVALUATION_PROTOCOL.md section 3.
+
+configs:
+  A:
+    description: Single agent, all five tools, up to 8 tool calls, top hypothesis plus alternatives
+    triage: false
+    subagents: 1
+    verifier: true
+    adjudicator: false
+    tool_call_limit: 8
+  D:
+    description: Full pipeline, triage, sequential subagents (up to 4 tool calls each), verifier, adjudicator
+    triage: true
+    subagents: 3-5          # from triage priors
+    verifier: true
+    adjudicator: true
+    tool_call_limit: 4

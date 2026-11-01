@@ -1,0 +1,33 @@
+# Model configuration. Change models here, never in code.
+# G1 is ACCEPTED: Llama is eligible, so the primary model is llama3.1:8b
+# (reply in docs/permissions/G1-llama.md; see DECISIONS.md D-023).
+# llama3.2:3b is the triage / fallback model. Muse Glimmer is an optional
+# comparison only (D-025), off by default.
+
+primary:
+  backend: ollama
+  base_url: http://localhost:11434/v1
+  model: llama3.1:8b
+  temperature: 0
+  seed: 42
+
+triage:
+  model: llama3.2:3b            # fast triage / fallback if memory is tight; null = use primary
+
+adjudicator:
+  model: null                   # null = primary
+
+# Optional Muse Glimmer comparison for the Meta-tooling criterion (D-025).
+# Off by default. Enable only to run the one-off comparison described in D-025.
+comparison:
+  enabled: false
+  backend: ollama
+  base_url: http://localhost:11434/v1
+  model: muse-glimmer           # local 2-bit listing/GGUF name; used only when enabled
+
+hosted:
+  enabled: false
+  backend: openai_compatible
+  base_url: null                # set per provider the human has an account with
+  model: null
+  api_key_env: HOSTED_API_KEY   # key lives in .env, never in this file

@@ -1,0 +1,56 @@
+global_seed: 20261029
+labels:
+  - position_spoofing
+  - ghost_aircraft
+  - replay_duplicate
+  - sensor_fault
+  - benign_anomaly
+per_label:
+  total: 10
+  kb: 2
+  dev: 3
+  test: 5
+difficulty_mix: {easy: 0.33, medium: 0.34, hard: 0.33}
+
+# Day-based split (D-024). Scenarios are split by day group so that no test-day
+# window informs a dev/kb scenario. Day lists are null until the G3 file dates
+# are checked in M2; method falls back to by_hour if only one day is usable.
+day_split:
+  method: by_day
+  groups:
+    dev_kb: null              # list of YYYY-MM-DD days; filled after the G3 data check
+    test: null                # list of YYYY-MM-DD days; filled after the G3 data check
+
+injectors:
+  position_spoofing:
+    modes: [drift, jump, velocity_offset]
+    drift_rate_km_per_min: [0.05, 0.5]
+    drift_window_min: [4, 10]
+    jump_offset_km: [2, 50]
+    velocity_scale: [0.6, 1.6]
+  ghost_aircraft:
+    cruise_kt: [400, 480]
+    duration_min: [5, 20]
+    position_noise_m: [20, 60]
+  replay_duplicate:
+    modes: [window_copy, address_duplicate]
+    window_min: [2, 10]
+    window_copy_offset_min: [10, 360]   # up to 6 h; source window stays in the same day group (D-026)
+    address_offset_km: [50, 300]
+  sensor_fault:
+    noise_sigma_m: [50, 500]
+    dropout_fraction: [0.10, 0.60]
+    dropout_duration_s: [30, 120]
+    stuck_duration_s: [20, 60]
+    timestamp_jitter_s: [1, 5]
+
+benign:
+  holding:
+    min_heading_change_deg: 360
+    window_min: 6
+    max_radius_nm: 5
+  go_around:
+    climb_ft: 1000
+    window_min: 3
+    enabled: true              # set false if airport-free rule is unreliable; then report count
+  min_examples_required: 10     # report actual count if fewer
