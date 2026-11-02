@@ -1,0 +1,521 @@
+{
+  "method": "isolation_forest",
+  "threshold": 0.04735126380193692,
+  "threshold_policy": "dev_fp_budget",
+  "target_alert_rate": 0.05,
+  "baseline_fp_rate": 0.05,
+  "target_dev_recall": 0.8,
+  "n_features": 12,
+  "feature_names": [
+    "speed_resid_kt_med",
+    "speed_resid_kt_max",
+    "largest_jump_km",
+    "max_gap_s",
+    "missing_frac",
+    "dup_pairs",
+    "scatter_m",
+    "max_stuck_run",
+    "time_irregularity",
+    "vertrate_mismatch_ms",
+    "identity_missing",
+    "vel_cv"
+  ],
+  "baseline": {
+    "n_windows": 3000,
+    "hours": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ]
+  },
+  "dev": {
+    "n_positive": 12,
+    "n_benign": 3,
+    "tp": 7,
+    "fp": 0,
+    "recall": 0.5833333333333334,
+    "precision": 1.0,
+    "benign_flag_rate": 0.0,
+    "per_class": {
+      "position_spoofing": {
+        "total": 3,
+        "flagged": 0,
+        "recall": 0.0
+      },
+      "ghost_aircraft": {
+        "total": 3,
+        "flagged": 3,
+        "recall": 1.0
+      },
+      "replay_duplicate": {
+        "total": 3,
+        "flagged": 3,
+        "recall": 1.0
+      },
+      "sensor_fault": {
+        "total": 3,
+        "flagged": 1,
+        "recall": 0.3333333333333333
+      },
+      "benign_anomaly": {
+        "total": 3,
+        "flagged": 0,
+        "recall": 0.0
+      }
+    }
+  },
+  "test": {
+    "n_positive": 20,
+    "n_benign": 5,
+    "tp": 10,
+    "fp": 0,
+    "recall": 0.5,
+    "precision": 1.0,
+    "benign_flag_rate": 0.0,
+    "per_class": {
+      "position_spoofing": {
+        "total": 5,
+        "flagged": 0,
+        "recall": 0.0
+      },
+      "ghost_aircraft": {
+        "total": 5,
+        "flagged": 5,
+        "recall": 1.0
+      },
+      "replay_duplicate": {
+        "total": 5,
+        "flagged": 5,
+        "recall": 1.0
+      },
+      "sensor_fault": {
+        "total": 5,
+        "flagged": 0,
+        "recall": 0.0
+      },
+      "benign_anomaly": {
+        "total": 5,
+        "flagged": 0,
+        "recall": 0.0
+      }
+    }
+  },
+  "real_alert_rate": {
+    "hours": [
+      20,
+      21,
+      22,
+      23
+    ],
+    "n_sampled": 2000,
+    "n_flagged": 94,
+    "rate": 0.047
+  },
+  "n_alerts": 17,
+  "per_scenario": [
+    {
+      "scenario_id": "S0001",
+      "split": "kb",
+      "label": "position_spoofing",
+      "score": -0.14166351880053307,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0002",
+      "split": "kb",
+      "label": "position_spoofing",
+      "score": -0.0940877010123144,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0003",
+      "split": "dev",
+      "label": "position_spoofing",
+      "score": -0.11644201474618204,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0004",
+      "split": "dev",
+      "label": "position_spoofing",
+      "score": -0.11734126128305689,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0005",
+      "split": "dev",
+      "label": "position_spoofing",
+      "score": -0.051564739276838745,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0006",
+      "split": "test",
+      "label": "position_spoofing",
+      "score": -0.09576840619375415,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0007",
+      "split": "test",
+      "label": "position_spoofing",
+      "score": -0.1423251412619343,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0008",
+      "split": "test",
+      "label": "position_spoofing",
+      "score": -0.050657932213711454,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0009",
+      "split": "test",
+      "label": "position_spoofing",
+      "score": -0.11706846354759287,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0010",
+      "split": "test",
+      "label": "position_spoofing",
+      "score": -0.11496933866466419,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0011",
+      "split": "kb",
+      "label": "ghost_aircraft",
+      "score": 0.07405401333717476,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0012",
+      "split": "kb",
+      "label": "ghost_aircraft",
+      "score": 0.0801595733537912,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0013",
+      "split": "dev",
+      "label": "ghost_aircraft",
+      "score": 0.058571629496180444,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0014",
+      "split": "dev",
+      "label": "ghost_aircraft",
+      "score": 0.07018362371805065,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0015",
+      "split": "dev",
+      "label": "ghost_aircraft",
+      "score": 0.076021898673157,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0016",
+      "split": "test",
+      "label": "ghost_aircraft",
+      "score": 0.06466753991872831,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0017",
+      "split": "test",
+      "label": "ghost_aircraft",
+      "score": 0.07599258085461402,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0018",
+      "split": "test",
+      "label": "ghost_aircraft",
+      "score": 0.07388802225107316,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0019",
+      "split": "test",
+      "label": "ghost_aircraft",
+      "score": 0.06083120967222855,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0020",
+      "split": "test",
+      "label": "ghost_aircraft",
+      "score": 0.0631441095873333,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0021",
+      "split": "kb",
+      "label": "replay_duplicate",
+      "score": 0.2300756406004132,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0022",
+      "split": "kb",
+      "label": "replay_duplicate",
+      "score": 0.14835368510521985,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0023",
+      "split": "dev",
+      "label": "replay_duplicate",
+      "score": 0.23589967563397995,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0024",
+      "split": "dev",
+      "label": "replay_duplicate",
+      "score": 0.09907813646941499,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0025",
+      "split": "dev",
+      "label": "replay_duplicate",
+      "score": 0.22481163120413006,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0026",
+      "split": "test",
+      "label": "replay_duplicate",
+      "score": 0.09498226773941831,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0027",
+      "split": "test",
+      "label": "replay_duplicate",
+      "score": 0.23112102873911178,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0028",
+      "split": "test",
+      "label": "replay_duplicate",
+      "score": 0.10679652684724006,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0029",
+      "split": "test",
+      "label": "replay_duplicate",
+      "score": 0.23611588571779674,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0030",
+      "split": "test",
+      "label": "replay_duplicate",
+      "score": 0.08339559931964391,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0031",
+      "split": "kb",
+      "label": "sensor_fault",
+      "score": 0.07397131268997903,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0032",
+      "split": "kb",
+      "label": "sensor_fault",
+      "score": -0.1260121882019934,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0033",
+      "split": "dev",
+      "label": "sensor_fault",
+      "score": -0.08531825525398251,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0034",
+      "split": "dev",
+      "label": "sensor_fault",
+      "score": 0.047962485028858026,
+      "is_positive": true,
+      "flagged": true
+    },
+    {
+      "scenario_id": "S0035",
+      "split": "dev",
+      "label": "sensor_fault",
+      "score": -0.1287105814060095,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0036",
+      "split": "test",
+      "label": "sensor_fault",
+      "score": 0.02985823559696521,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0037",
+      "split": "test",
+      "label": "sensor_fault",
+      "score": 0.03609807993140346,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0038",
+      "split": "test",
+      "label": "sensor_fault",
+      "score": -0.030726594117656825,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0039",
+      "split": "test",
+      "label": "sensor_fault",
+      "score": -0.12372955718196776,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0040",
+      "split": "test",
+      "label": "sensor_fault",
+      "score": 0.0323998813511811,
+      "is_positive": true,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0041",
+      "split": "kb",
+      "label": "benign_anomaly",
+      "score": -0.07656136608624714,
+      "is_positive": false,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0042",
+      "split": "kb",
+      "label": "benign_anomaly",
+      "score": -0.02277965113664976,
+      "is_positive": false,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0043",
+      "split": "dev",
+      "label": "benign_anomaly",
+      "score": -0.09694638969197478,
+      "is_positive": false,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0044",
+      "split": "dev",
+      "label": "benign_anomaly",
+      "score": -0.09270925887404491,
+      "is_positive": false,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0045",
+      "split": "dev",
+      "label": "benign_anomaly",
+      "score": -0.06963760927787854,
+      "is_positive": false,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0046",
+      "split": "test",
+      "label": "benign_anomaly",
+      "score": -0.0871105586329774,
+      "is_positive": false,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0047",
+      "split": "test",
+      "label": "benign_anomaly",
+      "score": -0.11250885392812149,
+      "is_positive": false,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0048",
+      "split": "test",
+      "label": "benign_anomaly",
+      "score": -0.09504180317435224,
+      "is_positive": false,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0049",
+      "split": "test",
+      "label": "benign_anomaly",
+      "score": -0.09558302577299993,
+      "is_positive": false,
+      "flagged": false
+    },
+    {
+      "scenario_id": "S0050",
+      "split": "test",
+      "label": "benign_anomaly",
+      "score": -0.0974943333583394,
+      "is_positive": false,
+      "flagged": false
+    }
+  ],
+  "generated_utc": "2026-11-02T02:25:00+00:00"
+}

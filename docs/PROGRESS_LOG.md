@@ -122,4 +122,38 @@ Notes for later:
 - `alert_map.json` (alert_id→scenario_id) is produced in M4 once alerts exist.
 - Benign difficulty left uniform; revisit if the detector needs graded benign cases.
 
-Next step: human confirms the benign holdings (eye-check); then M4 (rule-based flagger + alerts).
+Next step: human confirms the benign holdings (eye-check); then M4.
+
+## 2026-11-02: M4 detector (Isolation Forest primary, rule-based fallback)
+
+Owner decision D-030: IsolationForest is the primary detector; the rule-based flagger is the fallback (selectable in `config/detector.yaml`). All docs updated. Fixed the stale AGENTS §2 G3 row (now RESOLVED, one day 2019-12-09 per D-029).
+
+Plan:
+1. Done: flip design in all docs; add `config/detector.yaml`; log D-030.
+2. `detector/features.py`: per-window features (implied-vs-reported speed residual, largest jump, max gap, missing fraction, duplicate-position pairs with ≤5 s tolerance, vertrate/altitude mismatch, position scatter, callsign/squawk changes).
+3. `detector/baseline.py` + `model.py`: sample real normal tracks (seeded, scenario aircraft excluded) → feature matrix; fit IsolationForest (random_state 42) and per-feature z-score stats; rule scorer as fallback.
+4. `detector/flagger.py`: score a track (IF or rules), pick threshold on DEV to hit target recall, build `Alert` (no label/scenario_id; top_features from extreme z-scores).
+5. `detector/alerts.py` (Makefile `alerts`): run over scenarios → alerts + `alert_map.json`; alert rate on a disjoint real sample; write `results/detector/metrics.json` + `report.md` (per-class recall, precision, benign flag rate, real alert rate; test scored once).
+6. Tests: features on synthetic tracks, deterministic threshold, Alert carries no label, metrics math; extend leakage to built alerts.
+7. Run, record metrics (small-sample caveats), test + lint green.
+
+### M4 results
+
+Built `src/detector/` (features, baseline, model, flagger, alerts) + 14 hermetic tests. Full suite 69 pass, ruff clean. 12 features per window; baseline = 3000 real airborne windows from dev-group hours (6–11), disjoint from test hours.
+
+First run tuned the threshold to a 0.80 dev-recall target: 0.85 test recall but **61% of real traffic flagged** — unusable. Subtle `position_spoofing` (hard drift / near-unity velocity scale) and some `sensor_fault` windows score inside the normal-traffic bulk, so forcing recall drags the threshold into it. Changed the operating point to a **false-positive budget on normal dev-hour traffic** (flag the top 5%); logged as **D-031**. Recall is now reported at that operating point, not targeted.
+
+Final numbers (all in `results/detector/`, small samples — dev 12+3, test 20+5):
+
+| Detector | Threshold | Real alert rate | Benign FP | Test recall | Precision |
+|---|---|---|---|---|---|
+| **Isolation Forest** (primary) | 0.0474 | **4.7%** (94/2000) | 0% | 50% (10/20) | 100% |
+| Rule-based (baseline, `--method rules`) | 50.0 (z cap) | 56% | 40% | 75% | 88% |
+
+IF test per-class recall: `ghost_aircraft` 100%, `replay_duplicate` 100%, `sensor_fault` 0%, `position_spoofing` 0%. The detector reliably catches the two blatant classes at a believable alert rate with zero benign false positives; subtle position/sensor injections are a **feature-space limit, not a threshold one** (no sane threshold separates them). The downstream agents/tools are meant to do the nuanced work; the detector is deliberately simple.
+
+Rule-based baseline (`results/detector/baseline_rules/`): **cannot hit the 5% budget** — several features are zero-inflated in normal traffic (MAD 0), so the robust z saturates at the cap (50) for any nonzero value and the budget quantile collapses to the cap. It catches more classes (position 20%, sensor 80%) only by flagging 56% of all traffic. This cleanly justifies D-030 (IF primary, rules as baseline). Not re-tuned — roadmap cut-order #1 says stop there.
+
+Added a `--method/--tag` CLI to `detector.alerts` so the baseline writes to a separate results folder without touching the primary `alerts.json`/`alert_map.json`.
+
+Deviations: D-031 (operating point = FP budget). Next step: M5 (five read-only tools + ToolLog); the detector's weak position/sensor recall is context for M5/M7 (the agents investigate what is flagged).

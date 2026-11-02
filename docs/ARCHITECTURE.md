@@ -5,7 +5,7 @@
 ```
 OpenSky CSVs --> Parquet store --> Scenario builder (injectors, benign finder)
                                         |
-                              Alert generator (rule-based flagger)
+                     Alert generator (Isolation Forest; rule-based fallback)
                                         |
                            Orchestrator (one alert at a time)
                                         |
@@ -24,7 +24,7 @@ OpenSky CSVs --> Parquet store --> Scenario builder (injectors, benign finder)
 |---|---|---|
 | Parquet store | Clean, partitioned data | Be modified after conversion |
 | Scenario builder | Make labelled scenarios | Leak labels into the alert path |
-| Flagger | Produce alerts with a score and top features | See labels or scenario ids |
+| Detector | Produce alerts with a score and top features (Isolation Forest; rule-based fallback, D-030) | See labels or scenario ids |
 | Triage | Rank five hypotheses by prior from the alert summary | Use tools; claim to have checked data |
 | Subagent | Test one hypothesis; return `HypothesisReport` | See other subagents' output |
 | Tools | Read-only, bounded, return `ref_id` | Write, execute code, touch the network |
@@ -36,7 +36,7 @@ OpenSky CSVs --> Parquet store --> Scenario builder (injectors, benign finder)
 
 ## 2. Pipeline for one alert
 
-1. Flagger emits an alert object (no label, no scenario id).
+1. Detector emits an alert object (no label, no scenario id).
 2. Orchestrator creates an investigation id and a `ToolLog`.
 3. **Triage** (one model call, no tools) returns ranked hypotheses with priors and reasons. Keep hypotheses with prior at least 0.15; keep at least 3 and at most 5. If fewer than 3 pass the threshold, keep the top 3.
 4. **Subagents** run one at a time in config D. Each loop: model call, then execute any tool calls, append bounded results, repeat. At most 4 tool calls. Finish with a structured `HypothesisReport`. A parse failure is retried once, then recorded as `inconclusive`.

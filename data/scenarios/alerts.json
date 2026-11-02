@@ -1,0 +1,376 @@
+[
+  {
+    "alert_id": "alert_0a372e_1575878410_1575879120",
+    "icao24": "0a372e",
+    "t_start": 1575878410,
+    "t_end": 1575879120,
+    "score": 0.0586,
+    "top_features": [
+      {
+        "name": "identity_missing",
+        "z": 50.0
+      },
+      {
+        "name": "vertrate_mismatch_ms",
+        "z": -1.17
+      },
+      {
+        "name": "vel_cv",
+        "z": -0.73
+      }
+    ],
+    "summary": "The track carries no callsign or squawk (z=50.0)."
+  },
+  {
+    "alert_id": "alert_3af481_1575885610_1575886320",
+    "icao24": "3af481",
+    "t_start": 1575885610,
+    "t_end": 1575886320,
+    "score": 0.0702,
+    "top_features": [
+      {
+        "name": "identity_missing",
+        "z": 50.0
+      },
+      {
+        "name": "vertrate_mismatch_ms",
+        "z": -1.17
+      },
+      {
+        "name": "vel_cv",
+        "z": -0.73
+      }
+    ],
+    "summary": "The track carries no callsign or squawk (z=50.0)."
+  },
+  {
+    "alert_id": "alert_2c88ba_1575882010_1575882780",
+    "icao24": "2c88ba",
+    "t_start": 1575882010,
+    "t_end": 1575882780,
+    "score": 0.076,
+    "top_features": [
+      {
+        "name": "identity_missing",
+        "z": 50.0
+      },
+      {
+        "name": "vertrate_mismatch_ms",
+        "z": -1.17
+      },
+      {
+        "name": "vel_cv",
+        "z": -0.73
+      }
+    ],
+    "summary": "The track carries no callsign or squawk (z=50.0)."
+  },
+  {
+    "alert_id": "alert_306c47_1575921610_1575921900",
+    "icao24": "306c47",
+    "t_start": 1575921610,
+    "t_end": 1575921900,
+    "score": 0.0647,
+    "top_features": [
+      {
+        "name": "identity_missing",
+        "z": 50.0
+      },
+      {
+        "name": "vertrate_mismatch_ms",
+        "z": -1.17
+      },
+      {
+        "name": "vel_cv",
+        "z": -0.73
+      }
+    ],
+    "summary": "The track carries no callsign or squawk (z=50.0)."
+  },
+  {
+    "alert_id": "alert_78fde3_1575910800_1575911450",
+    "icao24": "78fde3",
+    "t_start": 1575910800,
+    "t_end": 1575911450,
+    "score": 0.076,
+    "top_features": [
+      {
+        "name": "identity_missing",
+        "z": 50.0
+      },
+      {
+        "name": "vertrate_mismatch_ms",
+        "z": -1.17
+      },
+      {
+        "name": "speed_resid_kt_med",
+        "z": -0.76
+      }
+    ],
+    "summary": "The track carries no callsign or squawk (z=50.0)."
+  },
+  {
+    "alert_id": "alert_a47ccb_1575921610_1575922560",
+    "icao24": "a47ccb",
+    "t_start": 1575921610,
+    "t_end": 1575922560,
+    "score": 0.0739,
+    "top_features": [
+      {
+        "name": "identity_missing",
+        "z": 50.0
+      },
+      {
+        "name": "vertrate_mismatch_ms",
+        "z": -1.17
+      },
+      {
+        "name": "vel_cv",
+        "z": -0.73
+      }
+    ],
+    "summary": "The track carries no callsign or squawk (z=50.0)."
+  },
+  {
+    "alert_id": "alert_257df2_1575907210_1575907680",
+    "icao24": "257df2",
+    "t_start": 1575907210,
+    "t_end": 1575907680,
+    "score": 0.0608,
+    "top_features": [
+      {
+        "name": "identity_missing",
+        "z": 50.0
+      },
+      {
+        "name": "vertrate_mismatch_ms",
+        "z": -1.17
+      },
+      {
+        "name": "vel_cv",
+        "z": -0.73
+      }
+    ],
+    "summary": "The track carries no callsign or squawk (z=50.0)."
+  },
+  {
+    "alert_id": "alert_5451b2_1575918010_1575918960",
+    "icao24": "5451b2",
+    "t_start": 1575918010,
+    "t_end": 1575918960,
+    "score": 0.0631,
+    "top_features": [
+      {
+        "name": "identity_missing",
+        "z": 50.0
+      },
+      {
+        "name": "vertrate_mismatch_ms",
+        "z": -1.17
+      },
+      {
+        "name": "vel_cv",
+        "z": -0.73
+      }
+    ],
+    "summary": "The track carries no callsign or squawk (z=50.0)."
+  },
+  {
+    "alert_id": "alert_155c18_1575885610_1575889885",
+    "icao24": "155c18",
+    "t_start": 1575885610,
+    "t_end": 1575889885,
+    "score": 0.2359,
+    "top_features": [
+      {
+        "name": "largest_jump_km",
+        "z": 50.0
+      },
+      {
+        "name": "max_gap_s",
+        "z": 50.0
+      },
+      {
+        "name": "missing_frac",
+        "z": 50.0
+      }
+    ],
+    "summary": "A large position step appears between consecutive reports (z=50.0)."
+  },
+  {
+    "alert_id": "alert_020106_1575889210_1575889814",
+    "icao24": "020106",
+    "t_start": 1575889210,
+    "t_end": 1575889814,
+    "score": 0.0991,
+    "top_features": [
+      {
+        "name": "speed_resid_kt_med",
+        "z": 50.0
+      },
+      {
+        "name": "speed_resid_kt_max",
+        "z": 50.0
+      },
+      {
+        "name": "largest_jump_km",
+        "z": 50.0
+      }
+    ],
+    "summary": "Position-implied speed disagrees with the reported speed (z=50.0)."
+  },
+  {
+    "alert_id": "alert_06a11d_1575882010_1575886109",
+    "icao24": "06a11d",
+    "t_start": 1575882010,
+    "t_end": 1575886109,
+    "score": 0.2248,
+    "top_features": [
+      {
+        "name": "largest_jump_km",
+        "z": 50.0
+      },
+      {
+        "name": "max_gap_s",
+        "z": 50.0
+      },
+      {
+        "name": "missing_frac",
+        "z": 50.0
+      }
+    ],
+    "summary": "A large position step appears between consecutive reports (z=50.0)."
+  },
+  {
+    "alert_id": "alert_02a186_1575907210_1575907813",
+    "icao24": "02a186",
+    "t_start": 1575907210,
+    "t_end": 1575907813,
+    "score": 0.095,
+    "top_features": [
+      {
+        "name": "speed_resid_kt_med",
+        "z": 50.0
+      },
+      {
+        "name": "speed_resid_kt_max",
+        "z": 50.0
+      },
+      {
+        "name": "max_gap_s",
+        "z": -50.0
+      }
+    ],
+    "summary": "Position-implied speed disagrees with the reported speed (z=50.0)."
+  },
+  {
+    "alert_id": "alert_346303_1575892800_1575913679",
+    "icao24": "346303",
+    "t_start": 1575892800,
+    "t_end": 1575913679,
+    "score": 0.2311,
+    "top_features": [
+      {
+        "name": "largest_jump_km",
+        "z": 50.0
+      },
+      {
+        "name": "max_gap_s",
+        "z": 50.0
+      },
+      {
+        "name": "missing_frac",
+        "z": 50.0
+      }
+    ],
+    "summary": "A large position step appears between consecutive reports (z=50.0)."
+  },
+  {
+    "alert_id": "alert_0a001b_1575900010_1575900613",
+    "icao24": "0a001b",
+    "t_start": 1575900010,
+    "t_end": 1575900613,
+    "score": 0.1068,
+    "top_features": [
+      {
+        "name": "speed_resid_kt_med",
+        "z": 50.0
+      },
+      {
+        "name": "speed_resid_kt_max",
+        "z": 50.0
+      },
+      {
+        "name": "largest_jump_km",
+        "z": 50.0
+      }
+    ],
+    "summary": "Position-implied speed disagrees with the reported speed (z=50.0)."
+  },
+  {
+    "alert_id": "alert_4ca9c3_1575921600_1575929432",
+    "icao24": "4ca9c3",
+    "t_start": 1575921600,
+    "t_end": 1575929432,
+    "score": 0.2361,
+    "top_features": [
+      {
+        "name": "largest_jump_km",
+        "z": 50.0
+      },
+      {
+        "name": "max_gap_s",
+        "z": 50.0
+      },
+      {
+        "name": "missing_frac",
+        "z": 50.0
+      }
+    ],
+    "summary": "A large position step appears between consecutive reports (z=50.0)."
+  },
+  {
+    "alert_id": "alert_06a01b_1575903610_1575904214",
+    "icao24": "06a01b",
+    "t_start": 1575903610,
+    "t_end": 1575904214,
+    "score": 0.0834,
+    "top_features": [
+      {
+        "name": "speed_resid_kt_med",
+        "z": 50.0
+      },
+      {
+        "name": "speed_resid_kt_max",
+        "z": 50.0
+      },
+      {
+        "name": "largest_jump_km",
+        "z": 50.0
+      }
+    ],
+    "summary": "Position-implied speed disagrees with the reported speed (z=50.0)."
+  },
+  {
+    "alert_id": "alert_3c64fa_1575882000_1575882600",
+    "icao24": "3c64fa",
+    "t_start": 1575882000,
+    "t_end": 1575882600,
+    "score": 0.048,
+    "top_features": [
+      {
+        "name": "max_gap_s",
+        "z": 50.0
+      },
+      {
+        "name": "missing_frac",
+        "z": 50.0
+      },
+      {
+        "name": "time_irregularity",
+        "z": 50.0
+      }
+    ],
+    "summary": "A stretch of expected position reports is missing (z=50.0)."
+  }
+]

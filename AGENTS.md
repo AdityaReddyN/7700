@@ -18,7 +18,7 @@ These gates must be resolved before the work that depends on them. Record each a
 |---|---|---|---|
 | G1 | Are Llama models accepted by the event? | Choice of primary model | **ACCEPTED** — Llama is eligible. Reply saved in `docs/permissions/G1-llama.md`. Settles D-011; see D-023. |
 | G2 | Does OpenSky permit this use (public hackathon repo, sample data published)? | Publishing any OpenSky-derived data, including samples | **RECEIVED** — reply saved in `docs/permissions/G2-opensky.md`. Follow any conditions it states. See D-023. |
-| G3 | Hourly OpenSky CSV(s) uploaded. | Replay scenarios that need offsets longer than one hour | **PARTIAL** — four days of hourly files are present; only `states_2017-06-05-01.csv` (01:00–01:59 UTC, 5 June 2017) has been inspected so far. Confirm the file dates and day groups in M2. See D-023, D-024. |
+| G3 | Hourly OpenSky CSV(s) uploaded. | Replay scenarios needing offsets longer than one hour | **RESOLVED (M2)** — one day present: 2019-12-09, 24 hourly `.csv.tar` files, converted and reported. Split uses the hour-based fallback. See D-023, D-024, D-029. |
 | G4 | Hardware for the primary model: Lenovo Yoga, 16 GB RAM, Intel Iris Xe, CPU inference only. | Model size choices | MEASURED (see docs/API_NOTES.md) |
 | G5 | Credits: Modal balance is $1. Baseten and Modal credit requests are unconfirmed. | Any hosted inference beyond a smoke test | PENDING |
 
@@ -65,7 +65,7 @@ These gates must be resolved before the work that depends on them. Record each a
 | LLM client | `openai` Python SDK pointed at the configured base URL |
 | Orchestration | Plain `asyncio` (no agent framework) |
 | Data | Parquet files, queried with DuckDB (read-only, fixed queries) |
-| Detector | Rule-based flagger (always). Isolation Forest (scikit-learn) only if it works by day 3 |
+| Detector | Isolation Forest (scikit-learn), primary. Rule-based flagger as fallback/baseline (D-030) |
 | Retrieval | `rank_bm25` always; local `sentence-transformers` embeddings with reciprocal rank fusion only if time allows. BM25 alone is acceptable |
 | Plots | Matplotlib (PNG) for the report; Plotly for interactive charts in the app |
 | App | Streamlit (proposed in DECISIONS.md D-008; awaiting written approval) |
@@ -90,6 +90,7 @@ adsb-analyst/
     scenarios.yaml          injector parameters, seeds, split sizes
     ablations.yaml          configs A and D
     pricing.yaml            hosted prices only, with check date; local = 0
+    detector.yaml           detector method, IsolationForest params, thresholds (D-030)
   data/                     gitignored except tiny samples
     raw/                    OpenSky CSVs (never committed)
     parquet/                converted, partitioned by hour
@@ -101,7 +102,7 @@ adsb-analyst/
   src/
     common/                 schemas.py, ids.py, logging.py, config.py
     data/                   convert.py, report.py
-    detector/               features.py, flagger.py, model.py (optional IF), alerts.py
+    detector/               features.py, baseline.py, model.py (IsolationForest), flagger.py, alerts.py
     scenarios/              inject.py, benign.py, split.py, leakage_test lives in tests/
     tools/                  registry.py, toollog.py, data_tools.py, retrieval.py
     kb/                     build_index.py
@@ -126,7 +127,7 @@ Do not start a milestone until the previous one's checks pass. Log each mileston
 | M1 | Model gate | Ollama installed. `llama3.1:8b` (and `llama3.2:3b`) pulled. Smoke tests run and recorded: plain completion, tool-call validity on 20 dev prompts, structured-output parse rate on 20 prompts, tokens/s, free RAM during run. (Glimmer dropped per D-028.) G1 is answered and the primary model is set in `config/models.yaml` |
 | M2 | Data | Both CSVs (if G3 resolved) converted to Parquet by hour. `data report` written: rows before and after filtering, null rates, time coverage, aircraft counts |
 | M3 | Scenarios | 50 labelled scenarios (10 per class), splits assigned, leakage test passes |
-| M4 | Detector | Rule-based flagger produces alerts for dev and test scenarios, with precision and recall on injected data and alert rate on real data. Isolation Forest added only if M4 flagger is done by day 3 |
+| M4 | Detector | Isolation Forest detector produces alerts for dev and test scenarios (rule-based flagger retained as fallback), with precision and recall on injected data and alert rate on real data. Threshold tuned on dev only (D-030) |
 | M5 | Tools | Five tools implemented, each with `ref_id`, bounded output, unit tests. ToolLog records every call |
 | M6 | Knowledge base | 10 case cards (2 per class, from KB scenarios only). At least 3 paraphrased reference passages with sources, or none if time is short (say so). Retrieval index built. Recall@4 on dev reported |
 | M7 | Agents | LLM wrapper with logging and timing. Triage, subagent loop, verifier, adjudicator, orchestrator. Config A (single agent) and config D (full pipeline) both produce a verified `IncidentReport` for one alert, with per-stage timing |

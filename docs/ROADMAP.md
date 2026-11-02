@@ -26,14 +26,14 @@ Today is the start of the build. Day numbering below is relative. The hard deadl
 
 **Day 2: scenarios and detector**
 - M3 complete: injectors for the four fault classes, benign finder, splits, leakage test. Labels: 50 scenarios.
-- M4 started: rule-based flagger. Alerts for dev and test.
+- M4 started: Isolation Forest detector (rule-based flagger as fallback). Alerts for dev and test.
 - Checkpoint: detector recall and false-positive rate saved.
 
 **Day 3: tools and first investigation**
 - M5 complete: five tools, ToolLog, unit tests.
 - M6 partly: case cards (10) written from KB scenarios. Retrieval with BM25.
 - M7 started: LLM wrapper, triage, one subagent, verifier.
-- Checkpoint (hard stop for the detector): if the rule-based flagger is not giving sane alert rates, keep it as is and stop tuning. Do not start Isolation Forest.
+- Checkpoint (hard stop for the detector): the Isolation Forest is primary (D-030). If it does not give sane alert rates, fall back to the rule-based flagger (`method: rules`) and stop tuning — do not keep iterating on the model.
 
 **Day 4: agents end to end**
 - M7 complete: subagent loop, adjudicator, orchestrator. Config A and config D each produce one verified `IncidentReport`.
@@ -57,7 +57,7 @@ Today is the start of the build. Day numbering below is relative. The hard deadl
 
 ## 3. Cut order if time runs short
 Cut in this order, and log each cut in DECISIONS.md:
-1. Isolation Forest (already optional).
+1. Isolation Forest tuning — if it underperforms, switch to the rule-based fallback (`method: rules`) and stop.
 2. Reference passages (case cards only).
 3. Glimmer or hosted comparison.
 4. Spot-check beyond 10 items.

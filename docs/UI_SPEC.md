@@ -10,7 +10,7 @@ Sidebar with three entries, rendered with `st.sidebar` and `st.radio`:
 2. **Report**: the full report for the selected alert, including evidence table and plot.
 3. **Benchmark**: reads `results/`.
 
-Sidebar also shows: the selected alert (dropdown of alerts from `data/alerts/alerts.parquet` or `alerts.json`), the mode (Replay or Live), the model name and config from the trace, and a visible "Rule-based flagger" label.
+Sidebar also shows: the selected alert (dropdown of alerts from `data/alerts/alerts.parquet` or `alerts.json`), the mode (Replay or Live), the model name and config from the trace, and a visible detector label ("Isolation Forest" or "Rule-based fallback").
 
 Use `st.session_state` for the selected alert, the scrubber position and the current step. Nothing resets when the user moves the scrubber.
 

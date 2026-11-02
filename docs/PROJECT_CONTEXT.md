@@ -1,7 +1,7 @@
 # Project context
 
 ## One-line summary
-An AI incident analyst for ADS-B aircraft-tracking anomalies. A rule-based detector flags suspicious tracks. Parallel-in-design (sequential on this laptop) hypothesis agents test competing explanations with tools and retrieval. A verifier checks every cited fact. An adjudicator writes a report that separates evidence from inference.
+An AI incident analyst for ADS-B aircraft-tracking anomalies. An Isolation Forest detector (rule-based fallback) flags suspicious tracks. Parallel-in-design (sequential on this laptop) hypothesis agents test competing explanations with tools and retrieval. A verifier checks every cited fact. An adjudicator writes a report that separates evidence from inference.
 
 ## The problem
 Operators of surveillance and sensor networks receive more anomaly alerts than they can investigate. Deciding whether an alert is spoofing, a sensor fault, a replay, a fabricated aircraft or a harmless manoeuvre is slow and repetitive, and real incidents get lost in the noise. The tool shortens the time from alert to understanding and shows its evidence, so a human can trust or challenge it.
@@ -49,7 +49,7 @@ The rubric weights noted earlier (Impact 30%, Tooling 25%, Demo 25%, Technical 2
 
 **In scope (must):**
 - Data conversion and a data report.
-- Rule-based detector with measured precision and recall on injected data.
+- Isolation Forest detector (rule-based fallback) with measured precision and recall on injected data.
 - Five hypothesis classes, with fresh injectors.
 - Five read-only tools with `ref_id` and a tool log.
 - Triage, subagent loop, verifier, adjudicator, orchestrator.
@@ -58,7 +58,6 @@ The rubric weights noted earlier (Impact 30%, Tooling 25%, Demo 25%, Technical 2
 - README, video, submission.
 
 **In scope (if time):**
-- Isolation Forest detector.
 - BM25 plus embedding retrieval (BM25 alone is acceptable).
 - Three or more paraphrased reference passages with sources.
 - Ten-case spot-check of verifier claims.

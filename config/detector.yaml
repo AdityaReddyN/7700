@@ -1,0 +1,32 @@
+# Detector configuration (D-030). IsolationForest is primary; rules are the fallback.
+method: isolation_forest        # 'isolation_forest' (primary) or 'rules' (fallback)
+
+isolation_forest:
+  n_estimators: 200
+  contamination: auto
+  max_samples: auto
+  random_state: 42              # determinism (ARCHITECTURE §9)
+
+rules:                          # fallback scorer: flag if any feature z >= z_flag
+  z_flag: 4.0
+
+baseline:                       # real normal traffic for the fit and z-score stats
+  sample_tracks: 3000
+  window_s: 600
+  min_points: 30
+  hours: [6, 7, 8, 9, 10, 11]   # dev-group hours; disjoint from the alert-rate sample
+  seed: 42
+
+threshold:
+  value: null                   # null = set by the false-positive budget below (D-031)
+  target_alert_rate: 0.05       # flag the top 5% of normal dev-hour traffic; sets the operating point
+  target_dev_recall: 0.80       # reference only; recall actually achieved is in metrics.json
+
+features:
+  duplicate_time_tolerance_s: 5 # address_duplicate shifts a few seconds (SCENARIO_SPEC §4.3)
+  duplicate_distance_km: 10
+
+alert_rate_sample:              # real traffic for the alert-rate (false-positive proxy)
+  tracks: 2000
+  hours: [20, 21, 22, 23]       # disjoint from baseline hours
+  seed: 7

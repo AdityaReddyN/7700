@@ -7,7 +7,7 @@ Target length 2:50. Record one fallback take first, in case the live run fails.
 | Time | On screen | What is said |
 |---|---|---|
 | 0:00 to 0:20 | Title card, then the alert list filling | Operators get more alerts than they can investigate. Detection is the easy part; explanation is the bottleneck. |
-| 0:20 to 0:40 | One alert selected; the track with the time scrubber; the rule that flagged it | This track was flagged by a rule-based flagger. The question is: what caused it? |
+| 0:20 to 0:40 | One alert selected; the track with the time scrubber; the feature that flagged it | This track was flagged by an Isolation Forest detector (rule-based fallback). The question is: what caused it? |
 | 0:40 to 1:30 | Hypotheses ranked; three debate panels, each with evidence for and against; one live run on a short case (or the replay if the live run is slow) | Each hypothesis gets its own agent. Each agent must find evidence for and against. Every claim cites a tool result. |
 | 1:30 to 2:00 | Verification table: verified rows, one excluded row with its reason | Before the report, every cited value is checked against the logged tool output. An unverified claim is removed, not hidden. |
 | 2:00 to 2:30 | Verdict, confidence, labelled inference, what would change its mind | The report separates what the data shows from what the model infers. |
