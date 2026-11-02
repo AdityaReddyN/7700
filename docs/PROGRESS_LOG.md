@@ -157,3 +157,16 @@ Rule-based baseline (`results/detector/baseline_rules/`): **cannot hit the 5% bu
 Added a `--method/--tag` CLI to `detector.alerts` so the baseline writes to a separate results folder without touching the primary `alerts.json`/`alert_map.json`.
 
 Deviations: D-031 (operating point = FP budget). Next step: M5 (five read-only tools + ToolLog); the detector's weak position/sensor recall is context for M5/M7 (the agents investigate what is flagged).
+
+## 2026-11-02: M5 tools + ToolLog (plan)
+
+Build the five read-only, deterministic tools (ARCHITECTURE §3) and the ToolLog (§4). Approved to ship `retrieve_cases` now degrading-to-empty until the M6 index exists.
+
+1. `src/tools/toollog.py`: `ToolLog` maps `ref_id -> ToolResult` (full output kept for the verifier); identical tool+args return the same cached `ref_id`; model-facing view returns the truncated output. Enforces the size rule (`tool_output_max_chars` from `config/agents.yaml`, 1600) and sets `truncated`.
+2. `src/tools/data_tools.py`: `TrackProvider` resolves the alert's own track by `icao24`+window from the scenario view (`tracks.parquet`) if rows exist there, else the real Parquet store — never via `scenario_id`/`alert_map`, so nothing leaks. Four tools: `get_track_window`, `compute_kinematics`, `check_identity` (on the alert track), `compare_to_baseline` (deterministic same-hour real aggregate via DuckDB `quantile_cont`, excluding scenario aircraft, cached). Reuses `detector/features.py` helpers.
+3. `src/tools/retrieval.py`: `retrieve_cases` over the BM25 KB index; returns empty if the index is absent (M6 builds it).
+4. `src/tools/registry.py`: dispatch `call(name, args) -> ToolResult` through the ToolLog; imports `TOOL_SPECS`/`TOOL_NAMES` from `agents/tool_specs.py` (unchanged, keeps the M1 smoke working).
+5. Tests (`tests/test_tools.py`, hermetic): per-tool values on synthetic tracks, `ref_id` determinism, size bound + `truncated`, ToolLog dedup and full-vs-truncated. Extend `tests/test_leakage.py`: no `S\d{4}`/label/split string in any serialised `ToolResult.output`.
+6. Decision D-032 (track resolution; deterministic same-hour baseline; retrieve_cases degrades to empty). Caps and native-vs-text tool-calling are M7, not M5.
+
+Next step: implement, then `make test`/`make lint` green and report.
