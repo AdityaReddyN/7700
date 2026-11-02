@@ -12,18 +12,21 @@ Run: `python -m agents.llm --smoke` (or `make smoke`).
 from __future__ import annotations
 
 import argparse
+import asyncio
 import json
 import platform
 import subprocess
 import time
+from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 from typing import Any
 
 import psutil
-from openai import OpenAI
+from openai import APIConnectionError, APIError, OpenAI
+from pydantic import BaseModel, ValidationError
 
-from common.config import REPO_ROOT, load_yaml
+from common.config import REPO_ROOT, get_settings, load_yaml
 from common.logging import get_logger
 from common.schemas import HypothesisReport
 
@@ -87,6 +90,222 @@ def _user_msg(p: dict) -> str:
         f"Alert: aircraft {p['icao24']} flagged from t_start={p['t_start']} "
         f"to t_end={p['t_end']}.\nObservation: {p['text']}"
     )
+
+
+# --- production wrapper (M7, ARCHITECTURE §6) ------------------------------
+
+@dataclass
+class LLMResult:
+    """One model call's outcome. `parsed` is set only when a schema was asked for."""
+
+    text: str
+    tool_calls: list[dict] = field(default_factory=list)  # {id, name, arguments(str)}
+    parsed: BaseModel | None = None
+    mode: str = "plain"                 # plain | native_tools | json_schema
+    parse_ok: bool = True
+    tool_call_valid: bool = True
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    latency_s: float = 0.0
+    model: str = ""
+    error: str | None = None
+
+
+class SpendCapError(RuntimeError):
+    """Raised when a hosted call would exceed MAX_SPEND_USD (local calls never trip this)."""
+
+
+class LLMClient:
+    """All model access for one investigation (logging, retries, spend cap).
+
+    Local only in this build (D-028): the backend is Ollama via the OpenAI SDK,
+    so money cost is always $0 and only time is logged. The hosted spend-cap
+    path is implemented for honesty but never trips while the backend is local.
+    """
+
+    def __init__(self, *, models_cfg: dict | None = None, agents_cfg: dict | None = None,
+                 log_path: Path | None = None, alert_id: str = "", config_name: str = "",
+                 client_factory=client) -> None:
+        self.models = models_cfg if models_cfg is not None else load_yaml("models")
+        self.agents = agents_cfg if agents_cfg is not None else _safe_agents_cfg()
+        self.alert_id = alert_id
+        self.config_name = config_name
+        self.log_path = Path(log_path) if log_path else None
+        if self.log_path is not None:
+            self.log_path.parent.mkdir(parents=True, exist_ok=True)
+
+        primary = self.models.get("primary", {})
+        self.backend = str(primary.get("backend", "ollama"))
+        self.base_url = str(primary.get("base_url", "http://localhost:11434/v1"))
+        self.temperature = float(primary.get("temperature", 0))
+        self.seed = int(primary.get("seed", 42))
+        self.default_timeout_s = float(self.agents.get("call_timeout_s", 300))
+        self._cli = client_factory(self.base_url)
+        self._cum_cost_usd = 0.0
+        self.calls: list[dict] = []
+
+    # -- model routing ------------------------------------------------------
+
+    def model_for(self, stage: str) -> str:
+        primary = str(self.models.get("primary", {}).get("model", "llama3.1:8b"))
+        if stage == "triage":
+            return str(self.models.get("triage", {}).get("model") or primary)
+        if stage == "adjudication":
+            return str(self.models.get("adjudicator", {}).get("model") or primary)
+        return primary
+
+    # -- the one call every stage uses -------------------------------------
+
+    async def complete(self, stage: str, messages: list[dict], *,
+                       tools: list[dict] | None = None,
+                       response_schema: type[BaseModel] | None = None,
+                       max_tokens: int = 800,
+                       timeout_s: float | None = None) -> LLMResult:
+        return await asyncio.to_thread(
+            self._complete_sync, stage, messages, tools, response_schema,
+            max_tokens, timeout_s,
+        )
+
+    def _complete_sync(self, stage, messages, tools, response_schema,
+                       max_tokens, timeout_s) -> LLMResult:
+        model = self.model_for(stage)
+        if self.backend != "ollama":
+            self._check_spend_cap()
+        timeout_s = timeout_s if timeout_s is not None else self.default_timeout_s
+
+        kwargs: dict = dict(model=model, messages=messages, temperature=self.temperature,
+                            seed=self.seed, max_tokens=max_tokens, timeout=timeout_s)
+        if tools:
+            kwargs["tools"] = tools
+            kwargs["tool_choice"] = "auto"
+        elif response_schema is not None:
+            kwargs["response_format"] = {"type": "json_object"}
+
+        attempts = messages
+        last_err: str | None = None
+        t0 = time.perf_counter()
+        for attempt in range(2 if response_schema is not None and not tools else 1):
+            kwargs["messages"] = attempts
+            try:
+                resp = self._api_call(kwargs)
+            except (APIConnectionError, APIError) as exc:  # connection/server failure
+                dt = time.perf_counter() - t0
+                res = LLMResult(text="", mode="error", parse_ok=False, model=model,
+                                latency_s=round(dt, 2), error=f"api_error: {exc}")
+                self._log(stage, res, tools)
+                return res
+
+            msg = resp.choices[0].message
+            raw_calls = msg.tool_calls or []
+            tool_calls = [{"id": c.id, "name": c.function.name,
+                           "arguments": c.function.arguments or "{}"} for c in raw_calls]
+            text = msg.content or ""
+            usage = resp.usage
+            pt = getattr(usage, "prompt_tokens", 0) or 0
+            ct = getattr(usage, "completion_tokens", 0) or 0
+
+            mode = "native_tools" if tools else ("json_schema" if response_schema else "plain")
+            tc_valid = _tool_calls_valid(tool_calls)
+
+            parsed = None
+            parse_ok = True
+            if response_schema is not None and not tools:
+                obj = _extract_json(text)
+                try:
+                    if obj is None:
+                        raise ValueError("no JSON object in reply")
+                    parsed = response_schema.model_validate(obj)
+                    parse_ok = True
+                except (ValidationError, ValueError) as exc:
+                    parse_ok = False
+                    last_err = str(exc)[:200]
+                    # feed the error back and retry once (ARCHITECTURE §6)
+                    attempts = list(messages) + [
+                        {"role": "assistant", "content": text},
+                        {"role": "user", "content":
+                            f"That reply was not valid: {last_err}. "
+                            "Return ONLY a single JSON object matching the schema, no prose."},
+                    ]
+                    if attempt == 0:
+                        continue
+
+            dt = time.perf_counter() - t0
+            res = LLMResult(text=text, tool_calls=tool_calls, parsed=parsed, mode=mode,
+                            parse_ok=parse_ok, tool_call_valid=tc_valid, prompt_tokens=pt,
+                            completion_tokens=ct, latency_s=round(dt, 2), model=model,
+                            error=None if parse_ok else f"parse_failed: {last_err}")
+            self._log(stage, res, tools)
+            return res
+
+        # unreachable in practice; keep the type checker and logic honest
+        dt = time.perf_counter() - t0
+        res = LLMResult(text="", mode="error", parse_ok=False, model=model,
+                        latency_s=round(dt, 2), error="exhausted retries")
+        self._log(stage, res, tools)
+        return res
+
+    def _api_call(self, kwargs: dict):
+        delay = 1.0
+        for i in range(3):
+            try:
+                return self._cli.chat.completions.create(**kwargs)
+            except APIConnectionError:
+                if i == 2:
+                    raise
+                time.sleep(delay)
+                delay *= 2
+
+    def _check_spend_cap(self) -> None:
+        cap = get_settings().max_spend_usd
+        if self._cum_cost_usd >= cap:
+            raise SpendCapError(
+                f"hosted spend ${self._cum_cost_usd:.4f} reached MAX_SPEND_USD ${cap:.2f}")
+
+    def _log(self, stage: str, res: LLMResult, tools: list[dict] | None) -> None:
+        rec = {
+            "ts": time.time(),
+            "stage": stage,
+            "backend": self.backend,
+            "model": res.model,
+            "alert_id": self.alert_id,
+            "config": self.config_name,
+            "prompt_tokens": res.prompt_tokens,
+            "completion_tokens": res.completion_tokens,
+            "latency_s": res.latency_s,
+            "tool_calls_count": len(res.tool_calls),
+            "tool_call_valid": res.tool_call_valid if tools else None,
+            "parse_ok": res.parse_ok,
+            "cost_usd": 0.0,  # local only (D-028)
+            "mode": res.mode,
+            "error": res.error,
+        }
+        self.calls.append(rec)
+        if self.log_path is not None:
+            with self.log_path.open("a", encoding="utf-8") as fh:
+                fh.write(json.dumps(rec) + "\n")
+
+
+def _safe_agents_cfg() -> dict:
+    try:
+        return load_yaml("agents")
+    except FileNotFoundError:
+        return {"call_timeout_s": 300}
+
+
+def _tool_calls_valid(tool_calls: list[dict]) -> bool:
+    from agents.tool_specs import TOOL_NAMES
+
+    if not tool_calls:
+        return True
+    for c in tool_calls:
+        if c.get("name") not in TOOL_NAMES:
+            return False
+        try:
+            if not isinstance(json.loads(c.get("arguments") or "{}"), dict):
+                return False
+        except json.JSONDecodeError:
+            return False
+    return True
 
 
 # --- checks ----------------------------------------------------------------

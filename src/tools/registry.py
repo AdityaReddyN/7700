@@ -42,7 +42,8 @@ class ToolRegistry:
         self.alert = alert
         self.provider = provider
         self.retriever = retriever
-        self.log = log or ToolLog(max_chars=_max_chars())
+        # NB: an empty ToolLog is falsy (len 0), so test `is not None`, never `or`.
+        self.log = log if log is not None else ToolLog(max_chars=_max_chars())
 
     def call(self, name: str, args: dict) -> ToolResult:
         if name not in TOOL_NAMES:

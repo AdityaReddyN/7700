@@ -1,0 +1,63 @@
+{
+  "note": "M7 smoke on one alert (alert_0a372e_1575878410_1575879120), Lenovo Yoga CPU, llama3.1:8b (triage llama3.2:3b). n=1, NOT an evaluation; full A-vs-D metrics are M8 (resumable, apps closed). Config A was measured under memory pressure; config D with apps closed, so the two times are not directly comparable.",
+  "date": "2026-11-02",
+  "config_A": {
+    "completed": true,
+    "conditions": "memory pressure (~1GB free)",
+    "verdict": "position_spoofing",
+    "confidence": 0.8,
+    "total_seconds": 222.57,
+    "stage_seconds": {
+      "subagent:single": 222.57,
+      "verification": 0.0
+    },
+    "n_llm_calls": 12,
+    "n_tool_calls": 7,
+    "verified_evidence": 0,
+    "excluded_evidence": 2,
+    "finding": "8B spent all tool calls on retrieve_cases and cited card-prose numbers under wrong stat keys; verifier rejected both. Dev-prompt tuning for M8."
+  },
+  "config_D": {
+    "completed": true,
+    "conditions": "apps closed (~7 tok/s)",
+    "verdict": "position_spoofing",
+    "confidence": 0.85,
+    "total_seconds": 533.48,
+    "stage_seconds": {
+      "triage": 29.2,
+      "subagent:benign_anomaly": 88.68,
+      "subagent:position_spoofing": 237.47,
+      "subagent:sensor_fault": 131.49,
+      "verification": 0.01,
+      "adjudication": 46.63
+    },
+    "n_llm_calls": 13,
+    "n_tool_calls": 1,
+    "triage_fallback": false,
+    "kept": [
+      "benign_anomaly",
+      "position_spoofing",
+      "sensor_fault"
+    ],
+    "verified_evidence": 3,
+    "excluded_evidence": 2,
+    "subagents": [
+      {
+        "hypothesis": "benign_anomaly",
+        "verdict": "refuted",
+        "tool_calls_used": 1
+      },
+      {
+        "hypothesis": "position_spoofing",
+        "verdict": "supported",
+        "tool_calls_used": 1
+      },
+      {
+        "hypothesis": "sensor_fault",
+        "verdict": "inconclusive",
+        "tool_calls_used": 1
+      }
+    ],
+    "under_15min_ceiling": true
+  }
+}

@@ -15,8 +15,8 @@ def test_agents_yaml_thresholds():
     agents = load_yaml("agents")
     assert agents["triage_min_prior"] == 0.15
     assert agents["triage_min_hypotheses"] == 3
-    assert agents["triage_max_hypotheses"] == 5
-    assert agents["subagent_tool_call_limit"] == 4
+    assert agents["triage_max_hypotheses"] == 3  # D-035: cut from 5 for the time budget
+    assert agents["subagent_tool_call_limit"] == 3  # D-035: cut from 4
     assert agents["config_a_tool_call_limit"] == 8
     assert agents["max_concurrency"] == 1
 

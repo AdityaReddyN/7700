@@ -1,7 +1,7 @@
 triage_min_prior: 0.15
 triage_min_hypotheses: 3
-triage_max_hypotheses: 5
-subagent_tool_call_limit: 4     # config D
+triage_max_hypotheses: 3         # cut from 5 (D-035): config D exceeded the 15-min ceiling
+subagent_tool_call_limit: 3      # cut from 4 (D-035, AGENTS §7 time budget)
 config_a_tool_call_limit: 8     # config A
 max_concurrency: 1              # CPU laptop; raise only if measured to help
 call_timeout_s: 300

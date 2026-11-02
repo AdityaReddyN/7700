@@ -196,3 +196,45 @@ Recall on dev (n=15, label-free queries, true label compared only after retrieva
 Honest caveats (in `results/kb/report.md`): only 10 cards, so high recall is expected and proves neither generalisation nor detection quality. The three tools expose no identity *presence* and smear subtle residual, so quiet classes (ghost/benign) and multi-modal sensor_fault separate weakly; quiet-class ranking leans on near-identical fingerprints and is close to chance. Reference passages and dense/RRF deferred (D-033).
 
 Next step: M7 (LLM wrapper, triage, subagent loop, verifier, adjudicator, orchestrator).
+
+## 2026-11-02: M7 agents — wrapper, triage, subagent, verifier, adjudicator, orchestrator (plan)
+
+Build the agent pipeline on top of the M5 tools (`ToolRegistry`) and M6 retrieval. Local Llama only (D-028). Configs A and D from `config/ablations.yaml`; thresholds and caps from `config/agents.yaml`; models from `config/models.yaml`. No scenario id / label / split in any prompt, tool output or alert (leakage test extended).
+
+1. `src/agents/llm.py`: add `LLMResult` + `class LLMClient` with `async complete(stage, messages, *, tools, response_schema, max_tokens, timeout_s)` (ARCHITECTURE §6). Resolves the stage's model from `models.yaml`; native Ollama tool-calling (measured working), `response_format=json_object` + schema-in-prompt validated with Pydantic, one retry on parse failure with the error fed back; logs one JSONL line per call (stage, model, tokens, latency_s, tool_calls_count, tool_call_valid, parse_ok, cost_usd=0, alert_id, config); hosted spend-cap check (local = $0, never trips). Sync core wrapped via `asyncio.to_thread`; keep the M1 `--smoke` path.
+2. `src/agents/prompts/*.v1.md` + `cheatsheet.py`: versioned prompt files (preamble, triage, subagent, subagent_config_a, adjudicator) from PROMPT_SPECS; placeholders filled by `str.replace` (JSON braces stay literal). Cheat sheet = label-free definitions/supports/refutes.
+3. `src/agents/triage.py`: one model call, no tools, parse `Triage`; keep prior >= 0.15, >= 3 and <= 5 (top-3 if fewer pass). Failure -> rule-based priors from the alert's top features, fallback recorded.
+4. `src/agents/subagent.py`: native tool-call loop through `ToolRegistry`; <= N tool calls (4 for D, 8 for config A); force a final structured `HypothesisReport`; parse fail -> retry once -> inconclusive; any exception -> inconclusive with a note. `run_single_agent` (config A) returns the top report + alternatives.
+5. `src/agents/verifier.py`: pure Python (no model). Per `Evidence`: ref in ToolLog (else `missing_ref`); if stat+value, stat is a key (nested) in the full logged output (else `unknown_stat`) and the value matches within max(5% rel, 0.5 abs) (else `value_mismatch`); stat/value missing -> `verified_partial` (counted apart). Returns the report with `verified` set + per-report counts. Adjudicator sees only verified items.
+6. `src/agents/adjudicator.py`: one model call from verified evidence only; `ranked` replaced in code by the verified reports; `evidence_table` built in code; confidence cap 0.9 unless >= 2 independent verified items back the verdict (enforced in code). Failure -> inconclusive `IncidentReport` with the verified evidence and reason.
+7. `src/agents/orchestrator.py`: `asyncio` + semaphore (concurrency 1). Config D: triage -> sequential subagents -> verifier -> adjudicator. Config A: single agent -> verifier -> `IncidentReport` directly (no adjudicator call). Per-stage timing + tokens in `meta`; one trace to `runs/<inv_id>/trace.json` (stage names per ARCHITECTURE §8). CLI `run-case` over `data/scenarios/alerts.json`.
+8. Tests (`tests/test_agents.py`, hermetic, `FakeLLM`, synthetic provider/retriever): verifier's 7 cases; triage keep-rule + fallback; subagent budget + inconclusive-on-failure; confidence-cap; orchestrator A and D end-to-end produce a valid `IncidentReport` + trace with per-stage timing; leakage — captured prompts carry no label/scenario id/split. Extend `tests/test_leakage.py` if needed.
+9. Real smoke after tests: `make run-case` on one real alert for configs A and D with Ollama, per-stage timing recorded. If Ollama is down or too slow on the laptop, report honestly; the hermetic path stays the verified deliverable.
+
+Next step: implement; full suite + ruff green; one real run per config if the laptop allows; log results; D-034. No commit until authorised.
+
+### M7 results
+
+Built the full agent pipeline (D-034): LLM wrapper (`agents/llm.py` `LLMClient.complete`), versioned prompts + label-free cheat sheet, triage (+ rule-based fallback), the bounded subagent tool-loop, the pure-Python verifier (EVALUATION_PROTOCOL §5), the adjudicator (verified-only, 0.9 confidence cap), and the asyncio orchestrator with configs A and D and a `make run-case` CLI. 21 new hermetic agent tests (FakeLLM, synthetic provider); full suite **117 pass**, ruff clean.
+
+Two real bugs surfaced by the first live run and fixed:
+- **ToolLog falsy.** An empty `ToolLog` has len 0, so `ToolRegistry`'s `self.log = log or ToolLog(...)` silently replaced the orchestrator's log with a fresh one — traces serialised an empty toollog and `n_tool_calls=0` though tools ran. Fixed to `log if log is not None`. A D-e2e test now guards it.
+- **ref_id not visible to the model.** Tool results shown to the model omitted the `ref_id`, so it could not cite real evidence (it hallucinated a card id). The subagent loop now surfaces `{"ref_id", "result"}` per tool result.
+
+Real smoke on one alert (`alert_0a372e…`), `llama3.1:8b`, CPU, **heavy memory pressure (~1 GB free)** — n=1, not an evaluation; numbers in `results/agents/m7_smoke.json`:
+- **Config A: completed, 222.6 s (~3.7 min)**, 12 model calls, 7 tool calls. Verdict `position_spoofing`, confidence 0.80. Verified evidence **0**, excluded **2**: the 8B agent spent all 7 tool calls on `retrieve_cases` and cited numbers from card *prose* under wrong stat keys (`median residual` vs the real `residual_kt_median`); the verifier correctly rejected both (`unknown_stat`). The pipeline is behaving as designed — the weakness is 8B tool choice/citation, which is dev-prompt tuning for M8, not a code defect.
+- **Config D: did not finish** — it ran past **~38 min / 29 model calls** and was stopped. Over the AGENTS §7 15-min ceiling, so the §7 cut is applied (**D-035**: top-3 hypotheses, 3 tool calls). The dominant cost is 8B prompt-evaluation under memory pressure (API_NOTES: ~1.8 tok/s loaded vs ~8.3 with apps closed). A clean per-investigation D timing and the A-vs-D comparison belong to the **M8** resumable eval, run with other apps closed (AGENTS §4).
+
+Deviations: config D's clean completion/timing is deferred to M8 (hardware-bound, not a pipeline gap). Honest limitation: with 8B under this memory pressure, D is impractical to run inline; M8 must close apps and use `--resume`.
+
+Next step: one completed config-D run with the D-035 caps (apps closed) to confirm the end-to-end D path, then M8 evaluation. No commit until authorised.
+
+### M7 results — config D completed (update)
+
+After fixing a subagent loop non-termination bug, config D now completes on the laptop. Root cause: the tool-call budget counted only *successful* calls, so a subagent whose 8B calls kept raising (valid shape, missing required args) never hit the cap and looped 20+ turns (~200 s each) — the earlier "runaway". Fixed to cap on **attempts**; guarded by `test_subagent_terminates_when_every_tool_call_errors`. Full suite **118 pass**, ruff clean.
+
+Clean run (apps closed, `llama3.1:8b` ~7 tok/s; numbers in `results/agents/m7_smoke.json`), one alert, n=1:
+- **Config D: completed in 533.5 s (~8.9 min)** — under the AGENTS §7 15-min ceiling. 13 model calls, 1 unique tool call (subagents hit the same window → ToolLog deduped, confirming the falsy-log fix). Triage ran for real (not fallback) and kept the top-3 (benign_anomaly, position_spoofing, sensor_fault). Verdict **position_spoofing @ 0.85**; **3 verified evidence items, 2 excluded** — with `ref_id` now visible the model cited real refs. Per-stage: triage 29 s, subagents 89/237/131 s, verification ~0 s, adjudication 47 s.
+- Config A (earlier, under memory pressure): 222.6 s, verdict position_spoofing, 0 verified / 2 excluded. The two times are not directly comparable (A under load, D apps-closed); the clean A-vs-D comparison is M8.
+
+M7 done-criteria met: configs A and D each produce a verified `IncidentReport` for one alert with per-stage timing. Next: M8 evaluation (resumable, apps closed).
