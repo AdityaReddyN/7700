@@ -1,0 +1,42 @@
+{
+  "n_dev_evaluated": 15,
+  "n_dev_skipped": 0,
+  "k": 4,
+  "n_retrieved_per_query": 4,
+  "recall@1": 0.3333333333333333,
+  "recall@2": 0.5333333333333333,
+  "recall@4": 0.7333333333333333,
+  "per_label": {
+    "position_spoofing": {
+      "n": 3,
+      "recall@1": 0.6666666666666666,
+      "recall@2": 0.6666666666666666,
+      "recall@4": 1.0
+    },
+    "ghost_aircraft": {
+      "n": 3,
+      "recall@1": 0.0,
+      "recall@2": 1.0,
+      "recall@4": 1.0
+    },
+    "replay_duplicate": {
+      "n": 3,
+      "recall@1": 1.0,
+      "recall@2": 1.0,
+      "recall@4": 1.0
+    },
+    "sensor_fault": {
+      "n": 3,
+      "recall@1": 0.0,
+      "recall@2": 0.0,
+      "recall@4": 0.3333333333333333
+    },
+    "benign_anomaly": {
+      "n": 3,
+      "recall@1": 0.0,
+      "recall@2": 0.0,
+      "recall@4": 0.3333333333333333
+    }
+  },
+  "n_cards": 10
+}

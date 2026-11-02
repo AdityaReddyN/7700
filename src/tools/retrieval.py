@@ -71,11 +71,25 @@ class CaseRetriever:
         if not tokens:
             return []
         scores = self._bm25.get_scores(tokens)
-        order = sorted(range(len(self.cards)), key=lambda i: (-scores[i], self.cards[i].card_id))
+        if float(scores.max()) > 1e-9:
+            # Normal case: BM25 has positive signal. Rank by it, keep positives.
+            rank = [-scores[i] for i in range(len(self.cards))]
+            kept = [scores[i] > 1e-9 for i in range(len(self.cards))]
+        else:
+            # BM25 is degenerate here: every query term is common across this tiny
+            # corpus, so its IDF is <= 0 and containing a term LOWERS the score.
+            # Fall back to shared-token overlap, where a match never hurts.
+            qset = set(tokens)
+            overlap = [len(qset & set(_tok(f"{c.title} {c.text}"))) for c in self.cards]
+            if max(overlap) == 0:
+                return []
+            rank = [-o for o in overlap]
+            kept = [o > 0 for o in overlap]
+        order = sorted(range(len(self.cards)), key=lambda i: (rank[i], self.cards[i].card_id))
         out = []
         for i in order[: max(0, int(k))]:
-            if scores[i] <= 0:
-                continue
+            if not kept[i]:
+                break
             c = self.cards[i]
             out.append({"card_id": c.card_id, "label": c.label, "title": c.title,
                         "snippet": _snippet(c.text)})

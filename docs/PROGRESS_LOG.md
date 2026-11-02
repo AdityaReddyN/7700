@@ -170,3 +170,29 @@ Build the five read-only, deterministic tools (ARCHITECTURE §3) and the ToolLog
 6. Decision D-032 (track resolution; deterministic same-hour baseline; retrieve_cases degrades to empty). Caps and native-vs-text tool-calling are M7, not M5.
 
 Next step: implement, then `make test`/`make lint` green and report.
+
+## 2026-11-02: M6 knowledge base — case cards + BM25 index (plan)
+
+Cards + BM25 only (dense/RRF, reference passages, triage, agents all deferred). Cards are generated from the 10 KB-split scenarios using the M5 tools (`kinematics`, `identity`, `window_summary`) — computed numbers only, no memory, no test/dev stats.
+
+1. `src/kb/cards.py`: select the 10 KB scenarios deterministically (sorted by label, scenario_id) -> C001..C010. For each, load its track from `tracks.parquet` and compute stats with the M5 tools. Write `data/kb/cards/C0NN.md` as YAML frontmatter (id, label, title, signature, differentiators, outcome, synthetic:true, source_split:kb) + a prose body. A shared `describe_stats()` turns the computed numbers into the card prose and (label-free) the recall query, so retrieval keys on measured signal. `outcome` is computed-derived (track span / max step / max gap), not the injection param — documented.
+2. `src/kb/build_index.py` (Makefile `kb`): parse the cards, write `data/kb/index.json` in the M5 retriever schema (`card_id,label,title,text`), build a `CaseRetriever.from_kb`, run recall@4 on dev, write `results/kb/recall_at4.json` + `report.md`. Deterministic and rerunnable.
+3. recall@4: for each dev scenario, query = `describe_stats` of its own computed stats (label-free); retrieve top 4; a hit counts if a card with the scenario's true label is in the top k. True label used only after retrieval. Report recall@1/2/4, per-label, counts, caveat "Expected high — only 10 cards."
+4. Tests (`tests/test_kb.py`, hermetic, synthetic loader): 2 cards/label, required fields, synthetic/source_split, no `S\d{4}` in cards, frontmatter round-trip, index schema, recall math on a synthetic index, `CaseRetriever.from_kb`, deterministic selection. Extend `tests/test_leakage.py` to run `check_no_test_ids_in_kb` over generated `data/kb/`.
+5. D-033 logged. Reference passages = none in M6 (said so). Known limit: the three tools do not expose identity *presence*, so ghost_aircraft looks "quiet" to retrieval — recall reported honestly per label.
+
+Next step: implement, `make kb`, full suite + lint green, report (no commit until authorised).
+
+### M6 results
+
+Built `src/kb/cards.py` + `build_index.py`; generated `data/kb/cards/C001..C010.md` (2 per label, from the 10 KB scenarios' computed stats via the M5 tools), `data/kb/index.json`, and `results/kb/{recall_at4.json,report.md}`. 18 new KB/leakage tests; full suite 95 pass, ruff clean.
+
+Retrieval signal: cards and the (label-free) recall query share conditional `signal_tokens` computed from the stats (residualhigh, positionjump, duplicatepositions, coveragegap, missingsamples, identitychange, residualrising, consistentkinematics, regularsampling). Found and fixed an M5 `CaseRetriever` defect: BM25 IDF goes <= 0 for tokens common across a 10-card corpus, so the old `score>0` cut returned nothing (or inverted rankings) for quiet, common-token queries. Fixed minimally: BM25 stays primary; when it has no positive signal, fall back to shared-token overlap (a match never lowers a card's rank). No interface change; M5 tool tests still pass.
+
+Recall on dev (n=15, label-free queries, true label compared only after retrieval):
+- recall@1 0.33, recall@2 0.53, **recall@4 0.73**.
+- per-label recall@4: position_spoofing 1.0, ghost_aircraft 1.0, replay_duplicate 1.0, sensor_fault 0.33, benign_anomaly 0.33.
+
+Honest caveats (in `results/kb/report.md`): only 10 cards, so high recall is expected and proves neither generalisation nor detection quality. The three tools expose no identity *presence* and smear subtle residual, so quiet classes (ghost/benign) and multi-modal sensor_fault separate weakly; quiet-class ranking leans on near-identical fingerprints and is close to chance. Reference passages and dense/RRF deferred (D-033).
+
+Next step: M7 (LLM wrapper, triage, subagent loop, verifier, adjudicator, orchestrator).

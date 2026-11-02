@@ -1,0 +1,62 @@
+[
+  {
+    "card_id": "C001",
+    "label": "position_spoofing",
+    "title": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+    "text": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km) identitychange consistentkinematics regularsampling implied speed 410 kt versus reported speed 405 kt; speed residual 10 kt median up to 41 kt; residual slope -0.2 kt per minute; largest position jump 2.3 km; maximum time gap 10 s; missing fraction 0.00; vertical-rate versus altitude mismatch 0.3 m/s; callsign changes 0; squawk changes 1; duplicate position pairs 0; track span 10 min over 61 points Computed over 61 points spanning 10 min; largest step 2.3 km, maximum gap 10 s, duplicate position pairs 0."
+  },
+  {
+    "card_id": "C002",
+    "label": "position_spoofing",
+    "title": "Position offset with reported-speed disagreement (median residual 8 kt, largest jump 7.3 km)",
+    "text": "Position offset with reported-speed disagreement (median residual 8 kt, largest jump 7.3 km) residualhigh identitychange regularsampling implied speed 555 kt versus reported speed 559 kt; speed residual 8 kt median up to 864 kt; residual slope -0.1 kt per minute; largest position jump 7.3 km; maximum time gap 10 s; missing fraction 0.00; vertical-rate versus altitude mismatch 0.0 m/s; callsign changes 0; squawk changes 5; duplicate position pairs 0; track span 10 min over 61 points Computed over 61 points spanning 10 min; largest step 7.3 km, maximum gap 10 s, duplicate position pairs 0."
+  },
+  {
+    "card_id": "C003",
+    "label": "ghost_aircraft",
+    "title": "Self-consistent track with no identity changes (median residual 5 kt, largest jump 2.1 km)",
+    "text": "Self-consistent track with no identity changes (median residual 5 kt, largest jump 2.1 km) consistentkinematics regularsampling implied speed 400 kt versus reported speed 401 kt; speed residual 5 kt median up to 19 kt; residual slope 0.0 kt per minute; largest position jump 2.1 km; maximum time gap 10 s; missing fraction 0.00; vertical-rate versus altitude mismatch 0.0 m/s; callsign changes 0; squawk changes 0; duplicate position pairs 0; track span 16 min over 96 points Computed over 96 points spanning 16 min; largest step 2.1 km, maximum gap 10 s, duplicate position pairs 0."
+  },
+  {
+    "card_id": "C004",
+    "label": "ghost_aircraft",
+    "title": "Self-consistent track with no identity changes (median residual 4 kt, largest jump 2.6 km)",
+    "text": "Self-consistent track with no identity changes (median residual 4 kt, largest jump 2.6 km) consistentkinematics regularsampling implied speed 477 kt versus reported speed 475 kt; speed residual 4 kt median up to 22 kt; residual slope 0.2 kt per minute; largest position jump 2.6 km; maximum time gap 10 s; missing fraction 0.00; vertical-rate versus altitude mismatch 0.0 m/s; callsign changes 0; squawk changes 0; duplicate position pairs 0; track span 13 min over 78 points Computed over 78 points spanning 13 min; largest step 2.6 km, maximum gap 10 s, duplicate position pairs 0."
+  },
+  {
+    "card_id": "C005",
+    "label": "replay_duplicate",
+    "title": "Repeated positions or same-address duplicates (median residual 176 kt, largest jump 122.0 km)",
+    "text": "Repeated positions or same-address duplicates (median residual 176 kt, largest jump 122.0 km) residualhigh positionjump coveragegap missingsamples implied speed 378 kt versus reported speed 402 kt; speed residual 176 kt median up to 2303 kt; residual slope -0.4 kt per minute; largest position jump 122.0 km; maximum time gap 20183 s; missing fraction 0.96; vertical-rate versus altitude mismatch 0.0 m/s; callsign changes 0; squawk changes 0; duplicate position pairs 0; track span 349 min over 79 points Computed over 79 points spanning 349 min; largest step 122.0 km, maximum gap 20183 s, duplicate position pairs 0."
+  },
+  {
+    "card_id": "C006",
+    "label": "replay_duplicate",
+    "title": "Repeated positions or same-address duplicates (median residual 497317 kt, largest jump 258.9 km)",
+    "text": "Repeated positions or same-address duplicates (median residual 497317 kt, largest jump 258.9 km) residualhigh residualrising positionjump duplicatepositions identitychange regularsampling implied speed 497744 kt versus reported speed 407 kt; speed residual 497317 kt median up to 501995 kt; residual slope 1142.8 kt per minute; largest position jump 258.9 km; maximum time gap 9 s; missing fraction 0.00; vertical-rate versus altitude mismatch 0.3 m/s; callsign changes 0; squawk changes 2; duplicate position pairs 61; track span 10 min over 122 points Computed over 122 points spanning 10 min; largest step 258.9 km, maximum gap 9 s, duplicate position pairs 61."
+  },
+  {
+    "card_id": "C007",
+    "label": "sensor_fault",
+    "title": "Dropouts, noise or frozen fields (median residual 104 kt, largest jump 7.2 km)",
+    "text": "Dropouts, noise or frozen fields (median residual 104 kt, largest jump 7.2 km) residualhigh residualrising implied speed 470 kt versus reported speed 478 kt; speed residual 104 kt median up to 394 kt; residual slope 2.9 kt per minute; largest position jump 7.2 km; maximum time gap 32 s; missing fraction 0.05; vertical-rate versus altitude mismatch 0.0 m/s; callsign changes 0; squawk changes 0; duplicate position pairs 0; track span 10 min over 58 points Computed over 58 points spanning 10 min; largest step 7.2 km, maximum gap 32 s, duplicate position pairs 0."
+  },
+  {
+    "card_id": "C008",
+    "label": "sensor_fault",
+    "title": "Dropouts, noise or frozen fields (median residual 9 kt, largest jump 3.4 km)",
+    "text": "Dropouts, noise or frozen fields (median residual 9 kt, largest jump 3.4 km) residualhigh consistentkinematics regularsampling implied speed 371 kt versus reported speed 372 kt; speed residual 9 kt median up to 281 kt; residual slope -1.0 kt per minute; largest position jump 3.4 km; maximum time gap 10 s; missing fraction 0.00; vertical-rate versus altitude mismatch 0.0 m/s; callsign changes 0; squawk changes 0; duplicate position pairs 0; track span 10 min over 61 points Computed over 61 points spanning 10 min; largest step 3.4 km, maximum gap 10 s, duplicate position pairs 0."
+  },
+  {
+    "card_id": "C009",
+    "label": "benign_anomaly",
+    "title": "Benign manoeuvre (holding or go-around) (median residual 2 kt, largest jump 3.9 km)",
+    "text": "Benign manoeuvre (holding or go-around) (median residual 2 kt, largest jump 3.9 km) residualhigh residualrising identitychange consistentkinematics regularsampling implied speed 106 kt versus reported speed 106 kt; speed residual 2 kt median up to 702 kt; residual slope 19.3 kt per minute; largest position jump 3.9 km; maximum time gap 10 s; missing fraction 0.00; vertical-rate versus altitude mismatch 0.4 m/s; callsign changes 3; squawk changes 0; duplicate position pairs 0; track span 6 min over 37 points Computed over 37 points spanning 6 min; largest step 3.9 km, maximum gap 10 s, duplicate position pairs 0."
+  },
+  {
+    "card_id": "C010",
+    "label": "benign_anomaly",
+    "title": "Benign manoeuvre (holding or go-around) (median residual 448 kt, largest jump 3.9 km)",
+    "text": "Benign manoeuvre (holding or go-around) (median residual 448 kt, largest jump 3.9 km) residualhigh residualrising regularsampling implied speed 0 kt versus reported speed 524 kt; speed residual 448 kt median up to 524 kt; residual slope 48.3 kt per minute; largest position jump 3.9 km; maximum time gap 10 s; missing fraction 0.00; vertical-rate versus altitude mismatch 0.1 m/s; callsign changes 0; squawk changes 0; duplicate position pairs 0; track span 1 min over 9 points Computed over 9 points spanning 1 min; largest step 3.9 km, maximum gap 10 s, duplicate position pairs 0."
+  }
+]

@@ -70,6 +70,33 @@ def test_test_ids_in_kb_flagged(tmp_path):
     assert leakage.check_no_test_ids_in_kb(tmp_path / "kb", {"S0099"}) == []  # not a test id
 
 
+def test_generated_kb_cards_carry_no_test_ids(tmp_path):
+    """M6: cards generated from a catalog that includes test scenarios leak no test id."""
+    from kb.cards import generate_cards
+
+    cat = {"scenarios": (
+        [_scn(f"S000{i}", lab, "kb", f"kb{i}", 0)
+         for i, lab in enumerate(["position_spoofing", "ghost_aircraft",
+                                   "replay_duplicate", "sensor_fault", "benign_anomaly"], 1)]
+        + [_scn(f"S000{i}", lab, "kb", f"kc{i}", 1)
+           for i, lab in enumerate(["position_spoofing", "ghost_aircraft",
+                                     "replay_duplicate", "sensor_fault", "benign_anomaly"], 6)]
+        + [_scn("S9001", "sensor_fault", "test", "tst001", 4)]
+    )}
+    cols = ["time", "icao24", "lat", "lon", "velocity", "heading", "vertrate",
+            "callsign", "squawk", "baroaltitude", "geoaltitude"]
+
+    def loader(scn):
+        return pd.DataFrame({"time": [0, 10, 20], "icao24": scn["icao24"],
+                             "lat": [50.0, 50.01, 50.02], "lon": 8.0, "velocity": 200.0,
+                             "heading": 0.0, "vertrate": 0.0, "callsign": "A",
+                             "squawk": "1", "baroaltitude": 1e4, "geoaltitude": 1e4})[cols]
+
+    generate_cards(cat, loader, tmp_path / "kb" / "cards")
+    test_ids = {s["scenario_id"] for s in cat["scenarios"] if s["split"] == "test"}
+    assert leakage.check_no_test_ids_in_kb(tmp_path / "kb", test_ids) == []
+
+
 def test_tracks_and_alert_schema_have_no_label():
     assert leakage.check_tracks_no_label(["time", "icao24", "scenario_id"]) == []
     assert leakage.check_tracks_no_label(["time", "label"])
