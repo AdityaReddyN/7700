@@ -238,3 +238,27 @@ Clean run (apps closed, `llama3.1:8b` ~7 tok/s; numbers in `results/agents/m7_sm
 - Config A (earlier, under memory pressure): 222.6 s, verdict position_spoofing, 0 verified / 2 excluded. The two times are not directly comparable (A under load, D apps-closed); the clean A-vs-D comparison is M8.
 
 M7 done-criteria met: configs A and D each produce a verified `IncidentReport` for one alert with per-stage timing. Next: M8 evaluation (resumable, apps closed).
+
+## 2026-11-02: M8 evaluation harness (plan)
+
+Reality that shapes M8: the M4 detector alerted on only **10 of 25 test scenarios, all `ghost_aircraft` (5) and `replay_duplicate` (5)**; the other 15 (position_spoofing, sensor_fault, benign_anomaly) were **missed** — the pipeline never sees them. So the end-to-end A-vs-D comparison runs on 10 alerts over 2 of 5 classes, and the 15 missed detections are a headline result, not a footnote (EVALUATION_PROTOCOL §9). Every table says "n=10 evaluated of 25 test; 15 missed by the detector."
+
+1. `src/eval/run_eval.py` (`make eval`): resumable. Args `--config A|D|both`, `--split test`, `--resume`, `--limit N`, `--run-id`. Ground truth = alert_map.json (alert→scenario) + splits.json (scenario→label); the label is used only for scoring, never passed to the pipeline (leakage test still holds). For each test scenario with an alert, run `orchestrator.investigate` (one shared provider/retriever); write `results/<run_id>/cases/<config>__<alert_id>.json` (label, verdict, correct, top2, confidence, verified/excluded counts, support rate, per-stage seconds, tool/llm counts) and the full trace under `traces/`. Skip cases already written (resume). Write `config.json` once (configs, git commit, models + `ollama show` digests, seeds, options) and `missed.json` (the 15). A case is the unit of resumption.
+2. `src/eval/metrics.py`: pure functions for EVALUATION_PROTOCOL §4 — top-1/top-2 accuracy, per-class precision/recall/F1 with counts, 5×5 confusion matrix, evidence support rate + unsupported-claim rate, inconclusive rate, tool-call validity + structured parse rate (from llm_calls), latency p50/max, detector recall/FP (from results/detector + missed), calibration bands; plus 95% bootstrap CIs (§6, 1000 resamples, fixed seed) for top-1 and support rate.
+3. `src/eval/figures.py`: matplotlib PNGs — accuracy by config (with n), confusion matrix (config D), latency per case (A and D), calibration counts (D). To `results/<run_id>/figures/`.
+4. `src/eval/summarize.py` (`make summarize`): read `results/<run_id>/cases/*.json` + llm_calls only (nothing hand-typed) → `summary.csv` (one row per case), `summary.md` (tables with n and the missed-detection caveat), figures, and the spot-check CSV template (§8): sample 10 evidence items per config (fixed seed) with claim + tool-output snippet for a human to fill. Default `--run-id` = latest under `results/`.
+5. Tests (`tests/test_eval.py`, hermetic): metrics math on synthetic case records (known confusion/accuracy/support/calibration/bootstrap determinism); run_eval end-to-end with an injected FakeLLM factory + synthetic provider (writes cases/config/missed, resumes without re-running); summarize builds csv/md/template from synthetic cases.
+6. Cheap real validation: `make eval --config A --limit 1` then `--resume` (proves a real case writes + resumes), then `make summarize` on it. Do NOT run the full 20 investigations inline.
+7. Full run is the overnight resumable job (10 alerts × A and D ≈ 2–2.5 h on the laptop, apps closed): set it up, let the user launch it, then summarize. Numbers trace to `results/<run_id>/`.
+
+Next step: implement 1–5, hermetic green + lint, cheap real validation, then hand off the full run. No commit until authorised.
+
+### M8 results (harness built + validated; full run pending)
+
+Built `src/eval/{run_eval,metrics,figures,summarize}.py` (D-036). 13 new hermetic eval tests (metrics math on synthetic records; runner + summariser driven by an injected FakeLLM + synthetic provider, incl. a resume check). Full suite **124 pass**, ruff clean.
+
+Validated the real CLI on one config-A case (`make eval --config A --limit 1 --run-id smoke_eval --resume`): the case ran (293 s), a second `--resume` skipped it (`ran=0`), and `make summarize` wrote `summary.csv`, `summary.md`, `metrics.json`, `figures/` and `spotcheck_template.csv`; `missed.json` recorded the 15 detector misses. The throwaway `smoke_eval/` run was deleted (not a final result; results/ is committed only for the final run).
+
+Headline coverage fact (also in the summary): the detector alerted on **10/25 test scenarios, all ghost_aircraft + replay_duplicate** — the A-vs-D comparison is over 10 alerts / 2 classes, with 15 missed detections reported up front. Per-investigation cost (M7): config A ~3–5 min, config D ~9 min, so the full run (10 × A and D) is ~2–2.5 h — the resumable overnight job, not run inline.
+
+Next step: launch the full run (`make eval` / `python -m eval.run_eval --config both --run-id test_final --resume`, apps closed) overnight, then `make summarize`; fill the spot-check; write the M9 app. No commit of a partial run.
