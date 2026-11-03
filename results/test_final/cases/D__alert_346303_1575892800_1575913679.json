@@ -1,0 +1,133 @@
+{
+  "alert_id": "alert_346303_1575892800_1575913679",
+  "scenario_id": "S0027",
+  "config": "D",
+  "label": "replay_duplicate",
+  "verdict": "position_spoofing",
+  "correct": false,
+  "top2_correct": false,
+  "ranked": [
+    "position_spoofing",
+    "benign_anomaly",
+    "ghost_aircraft"
+  ],
+  "confidence": 0.7,
+  "inconclusive": false,
+  "evidence_total": 5,
+  "evidence_verified": 5,
+  "evidence_partial": 0,
+  "evidence_failed": 0,
+  "support_rate": 1.0,
+  "n_tool_calls": 2,
+  "n_llm_calls": 14,
+  "total_seconds": 631.94,
+  "stage_seconds": {
+    "triage": 36.26,
+    "subagent:benign_anomaly": 194.85,
+    "subagent:position_spoofing": 228.72,
+    "subagent:ghost_aircraft": 116.29,
+    "verification": 0.0,
+    "adjudication": 55.82
+  },
+  "triage_fallback": false,
+  "llm_calls": [
+    {
+      "stage": "triage",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    },
+    {
+      "stage": "adjudication",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    }
+  ]
+}

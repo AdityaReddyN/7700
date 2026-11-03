@@ -1,0 +1,284 @@
+{
+  "investigation_id": "inv_20261103T034338_92e06efc",
+  "config": "A",
+  "alert": {
+    "alert_id": "alert_4ca9c3_1575921600_1575929432",
+    "icao24": "4ca9c3",
+    "t_start": 1575921600,
+    "t_end": 1575929432,
+    "score": 0.2361,
+    "top_features": [
+      {
+        "name": "largest_jump_km",
+        "z": 50.0
+      },
+      {
+        "name": "max_gap_s",
+        "z": 50.0
+      },
+      {
+        "name": "missing_frac",
+        "z": 50.0
+      }
+    ],
+    "summary": "A large position step appears between consecutive reports (z=50.0)."
+  },
+  "subagents": [
+    {
+      "hypothesis": "position_spoofing",
+      "verdict": "supported",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "claim": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+          "source": "retrieved_case",
+          "ref_id": "case:q:40ccbdbb",
+          "stat": "label",
+          "value": null,
+          "verified": null
+        },
+        {
+          "claim": "50.0",
+          "source": "data_window",
+          "ref_id": "alert_4ca9c3_1575921600_1575929432",
+          "stat": "largest_jump_km",
+          "value": 50.0,
+          "verified": null
+        }
+      ],
+      "inference": "The alert indicates a large position step, and the retrieved case supports the hypothesis of position spoofing.",
+      "would_disprove": [
+        "ghost_aircraft",
+        "sensor_fault"
+      ],
+      "next_checks": [
+        "compare_to_baseline",
+        "compare_to_baseline"
+      ],
+      "tool_calls_used": 1
+    }
+  ],
+  "alternatives": [
+    {
+      "hypothesis": "ghost_aircraft",
+      "reason": "The alert does not indicate a fabricated track with no genuine history."
+    },
+    {
+      "hypothesis": "sensor_fault",
+      "reason": "The alert does not indicate noise, dropouts, or repeated values from the receiver."
+    }
+  ],
+  "verification": [
+    {
+      "hypothesis": "position_spoofing",
+      "n_total": 2,
+      "n_verified": 0,
+      "n_partial": 1,
+      "n_failed": 1,
+      "items": [
+        {
+          "ref_id": "case:q:40ccbdbb",
+          "status": "verified_partial",
+          "reason": "no stat/value to check",
+          "logged_value": null
+        },
+        {
+          "ref_id": "alert_4ca9c3_1575921600_1575929432",
+          "status": "missing_ref",
+          "reason": "ref_id not in ToolLog",
+          "logged_value": null
+        }
+      ]
+    }
+  ],
+  "report": {
+    "alert_id": "alert_4ca9c3_1575921600_1575929432",
+    "verdict": "position_spoofing",
+    "confidence": 0.8,
+    "ranked": [
+      {
+        "hypothesis": "position_spoofing",
+        "verdict": "supported",
+        "confidence": 0.8,
+        "evidence": [
+          {
+            "claim": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+            "source": "retrieved_case",
+            "ref_id": "case:q:40ccbdbb",
+            "stat": "label",
+            "value": null,
+            "verified": true
+          }
+        ],
+        "inference": "The alert indicates a large position step, and the retrieved case supports the hypothesis of position spoofing.",
+        "would_disprove": [
+          "ghost_aircraft",
+          "sensor_fault"
+        ],
+        "next_checks": [
+          "compare_to_baseline",
+          "compare_to_baseline"
+        ],
+        "tool_calls_used": 1
+      }
+    ],
+    "evidence_table": [
+      {
+        "claim": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+        "source": "retrieved_case",
+        "ref_id": "case:q:40ccbdbb",
+        "stat": "label",
+        "value": null,
+        "verified": true
+      }
+    ],
+    "excluded_evidence_count": 1,
+    "inference": "The alert indicates a large position step, and the retrieved case supports the hypothesis of position spoofing.",
+    "would_change_my_mind": [
+      "ghost_aircraft",
+      "sensor_fault"
+    ],
+    "recommended_action": "(config A: single agent; no adjudicator stage)",
+    "meta": {
+      "alternatives": [
+        {
+          "hypothesis": "ghost_aircraft",
+          "reason": "The alert does not indicate a fabricated track with no genuine history."
+        },
+        {
+          "hypothesis": "sensor_fault",
+          "reason": "The alert does not indicate noise, dropouts, or repeated values from the receiver."
+        }
+      ],
+      "config": "A",
+      "models": {
+        "triage": "llama3.2:3b",
+        "subagent": "llama3.1:8b",
+        "adjudication": "llama3.1:8b"
+      },
+      "stage_seconds": {
+        "subagent:single": 143.57,
+        "verification": 0.0
+      },
+      "total_seconds": 143.57,
+      "n_llm_calls": 4,
+      "n_tool_calls": 2,
+      "prompt_tokens": 4505,
+      "completion_tokens": 379
+    }
+  },
+  "timing_s": {
+    "subagent:single": 143.57,
+    "verification": 0.0
+  },
+  "toollog": {
+    "case:C001": {
+      "ref_id": "case:C001",
+      "tool": "retrieve_cases",
+      "args": {
+        "k": 1,
+        "query": "4ca9c3",
+        "hypothesis": "position_spoofing"
+      },
+      "output": {
+        "card_id": "C001",
+        "label": "position_spoofing",
+        "title": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+        "snippet": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km) identitychange consistentkinematics regularsampling implied speed\u2026"
+      },
+      "truncated": false,
+      "ts": 1793677430.0998847
+    },
+    "case:q:40ccbdbb": {
+      "ref_id": "case:q:40ccbdbb",
+      "tool": "retrieve_cases",
+      "args": {
+        "k": 1,
+        "query": "4ca9c3",
+        "hypothesis": "position_spoofing"
+      },
+      "output": {
+        "cases": [
+          {
+            "card_id": "C001",
+            "label": "position_spoofing",
+            "title": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+            "snippet": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km) identitychange consistentkinematics regularsampling implied speed\u2026"
+          }
+        ]
+      },
+      "truncated": false,
+      "ts": 1793677430.0998847
+    }
+  },
+  "llm_calls": [
+    {
+      "ts": 1793677430.0983188,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_4ca9c3_1575921600_1575929432",
+      "config": "A",
+      "prompt_tokens": 1267,
+      "completion_tokens": 39,
+      "latency_s": 11.54,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793677445.6887698,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_4ca9c3_1575921600_1575929432",
+      "config": "A",
+      "prompt_tokens": 928,
+      "completion_tokens": 35,
+      "latency_s": 15.59,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793677451.7725248,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_4ca9c3_1575921600_1575929432",
+      "config": "A",
+      "prompt_tokens": 980,
+      "completion_tokens": 34,
+      "latency_s": 6.08,
+      "tool_calls_count": 0,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793677562.1275027,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_4ca9c3_1575921600_1575929432",
+      "config": "A",
+      "prompt_tokens": 1330,
+      "completion_tokens": 271,
+      "latency_s": 110.35,
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "json_schema",
+      "error": null
+    }
+  ]
+}

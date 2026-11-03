@@ -1,0 +1,81 @@
+{
+  "alert_id": "alert_02a186_1575907210_1575907813",
+  "scenario_id": "S0026",
+  "config": "A",
+  "label": "replay_duplicate",
+  "verdict": "position_spoofing",
+  "correct": false,
+  "top2_correct": false,
+  "ranked": [
+    "position_spoofing",
+    "sensor_fault",
+    "replay_duplicate",
+    "ghost_aircraft"
+  ],
+  "confidence": 0.8,
+  "inconclusive": false,
+  "evidence_total": 3,
+  "evidence_verified": 0,
+  "evidence_partial": 2,
+  "evidence_failed": 1,
+  "support_rate": 0.0,
+  "n_tool_calls": 9,
+  "n_llm_calls": 7,
+  "total_seconds": 282.16,
+  "stage_seconds": {
+    "subagent:single": 282.16,
+    "verification": 0.0
+  },
+  "triage_fallback": null,
+  "llm_calls": [
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 0,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    }
+  ]
+}

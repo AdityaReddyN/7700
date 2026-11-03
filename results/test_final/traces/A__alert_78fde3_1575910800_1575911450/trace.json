@@ -1,0 +1,460 @@
+{
+  "investigation_id": "inv_20261103T034932_ecaaa7ae",
+  "config": "A",
+  "alert": {
+    "alert_id": "alert_78fde3_1575910800_1575911450",
+    "icao24": "78fde3",
+    "t_start": 1575910800,
+    "t_end": 1575911450,
+    "score": 0.076,
+    "top_features": [
+      {
+        "name": "identity_missing",
+        "z": 50.0
+      },
+      {
+        "name": "vertrate_mismatch_ms",
+        "z": -1.17
+      },
+      {
+        "name": "speed_resid_kt_med",
+        "z": -0.76
+      }
+    ],
+    "summary": "The track carries no callsign or squawk (z=50.0)."
+  },
+  "subagents": [
+    {
+      "hypothesis": "position_spoofing",
+      "verdict": "supported",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "claim": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+          "source": "retrieved_case",
+          "ref_id": "case:q:7736931e",
+          "stat": "median residual",
+          "value": 10.0,
+          "verified": null
+        },
+        {
+          "claim": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+          "source": "retrieved_case",
+          "ref_id": "case:q:7736931e",
+          "stat": "largest jump",
+          "value": 2.3,
+          "verified": null
+        },
+        {
+          "claim": "Benign manoeuvre (holding or go-around) (median residual 448 kt, largest jump 3.9 km)",
+          "source": "retrieved_case",
+          "ref_id": "case:q:2531561d",
+          "stat": "median residual",
+          "value": 448.0,
+          "verified": null
+        },
+        {
+          "claim": "Benign manoeuvre (holding or go-around) (median residual 448 kt, largest jump 3.9 km)",
+          "source": "retrieved_case",
+          "ref_id": "case:q:2531561d",
+          "stat": "largest jump",
+          "value": 3.9,
+          "verified": null
+        }
+      ],
+      "inference": "The track carries no callsign or squawk, and there is a position offset with reported-speed disagreement.",
+      "would_disprove": [
+        "ghost_aircraft",
+        "replay_duplicate"
+      ],
+      "next_checks": [],
+      "tool_calls_used": 5
+    }
+  ],
+  "alternatives": [
+    {
+      "hypothesis": "ghost_aircraft",
+      "reason": "There is no genuine history for the track."
+    },
+    {
+      "hypothesis": "replay_duplicate",
+      "reason": "There is no earlier window re-broadcast or one address at distant places at once."
+    }
+  ],
+  "verification": [
+    {
+      "hypothesis": "position_spoofing",
+      "n_total": 4,
+      "n_verified": 0,
+      "n_partial": 0,
+      "n_failed": 4,
+      "items": [
+        {
+          "ref_id": "case:q:7736931e",
+          "status": "unknown_stat",
+          "reason": "stat 'median residual' not in output",
+          "logged_value": null
+        },
+        {
+          "ref_id": "case:q:7736931e",
+          "status": "unknown_stat",
+          "reason": "stat 'largest jump' not in output",
+          "logged_value": null
+        },
+        {
+          "ref_id": "case:q:2531561d",
+          "status": "unknown_stat",
+          "reason": "stat 'median residual' not in output",
+          "logged_value": null
+        },
+        {
+          "ref_id": "case:q:2531561d",
+          "status": "unknown_stat",
+          "reason": "stat 'largest jump' not in output",
+          "logged_value": null
+        }
+      ]
+    }
+  ],
+  "report": {
+    "alert_id": "alert_78fde3_1575910800_1575911450",
+    "verdict": "position_spoofing",
+    "confidence": 0.8,
+    "ranked": [
+      {
+        "hypothesis": "position_spoofing",
+        "verdict": "supported",
+        "confidence": 0.8,
+        "evidence": [],
+        "inference": "The track carries no callsign or squawk, and there is a position offset with reported-speed disagreement.",
+        "would_disprove": [
+          "ghost_aircraft",
+          "replay_duplicate"
+        ],
+        "next_checks": [],
+        "tool_calls_used": 5
+      }
+    ],
+    "evidence_table": [],
+    "excluded_evidence_count": 4,
+    "inference": "The track carries no callsign or squawk, and there is a position offset with reported-speed disagreement.",
+    "would_change_my_mind": [
+      "ghost_aircraft",
+      "replay_duplicate"
+    ],
+    "recommended_action": "(config A: single agent; no adjudicator stage)",
+    "meta": {
+      "alternatives": [
+        {
+          "hypothesis": "ghost_aircraft",
+          "reason": "There is no genuine history for the track."
+        },
+        {
+          "hypothesis": "replay_duplicate",
+          "reason": "There is no earlier window re-broadcast or one address at distant places at once."
+        }
+      ],
+      "config": "A",
+      "models": {
+        "triage": "llama3.2:3b",
+        "subagent": "llama3.1:8b",
+        "adjudication": "llama3.1:8b"
+      },
+      "stage_seconds": {
+        "subagent:single": 318.22,
+        "verification": 0.0
+      },
+      "total_seconds": 318.22,
+      "n_llm_calls": 9,
+      "n_tool_calls": 7,
+      "prompt_tokens": 12185,
+      "completion_tokens": 1356
+    }
+  },
+  "timing_s": {
+    "subagent:single": 318.22,
+    "verification": 0.0
+  },
+  "toollog": {
+    "case:C001": {
+      "ref_id": "case:C001",
+      "tool": "retrieve_cases",
+      "args": {
+        "query": "alert_78fde3_1575910800_1575911450",
+        "hypothesis": "position_spoofing",
+        "k": 1
+      },
+      "output": {
+        "card_id": "C001",
+        "label": "position_spoofing",
+        "title": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+        "snippet": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km) identitychange consistentkinematics regularsampling implied speed\u2026"
+      },
+      "truncated": false,
+      "ts": 1793677786.067333
+    },
+    "case:q:7736931e": {
+      "ref_id": "case:q:7736931e",
+      "tool": "retrieve_cases",
+      "args": {
+        "query": "alert_78fde3_1575910800_1575911450",
+        "hypothesis": "position_spoofing",
+        "k": 1
+      },
+      "output": {
+        "cases": [
+          {
+            "card_id": "C001",
+            "label": "position_spoofing",
+            "title": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+            "snippet": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km) identitychange consistentkinematics regularsampling implied speed\u2026"
+          }
+        ]
+      },
+      "truncated": false,
+      "ts": 1793677786.067333
+    },
+    "case:q:4c7c1c99": {
+      "ref_id": "case:q:4c7c1c99",
+      "tool": "retrieve_cases",
+      "args": {
+        "hypothesis": "ghost_aircraft",
+        "k": 1,
+        "query": "alert_78fde3_1575910800_1575911450"
+      },
+      "output": {
+        "cases": []
+      },
+      "truncated": false,
+      "ts": 1793677810.3126118
+    },
+    "case:q:98792e64": {
+      "ref_id": "case:q:98792e64",
+      "tool": "retrieve_cases",
+      "args": {
+        "hypothesis": "replay_duplicate",
+        "k": 1,
+        "query": "alert_78fde3_1575910800_1575911450"
+      },
+      "output": {
+        "cases": [
+          {
+            "card_id": "C001",
+            "label": "position_spoofing",
+            "title": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+            "snippet": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km) identitychange consistentkinematics regularsampling implied speed\u2026"
+          }
+        ]
+      },
+      "truncated": false,
+      "ts": 1793677817.9848576
+    },
+    "case:q:486ffc53": {
+      "ref_id": "case:q:486ffc53",
+      "tool": "retrieve_cases",
+      "args": {
+        "k": 1,
+        "query": "alert_78fde3_1575910800_1575911450",
+        "hypothesis": "sensor_fault"
+      },
+      "output": {
+        "cases": []
+      },
+      "truncated": false,
+      "ts": 1793677831.4110951
+    },
+    "case:C010": {
+      "ref_id": "case:C010",
+      "tool": "retrieve_cases",
+      "args": {
+        "query": "alert_78fde3_1575910800_1575911450",
+        "hypothesis": "benign_anomaly",
+        "k": 1
+      },
+      "output": {
+        "card_id": "C010",
+        "label": "benign_anomaly",
+        "title": "Benign manoeuvre (holding or go-around) (median residual 448 kt, largest jump 3.9 km)",
+        "snippet": "Benign manoeuvre (holding or go-around) (median residual 448 kt, largest jump 3.9 km) residualhigh residualrising regularsampling implied speed 0 kt versus repo\u2026"
+      },
+      "truncated": false,
+      "ts": 1793677839.2747931
+    },
+    "case:q:2531561d": {
+      "ref_id": "case:q:2531561d",
+      "tool": "retrieve_cases",
+      "args": {
+        "query": "alert_78fde3_1575910800_1575911450",
+        "hypothesis": "benign_anomaly",
+        "k": 1
+      },
+      "output": {
+        "cases": [
+          {
+            "card_id": "C010",
+            "label": "benign_anomaly",
+            "title": "Benign manoeuvre (holding or go-around) (median residual 448 kt, largest jump 3.9 km)",
+            "snippet": "Benign manoeuvre (holding or go-around) (median residual 448 kt, largest jump 3.9 km) residualhigh residualrising regularsampling implied speed 0 kt versus repo\u2026"
+          }
+        ]
+      },
+      "truncated": false,
+      "ts": 1793677839.2747931
+    }
+  },
+  "llm_calls": [
+    {
+      "ts": 1793677786.0650222,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "A",
+      "prompt_tokens": 1270,
+      "completion_tokens": 50,
+      "latency_s": 13.43,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793677803.443425,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "A",
+      "prompt_tokens": 942,
+      "completion_tokens": 46,
+      "latency_s": 17.38,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793677810.3105187,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "A",
+      "prompt_tokens": 1005,
+      "completion_tokens": 43,
+      "latency_s": 6.85,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793677817.9827452,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "A",
+      "prompt_tokens": 1083,
+      "completion_tokens": 43,
+      "latency_s": 7.67,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793677831.407095,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "A",
+      "prompt_tokens": 1239,
+      "completion_tokens": 42,
+      "latency_s": 13.42,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793677839.2737935,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "A",
+      "prompt_tokens": 1312,
+      "completion_tokens": 44,
+      "latency_s": 7.86,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793677887.6065285,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "A",
+      "prompt_tokens": 1480,
+      "completion_tokens": 287,
+      "latency_s": 48.33,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793677969.8008416,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "A",
+      "prompt_tokens": 1742,
+      "completion_tokens": 409,
+      "latency_s": 82.19,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793678090.846981,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "A",
+      "prompt_tokens": 2112,
+      "completion_tokens": 392,
+      "latency_s": 121.05,
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "json_schema",
+      "error": null
+    }
+  ]
+}

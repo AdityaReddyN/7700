@@ -1,0 +1,95 @@
+{
+  "alert_id": "alert_a47ccb_1575921610_1575922560",
+  "scenario_id": "S0018",
+  "config": "A",
+  "label": "ghost_aircraft",
+  "verdict": "position_spoofing",
+  "correct": false,
+  "top2_correct": true,
+  "ranked": [
+    "position_spoofing",
+    "ghost_aircraft",
+    "replay_duplicate",
+    "sensor_fault"
+  ],
+  "confidence": 0.8,
+  "inconclusive": false,
+  "evidence_total": 2,
+  "evidence_verified": 0,
+  "evidence_partial": 1,
+  "evidence_failed": 1,
+  "support_rate": 0.0,
+  "n_tool_calls": 5,
+  "n_llm_calls": 9,
+  "total_seconds": 200.5,
+  "stage_seconds": {
+    "subagent:single": 200.5,
+    "verification": 0.0
+  },
+  "triage_fallback": null,
+  "llm_calls": [
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    }
+  ]
+}

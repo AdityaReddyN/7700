@@ -1,0 +1,27 @@
+{
+  "split": "test",
+  "n_test": 25,
+  "n_evaluated": 10,
+  "missed_scenarios": [
+    "S0006",
+    "S0007",
+    "S0008",
+    "S0009",
+    "S0010",
+    "S0036",
+    "S0037",
+    "S0038",
+    "S0039",
+    "S0040",
+    "S0046",
+    "S0047",
+    "S0048",
+    "S0049",
+    "S0050"
+  ],
+  "missed_by_label": {
+    "position_spoofing": 5,
+    "sensor_fault": 5,
+    "benign_anomaly": 5
+  }
+}

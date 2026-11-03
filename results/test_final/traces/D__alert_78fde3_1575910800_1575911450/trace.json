@@ -1,0 +1,672 @@
+{
+  "investigation_id": "inv_20261103T051754_8093bc9b",
+  "config": "D",
+  "alert": {
+    "alert_id": "alert_78fde3_1575910800_1575911450",
+    "icao24": "78fde3",
+    "t_start": 1575910800,
+    "t_end": 1575911450,
+    "score": 0.076,
+    "top_features": [
+      {
+        "name": "identity_missing",
+        "z": 50.0
+      },
+      {
+        "name": "vertrate_mismatch_ms",
+        "z": -1.17
+      },
+      {
+        "name": "speed_resid_kt_med",
+        "z": -0.76
+      }
+    ],
+    "summary": "The track carries no callsign or squawk (z=50.0)."
+  },
+  "triage": {
+    "kept": [
+      {
+        "hypothesis": "benign_anomaly",
+        "prior": 0.8,
+        "reason": "The track carries no callsign or squawk, which is consistent with a benign manoeuvre."
+      },
+      {
+        "hypothesis": "ghost_aircraft",
+        "prior": 0.1,
+        "reason": "The track carries no callsign or squawk, which is unusual for a real aircraft."
+      },
+      {
+        "hypothesis": "sensor_fault",
+        "prior": 0.1,
+        "reason": "The track carries no callsign or squawk, which could be a result of sensor fault or noise."
+      }
+    ],
+    "raw": {
+      "hypotheses": [
+        {
+          "hypothesis": "benign_anomaly",
+          "prior": 0.8,
+          "reason": "The track carries no callsign or squawk, which is consistent with a benign manoeuvre."
+        },
+        {
+          "hypothesis": "ghost_aircraft",
+          "prior": 0.1,
+          "reason": "The track carries no callsign or squawk, which is unusual for a real aircraft."
+        },
+        {
+          "hypothesis": "replay_duplicate",
+          "prior": 0.05,
+          "reason": "The track carries no callsign or squawk, which could be a characteristic of a replayed track."
+        },
+        {
+          "hypothesis": "position_spoofing",
+          "prior": 0.05,
+          "reason": "The track carries no callsign or squawk, which could be a result of position spoofing."
+        },
+        {
+          "hypothesis": "sensor_fault",
+          "prior": 0.1,
+          "reason": "The track carries no callsign or squawk, which could be a result of sensor fault or noise."
+        }
+      ]
+    },
+    "fallback": false
+  },
+  "subagents": [
+    {
+      "hypothesis": "benign_anomaly",
+      "verdict": "inconclusive",
+      "confidence": 0.0,
+      "evidence": [
+        {
+          "claim": "implied_speed_kt_median",
+          "source": "calc",
+          "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+          "stat": "implied_speed_kt_median",
+          "value": 424.2,
+          "verified": null
+        }
+      ],
+      "inference": "The track's implied speed is inconsistent with the reported speed, but this does not necessarily indicate a benign anomaly.",
+      "would_disprove": [
+        "position_spoofing",
+        "ghost_aircraft",
+        "replay_duplicate",
+        "sensor_fault"
+      ],
+      "next_checks": [
+        "compare_to_baseline",
+        "retrieve_cases"
+      ],
+      "tool_calls_used": 1
+    },
+    {
+      "hypothesis": "ghost_aircraft",
+      "verdict": "inconclusive",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "claim": "implied_speed_kt_median",
+          "source": "calc",
+          "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+          "stat": "implied_speed_kt_median",
+          "value": 424.2,
+          "verified": null
+        },
+        {
+          "claim": "residual_kt_median",
+          "source": "calc",
+          "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+          "stat": "residual_kt_median",
+          "value": 4.1,
+          "verified": null
+        },
+        {
+          "claim": "n_points_used",
+          "source": "calc",
+          "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+          "stat": "n_points_used",
+          "value": 66.0,
+          "verified": null
+        }
+      ],
+      "inference": "The track's implied speed is 424.2 kt, which is not necessarily unusual. However, the residual speed is 4.1 kt, which is relatively low. This does not provide strong evidence for or against the hypothesis.",
+      "would_disprove": [
+        "continuous, plausible history over earlier minutes"
+      ],
+      "next_checks": [
+        "compare_to_baseline"
+      ],
+      "tool_calls_used": 2
+    },
+    {
+      "hypothesis": "sensor_fault",
+      "verdict": "inconclusive",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "claim": "speed_resid_kt_med",
+          "source": "calc",
+          "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+          "stat": "residual_kt_median",
+          "value": 4.1,
+          "verified": null
+        }
+      ],
+      "inference": "The residual speed is 4.1 kt, which is not necessarily indicative of a sensor fault.",
+      "would_disprove": [
+        "benign_anomaly"
+      ],
+      "next_checks": [
+        "compare_to_baseline"
+      ],
+      "tool_calls_used": 1
+    }
+  ],
+  "verification": [
+    {
+      "hypothesis": "benign_anomaly",
+      "n_total": 1,
+      "n_verified": 1,
+      "n_partial": 0,
+      "n_failed": 0,
+      "items": [
+        {
+          "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+          "status": "verified",
+          "reason": null,
+          "logged_value": 424.2
+        }
+      ]
+    },
+    {
+      "hypothesis": "ghost_aircraft",
+      "n_total": 3,
+      "n_verified": 3,
+      "n_partial": 0,
+      "n_failed": 0,
+      "items": [
+        {
+          "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+          "status": "verified",
+          "reason": null,
+          "logged_value": 424.2
+        },
+        {
+          "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+          "status": "verified",
+          "reason": null,
+          "logged_value": 4.1
+        },
+        {
+          "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+          "status": "verified",
+          "reason": null,
+          "logged_value": 66.0
+        }
+      ]
+    },
+    {
+      "hypothesis": "sensor_fault",
+      "n_total": 1,
+      "n_verified": 1,
+      "n_partial": 0,
+      "n_failed": 0,
+      "items": [
+        {
+          "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+          "status": "verified",
+          "reason": null,
+          "logged_value": 4.1
+        }
+      ]
+    }
+  ],
+  "report": {
+    "alert_id": "alert_78fde3_1575910800_1575911450",
+    "verdict": "sensor_fault",
+    "confidence": 0.7,
+    "ranked": [
+      {
+        "hypothesis": "sensor_fault",
+        "verdict": "inconclusive",
+        "confidence": 0.5,
+        "evidence": [
+          {
+            "claim": "speed_resid_kt_med",
+            "source": "calc",
+            "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+            "stat": "residual_kt_median",
+            "value": 4.1,
+            "verified": true
+          }
+        ],
+        "inference": "The residual speed is 4.1 kt, which is not necessarily indicative of a sensor fault.",
+        "would_disprove": [
+          "benign_anomaly"
+        ],
+        "next_checks": [
+          "compare_to_baseline"
+        ],
+        "tool_calls_used": 1
+      },
+      {
+        "hypothesis": "ghost_aircraft",
+        "verdict": "inconclusive",
+        "confidence": 0.5,
+        "evidence": [
+          {
+            "claim": "implied_speed_kt_median",
+            "source": "calc",
+            "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+            "stat": "implied_speed_kt_median",
+            "value": 424.2,
+            "verified": true
+          },
+          {
+            "claim": "residual_kt_median",
+            "source": "calc",
+            "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+            "stat": "residual_kt_median",
+            "value": 4.1,
+            "verified": true
+          },
+          {
+            "claim": "n_points_used",
+            "source": "calc",
+            "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+            "stat": "n_points_used",
+            "value": 66.0,
+            "verified": true
+          }
+        ],
+        "inference": "The track's implied speed is 424.2 kt, which is not necessarily unusual. However, the residual speed is 4.1 kt, which is relatively low. This does not provide strong evidence for or against the hypothesis.",
+        "would_disprove": [
+          "continuous, plausible history over earlier minutes"
+        ],
+        "next_checks": [
+          "compare_to_baseline"
+        ],
+        "tool_calls_used": 2
+      },
+      {
+        "hypothesis": "benign_anomaly",
+        "verdict": "inconclusive",
+        "confidence": 0.0,
+        "evidence": [
+          {
+            "claim": "implied_speed_kt_median",
+            "source": "calc",
+            "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+            "stat": "implied_speed_kt_median",
+            "value": 424.2,
+            "verified": true
+          }
+        ],
+        "inference": "The track's implied speed is inconsistent with the reported speed, but this does not necessarily indicate a benign anomaly.",
+        "would_disprove": [
+          "position_spoofing",
+          "ghost_aircraft",
+          "replay_duplicate",
+          "sensor_fault"
+        ],
+        "next_checks": [
+          "compare_to_baseline",
+          "retrieve_cases"
+        ],
+        "tool_calls_used": 1
+      }
+    ],
+    "evidence_table": [
+      {
+        "claim": "implied_speed_kt_median",
+        "source": "calc",
+        "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+        "stat": "implied_speed_kt_median",
+        "value": 424.2,
+        "verified": true
+      },
+      {
+        "claim": "residual_kt_median",
+        "source": "calc",
+        "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+        "stat": "residual_kt_median",
+        "value": 4.1,
+        "verified": true
+      },
+      {
+        "claim": "n_points_used",
+        "source": "calc",
+        "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+        "stat": "n_points_used",
+        "value": 66.0,
+        "verified": true
+      },
+      {
+        "claim": "speed_resid_kt_med",
+        "source": "calc",
+        "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+        "stat": "residual_kt_median",
+        "value": 4.1,
+        "verified": true
+      }
+    ],
+    "excluded_evidence_count": 0,
+    "inference": "The residual speed is 4.1 kt, which is relatively low. This is more indicative of a sensor fault than a benign anomaly or ghost aircraft. The implied speed is not unusual, but the residual speed is more consistent with a sensor fault.",
+    "would_change_my_mind": [
+      "Higher residual speed values",
+      "Presence of a callsign or squawk",
+      "Multiple independent checks confirming a benign anomaly"
+    ],
+    "recommended_action": "Investigate the receiver's configuration and maintenance history.",
+    "meta": {
+      "triage_fallback": false,
+      "discriminating_check": "Verify the receiver's timestamp jitter and noise levels.",
+      "config": "D",
+      "models": {
+        "triage": "llama3.2:3b",
+        "subagent": "llama3.1:8b",
+        "adjudication": "llama3.1:8b"
+      },
+      "stage_seconds": {
+        "triage": 27.27,
+        "subagent:benign_anomaly": 144.56,
+        "subagent:ghost_aircraft": 204.47,
+        "subagent:sensor_fault": 131.48,
+        "verification": 0.03,
+        "adjudication": 48.49
+      },
+      "total_seconds": 556.3,
+      "n_llm_calls": 14,
+      "n_tool_calls": 2,
+      "prompt_tokens": 16618,
+      "completion_tokens": 2025
+    }
+  },
+  "timing_s": {
+    "triage": 27.27,
+    "subagent:benign_anomaly": 144.56,
+    "subagent:ghost_aircraft": 204.47,
+    "subagent:sensor_fault": 131.48,
+    "verification": 0.03,
+    "adjudication": 48.49
+  },
+  "toollog": {
+    "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca": {
+      "ref_id": "calc:alert_78fde3_1575910800_1575911450:kin:76f32bca",
+      "tool": "compute_kinematics",
+      "args": {
+        "t_start": 1575910800,
+        "t_end": 1575911450,
+        "icao24": "78fde3"
+      },
+      "output": {
+        "implied_speed_kt_median": 424.2,
+        "reported_speed_kt_median": 426.3,
+        "residual_kt_median": 4.1,
+        "residual_kt_max": 18.6,
+        "residual_slope_kt_per_min": -0.14,
+        "largest_jump_km": 2.268,
+        "largest_jump_t": 1575911230,
+        "vertrate_vs_altitude_mismatch_ms_median": 0.0,
+        "n_points_used": 66
+      },
+      "truncated": false,
+      "ts": 1793683124.719475
+    },
+    "case:q:9bc9838e": {
+      "ref_id": "case:q:9bc9838e",
+      "tool": "retrieve_cases",
+      "args": {
+        "icao24": "78fde3",
+        "t_end": 1575911450,
+        "t_start": 1575910800
+      },
+      "output": {
+        "cases": []
+      },
+      "truncated": false,
+      "ts": 1793683320.990138
+    }
+  },
+  "llm_calls": [
+    {
+      "ts": 1793683102.5532873,
+      "stage": "triage",
+      "backend": "ollama",
+      "model": "llama3.2:3b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 552,
+      "completion_tokens": 229,
+      "latency_s": 27.25,
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "json_schema",
+      "error": null
+    },
+    {
+      "ts": 1793683124.7104712,
+      "stage": "subagent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1308,
+      "completion_tokens": 43,
+      "latency_s": 22.15,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793683161.8923392,
+      "stage": "subagent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1016,
+      "completion_tokens": 175,
+      "latency_s": 37.17,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793683194.353229,
+      "stage": "subagent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1191,
+      "completion_tokens": 175,
+      "latency_s": 32.46,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793683247.110969,
+      "stage": "subagent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1361,
+      "completion_tokens": 175,
+      "latency_s": 52.76,
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "json_schema",
+      "error": null
+    },
+    {
+      "ts": 1793683268.6062603,
+      "stage": "subagent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1295,
+      "completion_tokens": 43,
+      "latency_s": 21.49,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793683308.4501626,
+      "stage": "subagent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1003,
+      "completion_tokens": 187,
+      "latency_s": 39.84,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793683320.9666762,
+      "stage": "subagent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1193,
+      "completion_tokens": 41,
+      "latency_s": 12.51,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793683451.582165,
+      "stage": "subagent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1686,
+      "completion_tokens": 311,
+      "latency_s": 130.59,
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "json_schema",
+      "error": null
+    },
+    {
+      "ts": 1793683474.460347,
+      "stage": "subagent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1296,
+      "completion_tokens": 43,
+      "latency_s": 22.88,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793683508.979123,
+      "stage": "subagent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1004,
+      "completion_tokens": 151,
+      "latency_s": 34.51,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793683536.9499598,
+      "stage": "subagent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1159,
+      "completion_tokens": 151,
+      "latency_s": 27.97,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793683583.0630755,
+      "stage": "subagent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1311,
+      "completion_tokens": 151,
+      "latency_s": 46.11,
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "json_schema",
+      "error": null
+    },
+    {
+      "ts": 1793683631.581992,
+      "stage": "adjudication",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_78fde3_1575910800_1575911450",
+      "config": "D",
+      "prompt_tokens": 1243,
+      "completion_tokens": 150,
+      "latency_s": 48.48,
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "json_schema",
+      "error": null
+    }
+  ]
+}

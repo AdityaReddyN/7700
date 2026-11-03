@@ -1,0 +1,53 @@
+{
+  "configs": [
+    "A",
+    "D"
+  ],
+  "split": "test",
+  "git_commit": "8f411eba922e67a1dab24ee09fb38954c3edbfcd",
+  "seeds": {
+    "primary_seed": 42
+  },
+  "models": {
+    "primary": "llama3.1:8b",
+    "triage": "llama3.2:3b"
+  },
+  "model_digests": {
+    "llama3.1:8b": "Model\n    architecture        llama          \n    parameters          8.0B           \n    context length      131072         \n    embedding length    4096           \n    quantization        Q4_K_M         \n    template source     go_template    \n\n  Capabilities\n    completion    \n    tools         \n\n  Parameters\n    stop    \"<|start_header_id|>\"    \n    stop    \"<|end_header_id|>\"      \n    stop  ",
+    "llama3.2:3b": "Model\n    architecture        llama          \n    parameters          3.2B           \n    context length      131072         \n    embedding length    3072           \n    quantization        Q4_K_M         \n    template source     go_template    \n\n  Capabilities\n    completion    \n    tools         \n\n  Parameters\n    stop    \"<|start_header_id|>\"    \n    stop    \"<|end_header_id|>\"      \n    stop  "
+  },
+  "agents_cfg": {
+    "triage_min_prior": 0.15,
+    "triage_min_hypotheses": 3,
+    "triage_max_hypotheses": 3,
+    "subagent_tool_call_limit": 3,
+    "config_a_tool_call_limit": 8,
+    "max_concurrency": 1,
+    "call_timeout_s": 300,
+    "max_tokens": {
+      "triage": 300,
+      "subagent": 700,
+      "adjudicator": 900
+    },
+    "tool_output_max_chars": 1600,
+    "confidence_cap_single_evidence": 0.9
+  },
+  "ablations": {
+    "A": {
+      "description": "Single agent, all five tools, up to 8 tool calls, top hypothesis plus alternatives",
+      "triage": false,
+      "subagents": 1,
+      "verifier": true,
+      "adjudicator": false,
+      "tool_call_limit": 8
+    },
+    "D": {
+      "description": "Full pipeline, triage, sequential subagents (up to 4 tool calls each), verifier, adjudicator",
+      "triage": true,
+      "subagents": "3-5",
+      "verifier": true,
+      "adjudicator": true,
+      "tool_call_limit": 4
+    }
+  }
+}

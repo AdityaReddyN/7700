@@ -1,0 +1,338 @@
+{
+  "A": {
+    "accuracy": {
+      "n": 10,
+      "top1": 0.0,
+      "top2": 0.2,
+      "top1_count": 0,
+      "top2_count": 2
+    },
+    "per_class": {
+      "position_spoofing": {
+        "n": 0,
+        "n_predicted": 7,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": null,
+        "f1": null
+      },
+      "ghost_aircraft": {
+        "n": 5,
+        "n_predicted": 0,
+        "tp": 0,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "replay_duplicate": {
+        "n": 5,
+        "n_predicted": 0,
+        "tp": 0,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "sensor_fault": {
+        "n": 0,
+        "n_predicted": 0,
+        "tp": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null
+      },
+      "benign_anomaly": {
+        "n": 0,
+        "n_predicted": 0,
+        "tp": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null
+      }
+    },
+    "confusion": {
+      "rows": [
+        "position_spoofing",
+        "ghost_aircraft",
+        "replay_duplicate",
+        "sensor_fault",
+        "benign_anomaly"
+      ],
+      "cols": [
+        "position_spoofing",
+        "ghost_aircraft",
+        "replay_duplicate",
+        "sensor_fault",
+        "benign_anomaly",
+        "inconclusive"
+      ],
+      "matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        [
+          5,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "evidence_support": {
+      "n_items": 20,
+      "verified": 2,
+      "partial": 7,
+      "failed": 11,
+      "support_rate": 0.1,
+      "unsupported_rate": 0.55
+    },
+    "inconclusive": {
+      "n": 10,
+      "inconclusive": 3,
+      "rate": 0.3
+    },
+    "llm_quality": {
+      "n_tool_turns": 55,
+      "tool_call_validity": 1.0,
+      "n_structured": 10,
+      "structured_parse_rate": 0.7
+    },
+    "latency": {
+      "n": 10,
+      "p50": 212.52,
+      "max": 403.97
+    },
+    "calibration": [
+      {
+        "band": "<0.5",
+        "n": 3,
+        "correct": 0,
+        "accuracy": 0.0
+      },
+      {
+        "band": "0.5-0.7",
+        "n": 0,
+        "correct": 0,
+        "accuracy": null
+      },
+      {
+        "band": ">0.7",
+        "n": 7,
+        "correct": 0,
+        "accuracy": 0.0
+      }
+    ],
+    "top1_ci": {
+      "point": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "n": 10,
+      "n_resamples": 1000
+    },
+    "support_ci": {
+      "point": 0.1,
+      "lo": 0.0,
+      "hi": 0.2608695652173913,
+      "n": 10,
+      "n_resamples": 1000
+    }
+  },
+  "D": {
+    "accuracy": {
+      "n": 10,
+      "top1": 0.0,
+      "top2": 0.1,
+      "top1_count": 0,
+      "top2_count": 1
+    },
+    "per_class": {
+      "position_spoofing": {
+        "n": 0,
+        "n_predicted": 9,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": null,
+        "f1": null
+      },
+      "ghost_aircraft": {
+        "n": 5,
+        "n_predicted": 0,
+        "tp": 0,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "replay_duplicate": {
+        "n": 5,
+        "n_predicted": 0,
+        "tp": 0,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "sensor_fault": {
+        "n": 0,
+        "n_predicted": 1,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": null,
+        "f1": null
+      },
+      "benign_anomaly": {
+        "n": 0,
+        "n_predicted": 0,
+        "tp": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null
+      }
+    },
+    "confusion": {
+      "rows": [
+        "position_spoofing",
+        "ghost_aircraft",
+        "replay_duplicate",
+        "sensor_fault",
+        "benign_anomaly"
+      ],
+      "cols": [
+        "position_spoofing",
+        "ghost_aircraft",
+        "replay_duplicate",
+        "sensor_fault",
+        "benign_anomaly",
+        "inconclusive"
+      ],
+      "matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          5,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "evidence_support": {
+      "n_items": 56,
+      "verified": 43,
+      "partial": 0,
+      "failed": 13,
+      "support_rate": 0.7678571428571429,
+      "unsupported_rate": 0.23214285714285715
+    },
+    "inconclusive": {
+      "n": 10,
+      "inconclusive": 0,
+      "rate": 0.0
+    },
+    "llm_quality": {
+      "n_tool_turns": 86,
+      "tool_call_validity": 1.0,
+      "n_structured": 50,
+      "structured_parse_rate": 1.0
+    },
+    "latency": {
+      "n": 10,
+      "p50": 588.145,
+      "max": 687.71
+    },
+    "calibration": [
+      {
+        "band": "<0.5",
+        "n": 0,
+        "correct": 0,
+        "accuracy": null
+      },
+      {
+        "band": "0.5-0.7",
+        "n": 6,
+        "correct": 0,
+        "accuracy": 0.0
+      },
+      {
+        "band": ">0.7",
+        "n": 4,
+        "correct": 0,
+        "accuracy": 0.0
+      }
+    ],
+    "top1_ci": {
+      "point": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "n": 10,
+      "n_resamples": 1000
+    },
+    "support_ci": {
+      "point": 0.7678571428571429,
+      "lo": 0.6440677966101694,
+      "hi": 0.9019607843137255,
+      "n": 10,
+      "n_resamples": 1000
+    }
+  }
+}

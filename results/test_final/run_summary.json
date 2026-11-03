@@ -1,0 +1,11 @@
+{
+  "run_dir": "C:\\Users\\adity\\Documents\\GitHub\\AeroMuse\\results\\test_final",
+  "configs": [
+    "A",
+    "D"
+  ],
+  "n_cases": 10,
+  "n_missed": 15,
+  "ran": 17,
+  "already_done": 3
+}

@@ -1,0 +1,133 @@
+{
+  "alert_id": "alert_306c47_1575921610_1575921900",
+  "scenario_id": "S0016",
+  "config": "D",
+  "label": "ghost_aircraft",
+  "verdict": "position_spoofing",
+  "correct": false,
+  "top2_correct": false,
+  "ranked": [
+    "position_spoofing",
+    "sensor_fault",
+    "benign_anomaly"
+  ],
+  "confidence": 0.7,
+  "inconclusive": false,
+  "evidence_total": 4,
+  "evidence_verified": 2,
+  "evidence_partial": 0,
+  "evidence_failed": 2,
+  "support_rate": 0.5,
+  "n_tool_calls": 1,
+  "n_llm_calls": 14,
+  "total_seconds": 555.66,
+  "stage_seconds": {
+    "triage": 25.25,
+    "subagent:benign_anomaly": 135.36,
+    "subagent:sensor_fault": 107.93,
+    "subagent:position_spoofing": 224.19,
+    "verification": 0.0,
+    "adjudication": 62.93
+  },
+  "triage_fallback": false,
+  "llm_calls": [
+    {
+      "stage": "triage",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "subagent",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    },
+    {
+      "stage": "adjudication",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    }
+  ]
+}

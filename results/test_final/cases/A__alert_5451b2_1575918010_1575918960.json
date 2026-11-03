@@ -1,0 +1,92 @@
+{
+  "alert_id": "alert_5451b2_1575918010_1575918960",
+  "scenario_id": "S0020",
+  "config": "A",
+  "label": "ghost_aircraft",
+  "verdict": "inconclusive",
+  "correct": false,
+  "top2_correct": false,
+  "ranked": [
+    "benign_anomaly"
+  ],
+  "confidence": 0.0,
+  "inconclusive": true,
+  "evidence_total": 0,
+  "evidence_verified": 0,
+  "evidence_partial": 0,
+  "evidence_failed": 0,
+  "support_rate": null,
+  "n_tool_calls": 6,
+  "n_llm_calls": 9,
+  "total_seconds": 209.71,
+  "stage_seconds": {
+    "subagent:single": 209.71,
+    "verification": 0.0
+  },
+  "triage_fallback": null,
+  "llm_calls": [
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": false
+    }
+  ]
+}

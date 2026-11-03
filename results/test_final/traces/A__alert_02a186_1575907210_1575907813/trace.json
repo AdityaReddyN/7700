@@ -1,0 +1,539 @@
+{
+  "investigation_id": "inv_20261102T181616_1d3954fe",
+  "config": "A",
+  "alert": {
+    "alert_id": "alert_02a186_1575907210_1575907813",
+    "icao24": "02a186",
+    "t_start": 1575907210,
+    "t_end": 1575907813,
+    "score": 0.095,
+    "top_features": [
+      {
+        "name": "speed_resid_kt_med",
+        "z": 50.0
+      },
+      {
+        "name": "speed_resid_kt_max",
+        "z": 50.0
+      },
+      {
+        "name": "max_gap_s",
+        "z": -50.0
+      }
+    ],
+    "summary": "Position-implied speed disagrees with the reported speed (z=50.0)."
+  },
+  "subagents": [
+    {
+      "hypothesis": "position_spoofing",
+      "verdict": "supported",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "claim": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+          "source": "retrieved_case",
+          "ref_id": "case:q:afa9eba1",
+          "stat": "title",
+          "value": null,
+          "verified": null
+        },
+        {
+          "claim": "Position offset with reported-speed disagreement (median residual 8 kt, largest jump 7.3 km)",
+          "source": "retrieved_case",
+          "ref_id": "case:q:afa9eba1",
+          "stat": "title",
+          "value": null,
+          "verified": null
+        },
+        {
+          "claim": "Position-implied speed disagrees with the reported speed (z=50.0).",
+          "source": "data_window",
+          "ref_id": "alert_02a186_1575907210_1575907813",
+          "stat": "summary",
+          "value": null,
+          "verified": null
+        }
+      ],
+      "inference": "The alert summary and two case cards all point to a position spoofing event.",
+      "would_disprove": [
+        "sensor_fault",
+        "replay_duplicate",
+        "ghost_aircraft"
+      ],
+      "next_checks": [
+        "check for similar events in the past 24 hours"
+      ],
+      "tool_calls_used": 4
+    }
+  ],
+  "alternatives": [
+    {
+      "hypothesis": "sensor_fault",
+      "reason": "No evidence of repeated values or timestamp jitter"
+    },
+    {
+      "hypothesis": "replay_duplicate",
+      "reason": "No evidence of an earlier window re-broadcast"
+    },
+    {
+      "hypothesis": "ghost_aircraft",
+      "reason": "No evidence of a fabricated track with no genuine history"
+    }
+  ],
+  "verification": [
+    {
+      "hypothesis": "position_spoofing",
+      "n_total": 3,
+      "n_verified": 0,
+      "n_partial": 2,
+      "n_failed": 1,
+      "items": [
+        {
+          "ref_id": "case:q:afa9eba1",
+          "status": "verified_partial",
+          "reason": "no stat/value to check",
+          "logged_value": null
+        },
+        {
+          "ref_id": "case:q:afa9eba1",
+          "status": "verified_partial",
+          "reason": "no stat/value to check",
+          "logged_value": null
+        },
+        {
+          "ref_id": "alert_02a186_1575907210_1575907813",
+          "status": "missing_ref",
+          "reason": "ref_id not in ToolLog",
+          "logged_value": null
+        }
+      ]
+    }
+  ],
+  "report": {
+    "alert_id": "alert_02a186_1575907210_1575907813",
+    "verdict": "position_spoofing",
+    "confidence": 0.8,
+    "ranked": [
+      {
+        "hypothesis": "position_spoofing",
+        "verdict": "supported",
+        "confidence": 0.8,
+        "evidence": [
+          {
+            "claim": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+            "source": "retrieved_case",
+            "ref_id": "case:q:afa9eba1",
+            "stat": "title",
+            "value": null,
+            "verified": true
+          },
+          {
+            "claim": "Position offset with reported-speed disagreement (median residual 8 kt, largest jump 7.3 km)",
+            "source": "retrieved_case",
+            "ref_id": "case:q:afa9eba1",
+            "stat": "title",
+            "value": null,
+            "verified": true
+          }
+        ],
+        "inference": "The alert summary and two case cards all point to a position spoofing event.",
+        "would_disprove": [
+          "sensor_fault",
+          "replay_duplicate",
+          "ghost_aircraft"
+        ],
+        "next_checks": [
+          "check for similar events in the past 24 hours"
+        ],
+        "tool_calls_used": 4
+      }
+    ],
+    "evidence_table": [
+      {
+        "claim": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+        "source": "retrieved_case",
+        "ref_id": "case:q:afa9eba1",
+        "stat": "title",
+        "value": null,
+        "verified": true
+      },
+      {
+        "claim": "Position offset with reported-speed disagreement (median residual 8 kt, largest jump 7.3 km)",
+        "source": "retrieved_case",
+        "ref_id": "case:q:afa9eba1",
+        "stat": "title",
+        "value": null,
+        "verified": true
+      }
+    ],
+    "excluded_evidence_count": 1,
+    "inference": "The alert summary and two case cards all point to a position spoofing event.",
+    "would_change_my_mind": [
+      "sensor_fault",
+      "replay_duplicate",
+      "ghost_aircraft"
+    ],
+    "recommended_action": "(config A: single agent; no adjudicator stage)",
+    "meta": {
+      "alternatives": [
+        {
+          "hypothesis": "sensor_fault",
+          "reason": "No evidence of repeated values or timestamp jitter"
+        },
+        {
+          "hypothesis": "replay_duplicate",
+          "reason": "No evidence of an earlier window re-broadcast"
+        },
+        {
+          "hypothesis": "ghost_aircraft",
+          "reason": "No evidence of a fabricated track with no genuine history"
+        }
+      ],
+      "config": "A",
+      "models": {
+        "triage": "llama3.2:3b",
+        "subagent": "llama3.1:8b",
+        "adjudication": "llama3.1:8b"
+      },
+      "stage_seconds": {
+        "subagent:single": 282.16,
+        "verification": 0.0
+      },
+      "total_seconds": 282.16,
+      "n_llm_calls": 7,
+      "n_tool_calls": 9,
+      "prompt_tokens": 9024,
+      "completion_tokens": 855
+    }
+  },
+  "timing_s": {
+    "subagent:single": 282.16,
+    "verification": 0.0
+  },
+  "toollog": {
+    "case:C001": {
+      "ref_id": "case:C001",
+      "tool": "retrieve_cases",
+      "args": {
+        "query": "02a186",
+        "hypothesis": "position_spoofing",
+        "k": 5
+      },
+      "output": {
+        "card_id": "C001",
+        "label": "position_spoofing",
+        "title": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+        "snippet": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km) identitychange consistentkinematics regularsampling implied speed\u2026"
+      },
+      "truncated": false,
+      "ts": 1793643419.8233202
+    },
+    "case:C002": {
+      "ref_id": "case:C002",
+      "tool": "retrieve_cases",
+      "args": {
+        "query": "02a186",
+        "hypothesis": "position_spoofing",
+        "k": 5
+      },
+      "output": {
+        "card_id": "C002",
+        "label": "position_spoofing",
+        "title": "Position offset with reported-speed disagreement (median residual 8 kt, largest jump 7.3 km)",
+        "snippet": "Position offset with reported-speed disagreement (median residual 8 kt, largest jump 7.3 km) residualhigh identitychange regularsampling implied speed 555 kt ve\u2026"
+      },
+      "truncated": false,
+      "ts": 1793643419.8233202
+    },
+    "case:C003": {
+      "ref_id": "case:C003",
+      "tool": "retrieve_cases",
+      "args": {
+        "query": "02a186",
+        "hypothesis": "position_spoofing",
+        "k": 5
+      },
+      "output": {
+        "card_id": "C003",
+        "label": "ghost_aircraft",
+        "title": "Self-consistent track with no identity changes (median residual 5 kt, largest jump 2.1 km)",
+        "snippet": "Self-consistent track with no identity changes (median residual 5 kt, largest jump 2.1 km) consistentkinematics regularsampling implied speed 400 kt versus repo\u2026"
+      },
+      "truncated": false,
+      "ts": 1793643419.8233202
+    },
+    "case:C004": {
+      "ref_id": "case:C004",
+      "tool": "retrieve_cases",
+      "args": {
+        "query": "02a186",
+        "hypothesis": "position_spoofing",
+        "k": 5
+      },
+      "output": {
+        "card_id": "C004",
+        "label": "ghost_aircraft",
+        "title": "Self-consistent track with no identity changes (median residual 4 kt, largest jump 2.6 km)",
+        "snippet": "Self-consistent track with no identity changes (median residual 4 kt, largest jump 2.6 km) consistentkinematics regularsampling implied speed 477 kt versus repo\u2026"
+      },
+      "truncated": false,
+      "ts": 1793643419.8233202
+    },
+    "case:C005": {
+      "ref_id": "case:C005",
+      "tool": "retrieve_cases",
+      "args": {
+        "query": "02a186",
+        "hypothesis": "position_spoofing",
+        "k": 5
+      },
+      "output": {
+        "card_id": "C005",
+        "label": "replay_duplicate",
+        "title": "Repeated positions or same-address duplicates (median residual 176 kt, largest jump 122.0 km)",
+        "snippet": "Repeated positions or same-address duplicates (median residual 176 kt, largest jump 122.0 km) residualhigh positionjump coveragegap missingsamples implied speed\u2026"
+      },
+      "truncated": false,
+      "ts": 1793643419.8233202
+    },
+    "case:q:afa9eba1": {
+      "ref_id": "case:q:afa9eba1",
+      "tool": "retrieve_cases",
+      "args": {
+        "query": "02a186",
+        "hypothesis": "position_spoofing",
+        "k": 5
+      },
+      "output": {
+        "cases": [
+          {
+            "card_id": "C001",
+            "label": "position_spoofing",
+            "title": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+            "snippet": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km) identitychange consistentkinematics regularsampling implied speed\u2026"
+          },
+          {
+            "card_id": "C002",
+            "label": "position_spoofing",
+            "title": "Position offset with reported-speed disagreement (median residual 8 kt, largest jump 7.3 km)",
+            "snippet": "Position offset with reported-speed disagreement (median residual 8 kt, largest jump 7.3 km) residualhigh identitychange regularsampling implied speed 555 kt ve\u2026"
+          },
+          {
+            "card_id": "C003",
+            "label": "ghost_aircraft",
+            "title": "Self-consistent track with no identity changes (median residual 5 kt, largest jump 2.1 km)",
+            "snippet": "Self-consistent track with no identity changes (median residual 5 kt, largest jump 2.1 km) consistentkinematics regularsampling implied speed 400 kt versus repo\u2026"
+          },
+          {
+            "card_id": "C004",
+            "label": "ghost_aircraft",
+            "title": "Self-consistent track with no identity changes (median residual 4 kt, largest jump 2.6 km)",
+            "snippet": "Self-consistent track with no identity changes (median residual 4 kt, largest jump 2.6 km) consistentkinematics regularsampling implied speed 477 kt versus repo\u2026"
+          },
+          {
+            "card_id": "C005",
+            "label": "replay_duplicate",
+            "title": "Repeated positions or same-address duplicates (median residual 176 kt, largest jump 122.0 km)",
+            "snippet": "Repeated positions or same-address duplicates (median residual 176 kt, largest jump 122.0 km) residualhigh positionjump coveragegap missingsamples implied speed\u2026"
+          }
+        ]
+      },
+      "truncated": false,
+      "ts": 1793643419.8233202
+    },
+    "case:q:1447a05c": {
+      "ref_id": "case:q:1447a05c",
+      "tool": "retrieve_cases",
+      "args": {
+        "k": 5,
+        "query": "02a186",
+        "hypothesis": "sensor_fault"
+      },
+      "output": {
+        "cases": []
+      },
+      "truncated": false,
+      "ts": 1793643445.1462405
+    },
+    "case:q:5ee00e70": {
+      "ref_id": "case:q:5ee00e70",
+      "tool": "retrieve_cases",
+      "args": {
+        "k": 5,
+        "query": "02a186",
+        "hypothesis": "replay_duplicate"
+      },
+      "output": {
+        "cases": [
+          {
+            "card_id": "C001",
+            "label": "position_spoofing",
+            "title": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+            "snippet": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km) identitychange consistentkinematics regularsampling implied speed\u2026"
+          },
+          {
+            "card_id": "C002",
+            "label": "position_spoofing",
+            "title": "Position offset with reported-speed disagreement (median residual 8 kt, largest jump 7.3 km)",
+            "snippet": "Position offset with reported-speed disagreement (median residual 8 kt, largest jump 7.3 km) residualhigh identitychange regularsampling implied speed 555 kt ve\u2026"
+          },
+          {
+            "card_id": "C003",
+            "label": "ghost_aircraft",
+            "title": "Self-consistent track with no identity changes (median residual 5 kt, largest jump 2.1 km)",
+            "snippet": "Self-consistent track with no identity changes (median residual 5 kt, largest jump 2.1 km) consistentkinematics regularsampling implied speed 400 kt versus repo\u2026"
+          },
+          {
+            "card_id": "C004",
+            "label": "ghost_aircraft",
+            "title": "Self-consistent track with no identity changes (median residual 4 kt, largest jump 2.6 km)",
+            "snippet": "Self-consistent track with no identity changes (median residual 4 kt, largest jump 2.6 km) consistentkinematics regularsampling implied speed 477 kt versus repo\u2026"
+          },
+          {
+            "card_id": "C005",
+            "label": "replay_duplicate",
+            "title": "Repeated positions or same-address duplicates (median residual 176 kt, largest jump 122.0 km)",
+            "snippet": "Repeated positions or same-address duplicates (median residual 176 kt, largest jump 122.0 km) residualhigh positionjump coveragegap missingsamples implied speed\u2026"
+          }
+        ]
+      },
+      "truncated": false,
+      "ts": 1793643450.3468273
+    },
+    "case:q:b07eaf66": {
+      "ref_id": "case:q:b07eaf66",
+      "tool": "retrieve_cases",
+      "args": {
+        "hypothesis": "ghost_aircraft",
+        "k": 5,
+        "query": "02a186"
+      },
+      "output": {
+        "cases": []
+      },
+      "truncated": false,
+      "ts": 1793643460.1572692
+    }
+  },
+  "llm_calls": [
+    {
+      "ts": 1793643419.811515,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_02a186_1575907210_1575907813",
+      "config": "A",
+      "prompt_tokens": 1269,
+      "completion_tokens": 37,
+      "latency_s": 43.35,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793643440.6399379,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_02a186_1575907210_1575907813",
+      "config": "A",
+      "prompt_tokens": 1012,
+      "completion_tokens": 23,
+      "latency_s": 20.82,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793643445.1446497,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_02a186_1575907210_1575907813",
+      "config": "A",
+      "prompt_tokens": 1052,
+      "completion_tokens": 29,
+      "latency_s": 4.48,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793643450.344699,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_02a186_1575907210_1575907813",
+      "config": "A",
+      "prompt_tokens": 1114,
+      "completion_tokens": 30,
+      "latency_s": 5.2,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793643460.156128,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_02a186_1575907210_1575907813",
+      "config": "A",
+      "prompt_tokens": 1342,
+      "completion_tokens": 30,
+      "latency_s": 9.81,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793643512.4993205,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_02a186_1575907210_1575907813",
+      "config": "A",
+      "prompt_tokens": 1404,
+      "completion_tokens": 356,
+      "latency_s": 52.34,
+      "tool_calls_count": 0,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793643658.623492,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_02a186_1575907210_1575907813",
+      "config": "A",
+      "prompt_tokens": 1831,
+      "completion_tokens": 350,
+      "latency_s": 146.12,
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "json_schema",
+      "error": null
+    }
+  ]
+}

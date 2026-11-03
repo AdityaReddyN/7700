@@ -1,0 +1,59 @@
+{
+  "alert_id": "alert_06a01b_1575903610_1575904214",
+  "scenario_id": "S0030",
+  "config": "A",
+  "label": "replay_duplicate",
+  "verdict": "position_spoofing",
+  "correct": false,
+  "top2_correct": false,
+  "ranked": [
+    "position_spoofing",
+    "ghost_aircraft",
+    "replay_duplicate"
+  ],
+  "confidence": 0.8,
+  "inconclusive": false,
+  "evidence_total": 2,
+  "evidence_verified": 0,
+  "evidence_partial": 0,
+  "evidence_failed": 2,
+  "support_rate": 0.0,
+  "n_tool_calls": 6,
+  "n_llm_calls": 4,
+  "total_seconds": 84.03,
+  "stage_seconds": {
+    "subagent:single": 84.03,
+    "verification": 0.0
+  },
+  "triage_fallback": null,
+  "llm_calls": [
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "native_tools",
+      "tool_calls_count": 0,
+      "tool_call_valid": true,
+      "parse_ok": true
+    },
+    {
+      "stage": "single_agent",
+      "mode": "json_schema",
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": true
+    }
+  ]
+}

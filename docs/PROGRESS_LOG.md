@@ -262,3 +262,25 @@ Validated the real CLI on one config-A case (`make eval --config A --limit 1 --r
 Headline coverage fact (also in the summary): the detector alerted on **10/25 test scenarios, all ghost_aircraft + replay_duplicate** — the A-vs-D comparison is over 10 alerts / 2 classes, with 15 missed detections reported up front. Per-investigation cost (M7): config A ~3–5 min, config D ~9 min, so the full run (10 × A and D) is ~2–2.5 h — the resumable overnight job, not run inline.
 
 Next step: launch the full run (`make eval` / `python -m eval.run_eval --config both --run-id test_final --resume`, apps closed) overnight, then `make summarize`; fill the spot-check; write the M9 app. No commit of a partial run.
+
+### M8 full run complete (run-id `test_final`, 2026-11-03)
+
+Ran `python -m eval.run_eval --config both --run-id test_final --resume` to completion (exit 0, 7721 s wall ≈ 2.1 h, apps closed). All 20 investigations done (10 alerts × A and D); `make summarize` wrote `results/test_final/{summary.csv,summary.md,metrics.json,figures/,spotcheck_template.csv}`. Every number below traces to that folder.
+
+Coverage (unchanged, stated with every number): detector alerted on **10/25 test scenarios, all ghost_aircraft (5) + replay_duplicate (5)**; 15 missed (5 each position_spoofing / sensor_fault / benign_anomaly). The A-vs-D comparison is over 10 alerts / 2 classes. n=10 is small — directional, not conclusive.
+
+| metric | config A (single agent) | config D (full pipeline) |
+|---|---|---|
+| top-1 accuracy | **0%** (0/10), CI [0%,0%] | **0%** (0/10), CI [0%,0%] |
+| top-2 accuracy | 20% (2/10) | 10% (1/10) |
+| evidence support rate | **10%** (2/20 verified; 7 partial, 11 failed) | **77%** (43/56 verified; 0 partial, 13 failed) |
+| inconclusive rate | 30% (3/10) | 0% (0/10) |
+| structured parse | 70% (10 calls) | 100% (50 calls) |
+| tool-call validity | 100% (55 turns) | 100% (86 turns) |
+| latency p50 / max | 212.5 s / 404 s | 588.1 s / 687.7 s |
+
+What the 8B model predicted (confusion): both configs call **every replay_duplicate case position_spoofing** (5/5 each); ghost_aircraft → A: 2 position_spoofing + 3 inconclusive, D: 4 position_spoofing + 1 sensor_fault. So the model cannot separate the two present classes from position_spoofing/sensor_fault — top-1 is 0% for both configs.
+
+Honest reading: **the multi-agent + verifier pipeline (D) does not improve top-1 accuracy** — that is bottlenecked by the small local model on a hard 2-class confusion, on a biased 10-case subset. Where D clearly wins is **report quality**: 77% vs 10% evidence support (the verifier grounds claims against real tool output instead of excluding hallucinated ones), 0% vs 30% inconclusive, 100% vs 70% structured-output parse — at ~2.8× the latency (p50 588 s vs 212 s). The verifier is doing its job: config A's confident-but-empty reports are correctly stripped to near-zero support, while D's survive verification. This is an honest negative-on-accuracy, positive-on-grounding result, reported as such.
+
+Next step: fill the §8 spot-check template (10 of 20 if time is short); build the M9 Streamlit app (replay these saved traces). `results/test_final/` committed as the final run.

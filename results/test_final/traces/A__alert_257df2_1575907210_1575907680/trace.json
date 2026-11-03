@@ -1,0 +1,337 @@
+{
+  "investigation_id": "inv_20261103T032831_bd79f7bd",
+  "config": "A",
+  "alert": {
+    "alert_id": "alert_257df2_1575907210_1575907680",
+    "icao24": "257df2",
+    "t_start": 1575907210,
+    "t_end": 1575907680,
+    "score": 0.0608,
+    "top_features": [
+      {
+        "name": "identity_missing",
+        "z": 50.0
+      },
+      {
+        "name": "vertrate_mismatch_ms",
+        "z": -1.17
+      },
+      {
+        "name": "vel_cv",
+        "z": -0.73
+      }
+    ],
+    "summary": "The track carries no callsign or squawk (z=50.0)."
+  },
+  "subagents": [
+    {
+      "hypothesis": "benign_anomaly",
+      "verdict": "inconclusive",
+      "confidence": 0.0,
+      "evidence": [],
+      "inference": "reasoning: no valid report (parse_failed: 1 validation error for SingleAgentReport\nevidence.1.source\n  Input should be 'data_window', 'calc', 'retrieved_case' or 'reference' [type=literal_error, input_value='data', input_type=str]\n    For fur)",
+      "would_disprove": [],
+      "next_checks": [],
+      "tool_calls_used": 4
+    }
+  ],
+  "alternatives": [],
+  "verification": [
+    {
+      "hypothesis": "benign_anomaly",
+      "n_total": 0,
+      "n_verified": 0,
+      "n_partial": 0,
+      "n_failed": 0,
+      "items": []
+    }
+  ],
+  "report": {
+    "alert_id": "alert_257df2_1575907210_1575907680",
+    "verdict": "inconclusive",
+    "confidence": 0.0,
+    "ranked": [
+      {
+        "hypothesis": "benign_anomaly",
+        "verdict": "inconclusive",
+        "confidence": 0.0,
+        "evidence": [],
+        "inference": "reasoning: no valid report (parse_failed: 1 validation error for SingleAgentReport\nevidence.1.source\n  Input should be 'data_window', 'calc', 'retrieved_case' or 'reference' [type=literal_error, input_value='data', input_type=str]\n    For fur)",
+        "would_disprove": [],
+        "next_checks": [],
+        "tool_calls_used": 4
+      }
+    ],
+    "evidence_table": [],
+    "excluded_evidence_count": 0,
+    "inference": "reasoning: no valid report (parse_failed: 1 validation error for SingleAgentReport\nevidence.1.source\n  Input should be 'data_window', 'calc', 'retrieved_case' or 'reference' [type=literal_error, input_value='data', input_type=str]\n    For fur)",
+    "would_change_my_mind": [],
+    "recommended_action": "(config A: single agent; no adjudicator stage)",
+    "meta": {
+      "alternatives": [],
+      "config": "A",
+      "models": {
+        "triage": "llama3.2:3b",
+        "subagent": "llama3.1:8b",
+        "adjudication": "llama3.1:8b"
+      },
+      "stage_seconds": {
+        "subagent:single": 286.03,
+        "verification": 0.0
+      },
+      "total_seconds": 286.03,
+      "n_llm_calls": 9,
+      "n_tool_calls": 5,
+      "prompt_tokens": 10912,
+      "completion_tokens": 569
+    }
+  },
+  "timing_s": {
+    "subagent:single": 286.03,
+    "verification": 0.0
+  },
+  "toollog": {
+    "case:C001": {
+      "ref_id": "case:C001",
+      "tool": "retrieve_cases",
+      "args": {
+        "query": "257df2",
+        "hypothesis": "position_spoofing",
+        "k": 1
+      },
+      "output": {
+        "card_id": "C001",
+        "label": "position_spoofing",
+        "title": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+        "snippet": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km) identitychange consistentkinematics regularsampling implied speed\u2026"
+      },
+      "truncated": false,
+      "ts": 1793676563.4740145
+    },
+    "case:q:5038ee4f": {
+      "ref_id": "case:q:5038ee4f",
+      "tool": "retrieve_cases",
+      "args": {
+        "query": "257df2",
+        "hypothesis": "position_spoofing",
+        "k": 1
+      },
+      "output": {
+        "cases": [
+          {
+            "card_id": "C001",
+            "label": "position_spoofing",
+            "title": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+            "snippet": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km) identitychange consistentkinematics regularsampling implied speed\u2026"
+          }
+        ]
+      },
+      "truncated": false,
+      "ts": 1793676563.4750173
+    },
+    "case:q:ee427a5d": {
+      "ref_id": "case:q:ee427a5d",
+      "tool": "retrieve_cases",
+      "args": {
+        "hypothesis": "ghost_aircraft",
+        "k": 1,
+        "query": "257df2"
+      },
+      "output": {
+        "cases": []
+      },
+      "truncated": false,
+      "ts": 1793676597.3144987
+    },
+    "case:q:c67112df": {
+      "ref_id": "case:q:c67112df",
+      "tool": "retrieve_cases",
+      "args": {
+        "hypothesis": "replay_duplicate",
+        "k": 1,
+        "query": "257df2"
+      },
+      "output": {
+        "cases": [
+          {
+            "card_id": "C001",
+            "label": "position_spoofing",
+            "title": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km)",
+            "snippet": "Position offset with reported-speed disagreement (median residual 10 kt, largest jump 2.3 km) identitychange consistentkinematics regularsampling implied speed\u2026"
+          }
+        ]
+      },
+      "truncated": false,
+      "ts": 1793676611.0795393
+    },
+    "case:q:15c590b6": {
+      "ref_id": "case:q:15c590b6",
+      "tool": "retrieve_cases",
+      "args": {
+        "hypothesis": "sensor_fault",
+        "k": 1,
+        "query": "257df2"
+      },
+      "output": {
+        "cases": []
+      },
+      "truncated": false,
+      "ts": 1793676626.7027836
+    }
+  },
+  "llm_calls": [
+    {
+      "ts": 1793676563.4533947,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_257df2_1575907210_1575907680",
+      "config": "A",
+      "prompt_tokens": 1265,
+      "completion_tokens": 37,
+      "latency_s": 52.04,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793676591.1065,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_257df2_1575907210_1575907680",
+      "config": "A",
+      "prompt_tokens": 925,
+      "completion_tokens": 33,
+      "latency_s": 27.63,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793676597.3111355,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_257df2_1575907210_1575907680",
+      "config": "A",
+      "prompt_tokens": 975,
+      "completion_tokens": 30,
+      "latency_s": 6.2,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793676604.9263754,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_257df2_1575907210_1575907680",
+      "config": "A",
+      "prompt_tokens": 1038,
+      "completion_tokens": 31,
+      "latency_s": 7.61,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793676611.0772886,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_257df2_1575907210_1575907680",
+      "config": "A",
+      "prompt_tokens": 1086,
+      "completion_tokens": 30,
+      "latency_s": 6.15,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793676620.8646548,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_257df2_1575907210_1575907680",
+      "config": "A",
+      "prompt_tokens": 1228,
+      "completion_tokens": 31,
+      "latency_s": 9.79,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793676626.7006142,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_257df2_1575907210_1575907680",
+      "config": "A",
+      "prompt_tokens": 1276,
+      "completion_tokens": 29,
+      "latency_s": 5.83,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793676633.4918842,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_257df2_1575907210_1575907680",
+      "config": "A",
+      "prompt_tokens": 1338,
+      "completion_tokens": 30,
+      "latency_s": 6.79,
+      "tool_calls_count": 1,
+      "tool_call_valid": true,
+      "parse_ok": true,
+      "cost_usd": 0.0,
+      "mode": "native_tools",
+      "error": null
+    },
+    {
+      "ts": 1793676797.437438,
+      "stage": "single_agent",
+      "backend": "ollama",
+      "model": "llama3.1:8b",
+      "alert_id": "alert_257df2_1575907210_1575907680",
+      "config": "A",
+      "prompt_tokens": 1781,
+      "completion_tokens": 318,
+      "latency_s": 163.94,
+      "tool_calls_count": 0,
+      "tool_call_valid": null,
+      "parse_ok": false,
+      "cost_usd": 0.0,
+      "mode": "json_schema",
+      "error": "parse_failed: 1 validation error for SingleAgentReport\nevidence.1.source\n  Input should be 'data_window', 'calc', 'retrieved_case' or 'reference' [type=literal_error, input_value='data', input_type=str]\n    For fur"
+    }
+  ]
+}
