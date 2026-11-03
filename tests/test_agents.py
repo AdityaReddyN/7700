@@ -304,6 +304,44 @@ def test_adjudicator_allows_high_confidence_with_two_supports():
     assert inc.confidence == 0.95 and len(inc.evidence_table) == 2
 
 
+# --- adjudicator verdict constraint (D-038) --------------------------------
+
+def test_adjudicator_rejects_uninvestigated_verdict():
+    """The LLM names a hypothesis no subagent investigated -> inconclusive."""
+    alert = _alert()
+    reports = [HypothesisReport(hypothesis="ghost_aircraft", verdict="inconclusive",
+                                confidence=0.5, evidence=[], inference="r"),
+               HypothesisReport(hypothesis="benign_anomaly", verdict="refuted",
+                                confidence=0.8, evidence=[], inference="r")]
+    llm = FakeLLM(alert, adj_out=_AdjOut(verdict="position_spoofing", confidence=0.9))
+    inc = asyncio.run(run_adjudicator(llm, alert, reports, cfg=_AGENTS_CFG))
+    assert inc.verdict == "inconclusive" and inc.confidence == 0.0
+    assert inc.meta["verdict_overridden"] and inc.meta["proposed_verdict"] == "position_spoofing"
+
+
+def test_adjudicator_overrides_to_supported_hypothesis():
+    """The LLM strays to an uninvestigated label but one hypothesis is supported."""
+    alert = _alert()
+    reports = [HypothesisReport(hypothesis="ghost_aircraft", verdict="supported",
+                                confidence=0.6, evidence=[], inference="r"),
+               HypothesisReport(hypothesis="benign_anomaly", verdict="refuted",
+                                confidence=0.8, evidence=[], inference="r")]
+    llm = FakeLLM(alert, adj_out=_AdjOut(verdict="position_spoofing", confidence=0.9))
+    inc = asyncio.run(run_adjudicator(llm, alert, reports, cfg=_AGENTS_CFG))
+    assert inc.verdict == "ghost_aircraft" and inc.confidence <= 0.6
+    assert inc.meta["verdict_overridden"]
+
+
+def test_adjudicator_keeps_explicit_inconclusive():
+    """An explicit inconclusive is respected even when a hypothesis is supported."""
+    alert = _alert()
+    reports = [HypothesisReport(hypothesis="ghost_aircraft", verdict="supported",
+                                confidence=0.6, evidence=[], inference="r")]
+    llm = FakeLLM(alert, adj_out=_AdjOut(verdict="inconclusive", confidence=0.4))
+    inc = asyncio.run(run_adjudicator(llm, alert, reports, cfg=_AGENTS_CFG))
+    assert inc.verdict == "inconclusive" and not inc.meta["verdict_overridden"]
+
+
 # --- orchestrator end-to-end ----------------------------------------------
 
 def _d_llm(alert):

@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 
 from agents.llm import LLMClient
-from agents.prompts import fill, load_prompt
+from agents.prompts import FEATURE_MAP, fill, load_prompt, triage_cheatsheet
 from common.schemas import Alert, Triage, TriageItem
 
 # Which hypotheses a detector feature points at, for the no-model fallback only.
@@ -68,11 +68,19 @@ def select_hypotheses(items: list[TriageItem], cfg: dict) -> list[TriageItem]:
 
 
 async def run_triage(llm: LLMClient, alert: Alert, cfg: dict,
-                     *, max_tokens: int = 300) -> tuple[list[TriageItem], Triage | None, bool]:
-    """Return (kept hypotheses, raw triage or None, used_fallback)."""
+                     *, max_tokens: int = 450) -> tuple[list[TriageItem], Triage | None, bool]:
+    """Return (kept hypotheses, raw triage or None, used_fallback).
+
+    Triage runs the v2 prompt (D-037): it carries the label-free hypothesis
+    definitions and the feature->hypothesis hints, so the true class is not
+    buried as a low prior and cut before any subagent investigates it. Other
+    stages stay on v1.
+    """
+    user = fill(load_prompt("triage", "v2"), cheatsheet=triage_cheatsheet(),
+                feature_map=FEATURE_MAP, alert_json=alert_json(alert))
     messages = [
         {"role": "system", "content": load_prompt("preamble")},
-        {"role": "user", "content": fill(load_prompt("triage"), alert_json=alert_json(alert))},
+        {"role": "user", "content": user},
     ]
     res = await llm.complete("triage", messages, response_schema=Triage, max_tokens=max_tokens)
     if res.parsed is None:

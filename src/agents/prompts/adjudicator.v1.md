@@ -4,6 +4,9 @@ You receive independent hypothesis reports. Only verified evidence is included.
 Write the incident report.
 
 Requirements:
+- Your verdict MUST be one of the hypotheses in the reports below whose verified
+  evidence supports it. Do NOT name a hypothesis that is not in the reports. If no
+  hypothesis is supported by verified evidence, the verdict is "inconclusive".
 - Choose the most likely cause and give a calibrated confidence (see the rules above).
 - Rank the other hypotheses and say why each ranks lower.
 - Build the evidence table from verified evidence only. Do not cite anything

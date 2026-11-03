@@ -6,7 +6,7 @@ config_a_tool_call_limit: 8     # config A
 max_concurrency: 1              # CPU laptop; raise only if measured to help
 call_timeout_s: 300
 max_tokens:
-  triage: 300
+  triage: 450                    # raised from 300 (D-037): the v2 triage prompt is longer
   subagent: 700
   adjudicator: 900
 tool_output_max_chars: 1600

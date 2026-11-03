@@ -73,6 +73,30 @@ def _supporting_count(reports: list[HypothesisReport], verdict: str) -> int:
     return len(refs)
 
 
+def _resolve_verdict(proposed: str, reports: list[HypothesisReport]) -> tuple[str, bool]:
+    """Constrain the verdict to an investigated, supported hypothesis (D-038).
+
+    The adjudicator LLM otherwise free-forms a verdict and defaults to its
+    favoured label even when no subagent investigated it (dev_v2: 3 ghost cases
+    were called position_spoofing, which was never examined). Rule: keep an
+    explicit 'inconclusive'; else accept the proposed verdict only if a subagent
+    found it supported; else fall back to the best-supported hypothesis (most
+    verified evidence, then confidence); else 'inconclusive'. Returns
+    (verdict, overridden).
+    """
+    if proposed == "inconclusive":
+        return "inconclusive", False
+    supported = [r for r in reports if r.verdict == "supported"]
+    names = {r.hypothesis for r in supported}
+    if proposed in names:
+        return proposed, False
+    if supported:
+        best = max(supported, key=lambda r: (sum(1 for e in r.evidence if e.verified),
+                                              r.confidence))
+        return best.hypothesis, True
+    return "inconclusive", True
+
+
 async def run_adjudicator(llm: LLMClient, alert: Alert,
                           verified_reports: list[HypothesisReport], *,
                           excluded_count: int = 0, cfg: dict | None = None,
@@ -98,15 +122,31 @@ async def run_adjudicator(llm: LLMClient, alert: Alert,
             meta=meta or {})
 
     out: _AdjOut = res.parsed  # type: ignore[assignment]
-    verdict = out.verdict if out.verdict in _LABELS or out.verdict == "inconclusive" \
+    proposed = out.verdict if out.verdict in _LABELS or out.verdict == "inconclusive" \
         else "inconclusive"
-    confidence = out.confidence
+    verdict, overridden = _resolve_verdict(proposed, verified_reports)
+    inference = out.inference
+    if verdict == "inconclusive":
+        confidence = 0.0
+        if overridden:
+            inference = (f"reasoning: no investigated hypothesis was supported by verified "
+                         f"evidence; the proposed verdict '{proposed}' was not among the "
+                         f"supported hypotheses, so the finding is inconclusive.")
+    elif overridden:
+        sub = next((r for r in verified_reports if r.hypothesis == verdict), None)
+        confidence = min(out.confidence, sub.confidence if sub else out.confidence)
+        inference = (f"reasoning: the proposed verdict '{proposed}' was not supported by any "
+                     f"subagent; the best-supported hypothesis '{verdict}' is used instead. "
+                     f"{out.inference}")
+    else:
+        confidence = out.confidence
     if verdict != "inconclusive" and _supporting_count(verified_reports, verdict) < 2:
         confidence = min(confidence, cap)  # not enough independent verified support
     return IncidentReport(
         alert_id=alert.alert_id, verdict=verdict, confidence=round(confidence, 3),
         ranked=_rank(verified_reports, verdict), evidence_table=table,
-        excluded_evidence_count=excluded_count, inference=out.inference,
+        excluded_evidence_count=excluded_count, inference=inference,
         would_change_my_mind=list(out.would_change_my_mind),
         recommended_action=out.recommended_action,
-        meta={**(meta or {}), "discriminating_check": out.discriminating_check})
+        meta={**(meta or {}), "discriminating_check": out.discriminating_check,
+              "verdict_overridden": overridden, "proposed_verdict": proposed})

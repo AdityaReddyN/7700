@@ -49,6 +49,27 @@ CHEATSHEET: dict[str, dict[str, str]] = {
 }
 
 
+# Label-free hint from detector feature -> likely hypothesis, for triage (D-037).
+# Uses only public feature names and the public taxonomy; no scenario label/id.
+FEATURE_MAP = (
+    "Feature hints (what an elevated anomaly feature typically indicates):\n"
+    "- identity_missing / no callsign or squawk -> ghost_aircraft (a fabricated track) "
+    "or replay_duplicate; only rarely benign_anomaly.\n"
+    "- duplicate position pairs / one address at two places at once -> replay_duplicate.\n"
+    "- large position jump / backwards timestamps -> replay_duplicate or position_spoofing.\n"
+    "- implied-vs-reported speed residual -> position_spoofing.\n"
+    "- scatter / dropouts / repeated values / timestamp jitter -> sensor_fault.\n"
+)
+
+
+def triage_cheatsheet() -> str:
+    """Render the label-free hypothesis definitions for the triage prompt (D-037)."""
+    return "\n".join(
+        f"- {h}: {c['definition']}. Supports: {c['supports']}."
+        for h, c in CHEATSHEET.items()
+    )
+
+
 def load_prompt(name: str, version: str = PROMPT_VERSION) -> str:
     """Read `<name>.<version>.md` from this directory."""
     return (_DIR / f"{name}.{version}.md").read_text(encoding="utf-8")
