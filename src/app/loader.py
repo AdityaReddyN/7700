@@ -20,6 +20,18 @@ from common.config import REPO_ROOT
 
 CONFIG_LABELS = {"A": "A — single agent", "D": "D — full pipeline"}
 
+# Demo ordering: the clearest, most camera-ready example of each anomaly type,
+# surfaced first in the gallery so the strongest visual leads (purely a display
+# order — nothing hidden). Spoofing picks are the steadiest speed divergences;
+# replay picks the largest position jump; benign picks the clearest turn.
+FEATURED_SCENARIOS: dict[str, list[str]] = {
+    "position_spoofing": ["S0010", "S0003"],
+    "ghost_aircraft": ["S0018", "S0020"],
+    "replay_duplicate": ["S0024", "S0028"],
+    "sensor_fault": ["S0036", "S0031"],
+    "benign_anomaly": ["S0050", "S0044"],
+}
+
 LABEL_BLURB = {
     "position_spoofing": "Reported positions drift away from where the aircraft's "
                          "reported velocity says it should be — the GPS/position is spoofed.",
@@ -50,6 +62,11 @@ def scenarios_by_label(data_dir: Path | None = None) -> dict[str, list[dict]]:
     out: dict[str, list[dict]] = {}
     for s in json.loads(path.read_text(encoding="utf-8")).get("scenarios", []):
         out.setdefault(s["label"], []).append(s)
+    for label, scenarios in out.items():
+        featured = FEATURED_SCENARIOS.get(label, [])
+        rank = {sid: i for i, sid in enumerate(featured)}
+        scenarios.sort(key=lambda s: (rank.get(s["scenario_id"], len(featured)),
+                                      s["scenario_id"]))
     return out
 
 
@@ -114,14 +131,26 @@ def _read_json(path: Path) -> dict | None:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _demo_rank(case: dict) -> tuple:
+    """Sort key putting the most camera-ready case first: a correct, well-grounded,
+    confident verdict beats a wrong or inconclusive one. Pure display order."""
+    return (
+        0 if case.get("correct") else 1,
+        0 if not case.get("inconclusive") else 1,
+        -float(case.get("support_rate") or 0.0),
+        -int(case.get("evidence_verified") or 0),
+        case.get("alert_id", ""),
+    )
+
+
 def load_cases(run_dir: Path) -> dict[str, list[dict]]:
-    """Case records grouped by config, each list sorted by alert_id."""
+    """Case records grouped by config, each list sorted best-demo-first."""
     by_config: dict[str, list[dict]] = {}
     for path in sorted((run_dir / "cases").glob("*.json")):
         rec = json.loads(path.read_text(encoding="utf-8"))
         by_config.setdefault(rec["config"], []).append(rec)
     for cases in by_config.values():
-        cases.sort(key=lambda c: c["alert_id"])
+        cases.sort(key=_demo_rank)
     return by_config
 
 

@@ -336,7 +336,7 @@ def view_report(run_dir: Path) -> None:
     if not by_config:
         st.warning("No cases in this run.")
         return
-    config = st.selectbox("Config", sorted(by_config),
+    config = st.selectbox("Config", sorted(by_config, key=lambda c: (c != "D", c)),
                           format_func=lambda c: loader.CONFIG_LABELS.get(c, c))
     case = st.selectbox("Case", by_config[config],
                         format_func=lambda c: f"{c['alert_id']} · verdict: {c['verdict']}")
@@ -405,7 +405,8 @@ def view_investigate(run_dir: Path) -> None:
         st.warning("No cases in this run.")
         return
     st.caption("🔁 REPLAY — these steps are read from a saved trace.")
-    config = st.selectbox("Config", sorted(by_config), key="inv_config",
+    config = st.selectbox("Config", sorted(by_config, key=lambda c: (c != "D", c)),
+                          key="inv_config",
                           format_func=lambda c: loader.CONFIG_LABELS.get(c, c))
     case = st.selectbox("Case", by_config[config], key="inv_case",
                         format_func=lambda c: f"{c['alert_id']} · {c['verdict']}")
