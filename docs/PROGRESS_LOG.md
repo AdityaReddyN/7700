@@ -284,3 +284,38 @@ What the 8B model predicted (confusion): both configs call **every replay_duplic
 Honest reading: **the multi-agent + verifier pipeline (D) does not improve top-1 accuracy** — that is bottlenecked by the small local model on a hard 2-class confusion, on a biased 10-case subset. Where D clearly wins is **report quality**: 77% vs 10% evidence support (the verifier grounds claims against real tool output instead of excluding hallucinated ones), 0% vs 30% inconclusive, 100% vs 70% structured-output parse — at ~2.8× the latency (p50 588 s vs 212 s). The verifier is doing its job: config A's confident-but-empty reports are correctly stripped to near-zero support, while D's survive verification. This is an honest negative-on-accuracy, positive-on-grounding result, reported as such.
 
 Next step: fill the §8 spot-check template (10 of 20 if time is short); build the M9 Streamlit app (replay these saved traces). `results/test_final/` committed as the final run.
+
+## 2026-11-03: M9 Streamlit app (plan)
+
+Default UI is Streamlit (D-008 still PROPOSED; AGENTS §5 lists it and the default is to proceed and mark the assumption). AGENTS §9: replayed traces MUST be labelled as replays; every number comes from `results/` (§3).
+
+1. `src/app/loader.py` — pure, Streamlit-free, unit-testable: `eval_runs()`, `load_cases()`/`load_metrics()`/`load_missed()`/`summary_rows()`/`figures()` (read `results/<run>/`), `load_trace(run,config,alert)`, `live_runs()`/`load_trace_file()` (read `runs/`), and `stage_steps(trace)` that normalises a trace into ordered replay steps (triage → each subagent → verification → adjudication) with per-stage seconds from `timing_s`.
+2. `src/app/streamlit_app.py` — three views via a sidebar radio, plus a run selector and a persistent honest caveat (n evaluated of 25 test, 2 classes, 15 missed):
+   - **Benchmark**: A-vs-D table (top-1/2, evidence support, inconclusive, parse, latency) from `metrics.json`; Plotly accuracy + support bars; the committed confusion/calibration PNGs; detector coverage from `missed.json`.
+   - **Report**: pick config + case → alert, verdict + confidence (with the inconclusive/override note from `meta`), verified-only evidence table, ranked hypotheses, reasoning (labelled), excluded-evidence count, would-change-my-mind. Marked as a replay of a saved trace.
+   - **Investigate**: a REPLAY badge + stepper over `stage_steps` (triage priors, each subagent verdict/confidence/evidence/tool calls, verification stats, adjudication, final verdict, toollog outputs). An optional "Run live (config A, short case)" button that lazy-imports the orchestrator + `default_provider`, labelled LIVE, with a CPU-time warning; writes to `runs/`.
+3. Lazy-import orchestrator/provider only inside the live button so the app loads without parquet. `make app` already runs it.
+4. `tests/test_app.py` (hermetic): loaders over the committed `results/test_final` + a tiny synthetic trace for `stage_steps`; assert the no-leakage property holds on what the app surfaces (no scenario_id/split/label in the rendered trace payloads). No Streamlit runtime in tests.
+
+Next step: implement 1–4, lint + full suite green, smoke-test that the app imports and `stage_steps` works, then record results. Commit when the human asks.
+
+### M9 results (Streamlit app built + verified in browser)
+
+Built `src/app/loader.py` (pure, Streamlit-free data loading over `results/` + `runs/`) and `src/app/streamlit_app.py` (three views). 5 new hermetic loader tests (`tests/test_app.py`); full suite **132 pass**, ruff clean. `make app` runs it.
+
+Verified live in the browser (all three views render from `results/`):
+- **Benchmark** — honest caveat banner (n evaluated of test, missed-by-label), A-vs-D headline table (top-1/2, evidence support, inconclusive, parse, latency) from `metrics.json`, Plotly accuracy + support bars, detector-coverage note, committed confusion/calibration PNGs.
+- **Report** — per-case incident report: verdict + confidence, the inconclusive/override note from `meta`, **verified-evidence-only** table (shows "No evidence survived verification" honestly), ranked hypotheses, reasoning labelled as inference, excluded-claim count. Marked "🔁 REPLAY of a saved trace".
+- **Investigate** — 🔁 REPLAY badge + a stepper over triage → each subagent (verdict/confidence/evidence/tool-output/verification) → verification → adjudication, with per-stage seconds; plus an "⚡ Run live (config A)" button that lazy-imports the orchestrator (labelled LIVE, CPU-time warning).
+
+AGENTS §9 honoured: replays are labelled REPLAY, the live path LIVE. AGENTS §3: every number is read from a committed file. The live-run button is wired to `investigate_sync` but not click-tested (a real run is minutes on CPU). D-008 (Streamlit) remains PROPOSED; proceeding on the default and marking the assumption.
+
+Next step: M10 ship (README, licence, data attribution, Meta tools used, limitations incl. the fix-2b ceiling; record a fallback demo video; make the repo public; submit). Commit the app when the human asks.
+
+### M9 redesign (white/black/red theme + track visuals)
+
+Reworked the app for presentation: `.streamlit/config.toml` (light theme, red primary `#D7263D`) + injected CSS (black headers with red accents, red/grey status chips). New `src/app/plots.py` (Plotly, white bg / black text / red for the anomalous series): `track_map` (lat/lon path, green start, red-X end, red "largest step"), `speed_drift` (reported vs position-implied speed — the divergence that signals spoofing), `residual`, `altitude`. `loader.py` gained scenario-track loading + a haversine `implied_speed_kt`.
+
+New **Anomaly gallery** view: per anomaly type, the injected track over real OpenSky data with the four plots and injection params, plus an honest detection-status chip — `detector recall (test)` read from `results/detector/metrics.json` (position_spoofing shows **0%**, with a ⚠️ note that the picture illustrates the anomaly and is not a claim the pipeline flagged it). Track+drift pictures also embedded in Report and Investigate.
+
+Honesty: the gallery makes GPS/velocity-spoofing drift visually obvious, but the recall chips and caveat state the detector misses that class (fix-2b limitation); nothing implies detection that did not happen (AGENTS §3, §10). 9 app tests (loaders + plots return figures), full suite **134 pass**, ruff clean. Verified all four views render in the browser.
