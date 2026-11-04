@@ -1,4 +1,4 @@
-"""AeroMuse — M9 Streamlit app: Anomaly Gallery, Investigate, Report, Benchmark.
+"""7700 — M9 Streamlit app: Anomaly Gallery, Investigate, Report, Benchmark.
 
 White background, black text, red accents. Reads only `results/<run>/` (eval
 runs), `runs/` (live traces) and `data/scenarios/tracks.parquet` (for the track
@@ -21,7 +21,7 @@ import streamlit as st
 
 from app import loader, plots
 
-st.set_page_config(page_title="AeroMuse — ADS-B incident analyst", layout="wide")
+st.set_page_config(page_title="7700 — ADS-B incident analyst", layout="wide")
 
 _PCT = lambda x: "n/a" if x is None else f"{100 * x:.0f}%"  # noqa: E731
 
@@ -102,9 +102,11 @@ def view_overview(headline: Path | None) -> None:
              f"· local via {models.get('backend', 'ollama').title()}")
     st.markdown(
         f'<div class="hero"><div class="tag">AI incident analyst · ADS-B airspace security</div>'
-        f'<h1>AeroMuse</h1>'
+        f'<h1>7700</h1>'
+        f'<div style="color:#666;font-size:.92rem;margin:-.3rem 0 .5rem;">aviation\'s universal '
+        f'<b>emergency squawk</b> — the code a crew sets when something is wrong in the sky</div>'
         f'<p style="font-size:1.05rem;margin:.2rem 0 .5rem;">ADS-B aircraft signals are '
-        f'<b>unauthenticated</b> — anyone can forge a position, speed or identity. AeroMuse '
+        f'<b>unauthenticated</b> — anyone can forge a position, speed or identity. 7700 '
         f'triages spoofing and anomaly alerts and writes an incident report where every '
         f'number is <span class="redword">verified against the data</span>, running '
         f'<b>entirely on a laptop</b> — no cloud, private by default.</p>'
@@ -126,7 +128,7 @@ def view_overview(headline: Path | None) -> None:
     with c1:
         st.markdown("**Why it matters.** GPS/position spoofing, ghost aircraft and replay "
                     "attacks are real threats to aviation and drones. Security teams face more "
-                    "alerts than they can read. AeroMuse turns one alert into a ranked, "
+                    "alerts than they can read. 7700 turns one alert into a ranked, "
                     "evidence-backed story an analyst can trust in minutes.")
     with c2:
         st.markdown("**Honest by construction.** A pure-Python verifier re-checks every cited "
@@ -422,7 +424,7 @@ def view_investigate(run_dir: Path) -> None:
 # --------------------------------------------------------------------------- #
 def main() -> None:
     st.markdown(_CSS, unsafe_allow_html=True)
-    st.sidebar.markdown("## AeroMuse")
+    st.sidebar.markdown("## 7700")
     st.sidebar.caption("AI incident analyst for ADS-B anomaly alerts")
     models = loader.models_used()
     st.sidebar.markdown(
@@ -447,7 +449,7 @@ def main() -> None:
         view_gallery()
         return
     if not run_dir:
-        st.title("AeroMuse")
+        st.title("7700")
         st.warning("No eval runs under results/. Run `make eval` then `make summarize`.")
         return
     if view == "Benchmark":

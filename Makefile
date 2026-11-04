@@ -1,4 +1,4 @@
-# AeroMuse / adsb-analyst — task runner.
+# 7700 / adsb-analyst — task runner.
 # Windows note: install GNU make (e.g. `choco install make`) or use mingw32-make.
 # The venv lives in .venv; PY points at its interpreter.
 

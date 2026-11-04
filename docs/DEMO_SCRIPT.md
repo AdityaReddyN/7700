@@ -1,4 +1,4 @@
-# AeroMuse — 3-minute demo video script
+# 7700 — 3-minute demo video script
 
 **Target: ≤ 3:00.** Narration is ~430 words (~145 wpm, relaxed). Built to the rubric:
 Impact 30% · Use of Meta AI 25% · Demo 25% · Technical Depth 20%.
@@ -21,12 +21,13 @@ Production notes
 > It is completely **unauthenticated** — anyone with a cheap radio can forge a position, a
 > speed, or an identity. Spoofing, ghost aircraft, replay attacks: these are real threats
 > to aviation and drones, and security teams get far more alerts than any human can read.
-> Meet **AeroMuse** — an AI incident analyst for exactly these alerts."
+> Meet **7700** — named for aviation's universal *emergency squawk code* — an AI incident
+> analyst for exactly these alerts."
 
 ### 0:20–0:42 — What it is + Meta/Llama  *(Use of Meta AI)*
 **[ON SCREEN: point to the sidebar Llama badges and the "How it works" architecture strip.]**
 
-> "AeroMuse runs a **team of Llama models entirely on a laptop** — Llama 3.2 3B triages,
+> "7700 runs a **team of Llama models entirely on a laptop** — Llama 3.2 3B triages,
 > Llama 3.1 8B investigates — with native tool-calling and structured output, through
 > Ollama. **No cloud, zero inference cost, data never leaves the machine** — which matters
 > for sensitive airspace and defense data. Five stages: detect, triage, investigate,
@@ -44,7 +45,7 @@ Production notes
 ### 1:15–2:05 — The investigation + the verifier  *(Technical Depth + Use of Meta AI)*
 **[ON SCREEN: Investigate view → pick a flagged case → expand the stage steps.]**
 
-> "When a track is flagged, AeroMuse investigates. **Triage** ranks five hypotheses.
+> "When a track is flagged, 7700 investigates. **Triage** ranks five hypotheses.
 > A **subagent per hypothesis** gathers evidence using five read-only, deterministic tools —
 > the model never writes code or SQL, and the tools have no network access. Then the part
 > I'm proudest of: a **pure-Python verifier re-checks every number the model cites against
@@ -64,10 +65,10 @@ Production notes
 ### 2:35–3:00 — Close  *(Impact)*
 **[ON SCREEN: back to Overview hero.]**
 
-> "AeroMuse turns one unauthenticated radio signal into a ranked, **evidence-verified**
+> "7700 turns one unauthenticated radio signal into a ranked, **evidence-verified**
 > incident report — private, local, and free to run, on open Llama models. It's a blueprint
 > for AI triage you can actually deploy where the data can't leave the building. That's
-> AeroMuse. Thanks for watching."
+> That's 7700. Thanks for watching."
 
 ---
 

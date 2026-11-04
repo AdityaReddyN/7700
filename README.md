@@ -1,4 +1,6 @@
-# AeroMuse — AI incident analyst for ADS-B anomalies
+# 7700 — AI incident analyst for ADS-B anomalies
+
+*Named for aviation's universal emergency squawk code — the transponder setting a crew uses when something is wrong in the sky.*
 
 > **Status: work in progress (M0 scaffolding).** The public README with results,
 > figures and limitations is written in M10. Every number published here must
