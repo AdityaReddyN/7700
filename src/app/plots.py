@@ -66,21 +66,34 @@ def track_map(df: pd.DataFrame, title: str = "Ground track (lat / lon)") -> go.F
     return fig
 
 
+def _rolling_median(xs: list[float | None], window: int = 5) -> list[float | None]:
+    """Centred rolling median over non-null points — smooths finite-difference noise."""
+    out: list[float | None] = []
+    half = window // 2
+    for i in range(len(xs)):
+        vals = [v for v in xs[max(0, i - half):i + half + 1] if v is not None]
+        out.append(sorted(vals)[len(vals) // 2] if vals else None)
+    return out
+
+
 def speed_drift(df: pd.DataFrame,
                 title: str = "Reported speed vs position-implied speed") -> go.Figure:
-    """The spoofing/velocity signature: the two speeds diverge; gap shaded red."""
+    """The spoofing/velocity signature: the two speeds diverge; implied line smoothed."""
     if df.empty:
         return _empty("no track data")
     t0 = df["time"].iloc[0]
     mins = [(t - t0) / 60.0 for t in df["time"]]
     implied = loader.implied_speed_kt(df)
+    implied_s = _rolling_median(implied)
     reported_kt = [v * 1.943_844 for v in df["velocity"].tolist()]  # m/s -> kt
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=mins, y=reported_kt, mode="lines",
-                             line=dict(color=BLACK, width=2), name="reported speed (kt)"))
-    fig.add_trace(go.Scatter(x=mins, y=implied, mode="lines",
-                             line=dict(color=RED, width=2, dash="dot"),
-                             name="position-implied speed (kt)"))
+                             line=dict(color=BLACK, width=2.5), name="reported speed (kt)"))
+    fig.add_trace(go.Scatter(x=mins, y=implied, mode="markers",
+                             marker=dict(color="#F3AEB8", size=4), name="implied (raw)"))
+    fig.add_trace(go.Scatter(x=mins, y=implied_s, mode="lines",
+                             line=dict(color=RED, width=2.5),
+                             name="position-implied speed (smoothed)"))
     fig.update_layout(**_LAYOUT, height=360, title=title,
                       xaxis_title="minutes into window", yaxis_title="ground speed (kt)")
     return fig

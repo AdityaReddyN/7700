@@ -434,7 +434,10 @@ def main() -> None:
         "View", ["Overview", "Anomaly gallery", "Investigate", "Report", "Benchmark"])
     run_dir = None
     if runs:
-        run_dir = st.sidebar.selectbox("Eval run", runs, format_func=lambda p: p.name)
+        headline = loader.headline_run()
+        idx = runs.index(headline) if headline in runs else 0
+        run_dir = st.sidebar.selectbox("Eval run", runs, index=idx,
+                                       format_func=lambda p: p.name)
     st.sidebar.caption("🔁 replays · ⚡ live. Every number is read from results/.")
 
     if view == "Overview":

@@ -89,3 +89,42 @@ Production notes
   data control — essential for aviation/defense telemetry."
 - **"What's the novel bit?"** — "A verifier that gates an LLM's claims against deterministic
   tool output, turning a small local model into a trustworthy, auditable analyst."
+
+---
+
+## Recording checklist
+
+**Before you hit record**
+- Launch: `make app` (or the running instance). Browser at **1280×720** or **1920×1080**, 16:9.
+- Close other tabs; hide bookmarks bar; full-screen the browser. Cursor visible.
+- Sidebar should already show the **Llama badges** and **Eval run = test_final** (now the default).
+- Zoom the page so the hero + stat cards fit one screen (Ctrl/Cmd + "−" once if needed).
+- Audio: record narration separately (phone/USB mic) if your screen-recorder's mic is noisy;
+  it's easier to re-take audio than video.
+
+**Tools (any one)**
+- OBS Studio (free, best control) — scene = browser window capture, 1080p/30, record to MP4.
+- Windows: Xbox Game Bar (Win+G) for a quick capture. macOS: Cmd+Shift+5.
+- Edit/trim: Clipchamp (Win), iMovie (mac), or DaVinci Resolve (free).
+
+**Click path (matches the script beats)**
+1. **Overview** — start here; let the hero + cards + architecture strip sit on screen.
+2. **Anomaly gallery** → *position spoofing* → example scenario. Best drift visuals:
+   **S0003** or **S0010** (clear, steady speed divergence). Also worth showing **replay_duplicate**
+   (S0021/S0027 — obvious repeated path) and **ghost_aircraft** (no identity).
+3. **Investigate** — pick any case; expand *Triage*, one *Subagent*, then the open *Adjudication*.
+   Point at the verified/failed evidence counts.
+4. **Benchmark** — leave Eval run on **test_final**; land on the **10% → 77%** support contrast.
+5. Back to **Overview** for the close.
+
+**Pacing**
+- ~3:00 total. Rehearse once with a stopwatch; the per-beat end-times are in the cheat-sheet above.
+- Don't wait for a live CPU run on camera — use the 🔁 replays. If you want one live shot,
+  pre-record a config-A run and speed it up 4–8×, keeping the **LIVE** label visible.
+- Record in **sections** (one per beat) and stitch — far easier than one perfect take.
+
+**Honesty guardrails (keep you safe with judges)**
+- Don't say the detector "catches" spoofing. The on-screen recall chip tells the truth;
+  lean on the **verifier + 10%→77%** story and **local/private/$0** instead.
+- If asked about accuracy, use the backup lines above (detector 100% recall on ghost/replay;
+  spoofing recall 0% is a measured gap with a known fix).
